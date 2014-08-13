@@ -1,0 +1,30 @@
+# This file defines the set of scripts (rules) that should be executed
+# when dealing with the serpents-rpc project.
+
+set rules {
+  F001
+  L002
+  L003
+  L004_ext
+  L005
+  L006_ext
+  T001
+  T002
+  T003
+  T004
+  T005
+  T006
+  T007
+  T008
+  T009
+  T010
+  T011
+  T012
+  T013
+  T015
+  T016
+  T017
+  T018
+  T019
+  SpacesAroundEqualSign
+}
