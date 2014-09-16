@@ -1,0 +1,6 @@
+#ifndef SERPENTSRPC_EXPORTS
+#define SERPENTSRPC_EXPORTS
+#define PARAMETER_CON_EXPORT
+
+#endif
+
