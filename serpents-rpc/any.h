@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ANY_H
 #define ANY_H
 

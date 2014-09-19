@@ -10,7 +10,9 @@ cmake_minimum_required(VERSION 2.6)
 # 
 option(SERPENTS_RPC_BUILD_CORE "Build the core lib" ON)
 option(SERPENTS_RPC_BUILD_UNIT_TESTS "Build a test, linking to the guslib library" ON)
-
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 project(serpents-rpc)
 

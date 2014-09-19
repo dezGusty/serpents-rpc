@@ -3,16 +3,27 @@
 #include <iostream>
 namespace serpents{
 	Method::Method() {
-	
-		signature  = new std::string("?");
-		help = new std::string( "no help availible");
+		Impl_ = new Impl;
+		Impl_->signature = std::string("?");
+		Impl_->help =std::string("no help availible");
 	}
 	void FunctionRepository::addMethod(const std::string& name, Method* method){
 		Impl_->methodContainer.insert(std::pair<std::string, Method*>(name, method));
 	}
 	Method::~Method(){
-		delete signature;
-		delete help;
+		delete Impl_;
+	}
+	std::string Method::getSignature(){
+		return Impl_->signature;
+	}
+	std::string Method::getHelp(){
+		return Impl_->help;
+	}
+	void Method::setSignature(std::string sig){
+		Impl_->signature = sig;
+	}
+	void Method::setHelp(std::string help){
+		Impl_->help = help;
 	}
 	void FunctionRepository::executeAll(){
 		

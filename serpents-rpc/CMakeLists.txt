@@ -1,8 +1,10 @@
 include_directories("${PROJECT_SOURCE_DIR}/include/")
 
-link_directories("${PROJECT_SOURCE_DIR}/libs/")
 
-
+link_directories("${PROJECT_SOURCE_DIR}/bin/release")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 file (GLOB SERPENTS-SRC
 	"*.h"
 	"*.cpp")

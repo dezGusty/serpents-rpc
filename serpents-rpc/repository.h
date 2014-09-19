@@ -13,15 +13,24 @@ namespace serpents{
 	class SERPENTSDLL Method{
 	private:
 		Method(const Method& m) = delete;
-	public:
-		std::string* signature;
-		std::string* help;
+	protected:
+		class Impl;
+		Impl* Impl_;
 	public: 
 		Method();
 		~Method();
-	
+		std::string getSignature();
+		std::string getHelp();
+		void setSignature(std::string sig);
+		void setHelp(std::string help);
 		virtual void execute(ParameterContainer& parameters, RetValue& rv) = 0;
 	};
+	class Method::Impl{
+		friend Method;
+		std::string signature;
+		std::string help;
+	};
+
 
 	class SERPENTSDLL FunctionRepository{
 	private:
