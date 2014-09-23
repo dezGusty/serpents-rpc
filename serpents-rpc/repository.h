@@ -11,8 +11,6 @@
 namespace serpents{
 	
 	class SERPENTSDLL Method{
-	private:
-		Method(const Method& m) = delete;
 	protected:
 		class Impl;
 		Impl* Impl_;
@@ -23,12 +21,17 @@ namespace serpents{
 		std::string getHelp();
 		void setSignature(std::string sig);
 		void setHelp(std::string help);
-		virtual void execute(ParameterContainer& parameters, RetValue& rv) = 0;
+		void setName(std::string name);
+		std::string Method::getName();
+		virtual void execute(ParameterContainer* parameters, RetValue* rv) = 0;
+		Method& operator=(Method& m);
+		Method(const Method& m);
 	};
 	class Method::Impl{
 		friend Method;
 		std::string signature;
 		std::string help;
+		std::string name;
 	};
 
 
@@ -41,10 +44,9 @@ namespace serpents{
 		typedef std::map<std::string, Method *> methodMap;
 		void addMethod(const std::string& name,Method* method);
 		void executeAll();
-		FunctionRepository& operator=(const FunctionRepository& fr);
-		Impl* getImpl(){
-			return Impl_;
-		}
+		FunctionRepository& operator=(FunctionRepository& fr);
+		FunctionRepository(FunctionRepository& fr);
+		Impl* getImpl();
 		~FunctionRepository();
 		
 	};

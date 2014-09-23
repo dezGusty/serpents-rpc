@@ -7,6 +7,7 @@ namespace serpents{
 	ServerStartUp::ServerStartUp(){
 		Impl_ = new Impl();
 	}
+	
 	void XMLRPC_C_StartUp::run(Server& server){
 		try {
 
@@ -47,12 +48,12 @@ namespace serpents{
 	void XMLRPC_C_StartUp::controll(){
 		std::cout << "Type \"exit\" to exit" << std::endl;
 		bool keppAlive = true;
-		std::chrono::milliseconds dura(20);
 		while (keppAlive){
 			std::string command;
 			if (serverAbyssPtr != nullptr){
 
 				std::cin >> command;
+				std::transform(command.begin(), command.end(), command.begin(), ::tolower);
 				if (strcmp(command.c_str(), "exit") == 0){
 					this->serverAbyssPtr->terminate();
 					std::cout << "server closed" << std::endl;
@@ -102,12 +103,12 @@ namespace serpents{
 		std::cout << "Type \"exit\" to exit" << std::endl;
 
 		bool keppAlive = true;
-		std::chrono::milliseconds dura(20);
 		while (keppAlive){
 			std::string command;
 			if (xmlServerPnt != nullptr){
 
 				std::cin >> command;
+				std::transform(command.begin(), command.end(), command.begin(), ::tolower);
 				if (strcmp(command.c_str(), "exit") == 0){
 					this->xmlServerPnt->shutdown();
 					std::cout << "server closed" << std::endl;
@@ -117,8 +118,6 @@ namespace serpents{
 			}
 			std::this_thread::yield();
 		}
-
-
 	}
-
+	
 }

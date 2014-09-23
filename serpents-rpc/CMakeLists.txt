@@ -17,6 +17,12 @@ add_library(serpents SHARED ${SERPENTS-SRC})
 target_link_libraries(serpents Ws2_32.lib odbc32.lib odbccp32.lib xmlrpc.lib libxmlrpc++.lib)
 
 add_definitions(-DSERPENTSRPC_EXPORTS)
+
+if (SERPENTS_RPC_USELOG4CPP)
+	link_directories("${PROJECT_SOURCE_DIR}/bin/release/log4cpp")
+  target_link_libraries(serpents log4cpp.lib)
+  add_definitions(-DUSE_LOG4CPP)
+endif ()
 install (TARGETS serpents
 		ARCHIVE DESTINATION lib
 		LIBRARY DESTINATION lib

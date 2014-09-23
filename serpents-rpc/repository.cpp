@@ -7,6 +7,17 @@ namespace serpents{
 		Impl_->signature = std::string("?");
 		Impl_->help =std::string("no help availible");
 	}
+	Method& Method::operator=(Method& m){
+		if (this != &m){
+			this->Impl_ = new Impl;
+			this->Impl_->help = std::string(Impl_->help);
+			this->Impl_->signature = std::string(Impl_->signature);
+			return *this;
+		}
+		else{
+			return m;
+		}
+	}
 	void FunctionRepository::addMethod(const std::string& name, Method* method){
 		Impl_->methodContainer.insert(std::pair<std::string, Method*>(name, method));
 	}
@@ -25,31 +36,50 @@ namespace serpents{
 	void Method::setHelp(std::string help){
 		Impl_->help = help;
 	}
+	Method::Method(const Method& m){
+		this->Impl_ = new Impl;
+		Impl_->help = m.Impl_->help;
+		Impl_->signature = m.Impl_->signature;
+	}
+	void Method::setName(std::string name){
+		Impl_->name = name;
+	}
+	std::string Method::getName(){
+		return Impl_->name;
+	}
 	void FunctionRepository::executeAll(){
 		
 	}
 	FunctionRepository::FunctionRepository(){
-		Impl_ = new Impl;	}
-	
-	FunctionRepository& FunctionRepository::operator=(const FunctionRepository& fr){
-		for each (std::pair<std::string,Method*> var in fr.Impl_->methodContainer)
-		{
-			Method* m = nullptr; 
-			memset(m, 0, sizeof(var.second));
-			memcpy(m, var.second, sizeof(var.second));
-			this->Impl_->methodContainer.insert(std::pair<std::string, Method*>(var.first,m));
-		}
-		return *this;
-	}
-	
-	FunctionRepository::~FunctionRepository(){
-		methodMap::iterator it;
-		for (it = Impl_->methodContainer.begin(); it != Impl_->methodContainer.end(); ++it){
-			std::cout << "deleting obj" << std::endl;
-			delete it->second;
-		}
-		delete Impl_;
+		Impl_ = new Impl;	
 	}
 
+	FunctionRepository& FunctionRepository::operator=(FunctionRepository& fr){
+		if (this != &fr){
+			for each (auto var in fr.Impl_->methodContainer)
+			{
+				this->Impl_ = new Impl;
+				Impl_->methodContainer.insert(std::pair<std::string, Method*>(var.first, var.second));
+			}
+			return *this;
+		}
+		else{
+			return fr;
+		}
+	
+	}
+	FunctionRepository::FunctionRepository(FunctionRepository& fr){
+		for each (auto var in fr.Impl_->methodContainer)
+		{
+			this->Impl_ = new Impl;
+			Impl_->methodContainer.insert(std::pair<std::string, Method*>(var.first, var.second));
+		}
+	}
+	FunctionRepository::~FunctionRepository(){
+		delete Impl_;
+	}
+	FunctionRepository::Impl* FunctionRepository::getImpl(){
+		return Impl_;
+	}
 
 }

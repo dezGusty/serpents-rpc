@@ -1,17 +1,17 @@
-#ifndef SERVER_H
-#define SERVER_H
-#define SERVER_EXPORT
-#ifdef SERVER_EXPORT
-#define SERVERDLL _declspec(dllexport)
-#else
-#define SERVERDLL _declspec(dllimport)
-#endif
-
+#ifndef SERVER_H_
+#define SERVER_H_
 #include "base.h"
 #include <thread>
 #include <string>
 #include "repository.h"
 #include "serveroptions.h"
+
+#ifdef SERPENTSRPC_EXPORTS
+#define SERVERDLL _declspec(dllexport)
+#else
+#define SERVERDLL _declspec(dllimport)
+#endif
+
 
 namespace serpents{
 	
@@ -32,12 +32,14 @@ namespace serpents{
 		FunctionRepository* getRepository();
 		XMLRPC_CServerOptions* getXMLRPC_CServerOptions();
 		XMLRPCPP_ServerOptions* getXMLRPCPP_ServerOptions();
-
+		void addLogTarget(std::string type, std::string fileName);
+		std::map<std::string, std::string>* getLogTargets();
 	};
 	class Server::Impl{
 	public:
 		std::string URI;
 		unsigned int port;
+		std::map<std::string, std::string> logmap;
 		XMLRPC_CServerOptions* soPtr;
 		XMLRPCPP_ServerOptions* socppPtr;
 	};

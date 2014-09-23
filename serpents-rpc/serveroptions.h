@@ -1,14 +1,15 @@
-#ifndef SERVER_OPTIONS_H
-#define SERVER_OPTIONS_H
+#ifndef SERVER_OPTIONS_H_
+#define SERVER_OPTIONS_H_
 #include "base.h"
+#include <string>
 #include "xmlrpc-c\server_abyss.hpp"
 #ifdef SERPENTSDLL
-#define SERVEROPT_EXPT _declspec(dllexport)
+#define SERVEROPT_DLL _declspec(dllexport)
 #else
-#define SERVEROPT_EXPT _declspec(dllimport)
+#define SERVEROPT_DLL _declspec(dllimport)
 #endif
 namespace serpents{
-	class SERVEROPT_EXPT XMLRPC_CServerOptions{
+	class SERVEROPT_DLL XMLRPC_CServerOptions{
 		typedef xmlrpc_c::serverAbyss::constrOpt constrOpt;
 	public:
 		XMLRPC_CServerOptions();
@@ -29,7 +30,7 @@ namespace serpents{
 		constrOpt* constrOpt_;
 	};
 
-	class SERVEROPT_EXPT XMLRPCPP_ServerOptions{
+	class SERVEROPT_DLL XMLRPCPP_ServerOptions{
 		class Impl;
 		Impl* Impl_;
 	public:
@@ -43,4 +44,4 @@ namespace serpents{
 		unsigned int portNum;
 	};
 }
-#endif
+#endif  // SERVER_OPTIONS_H_

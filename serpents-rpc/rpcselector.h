@@ -1,5 +1,5 @@
-#ifndef RPCSELECTOR_H
-#define RPCSELECTOR_H
+#ifndef RPCSELECTOR_H_
+#define RPCSELECTOR_H_
 
 
 
@@ -21,7 +21,10 @@
 #include <iostream>
 #include <string>
 #include <cassert>
+#ifdef USE_LOG4CPP
+#include "log.h"
 
+#endif
 namespace serpents{
 	class ServerStartUp;
 	
@@ -44,7 +47,7 @@ namespace serpents{
 
 	
 }
-#endif
+#endif  // RPCSELECTOR_H_
 
 
 

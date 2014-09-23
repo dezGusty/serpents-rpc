@@ -1,7 +1,7 @@
-#ifndef BASE_H
-#define BASE_H
+#ifndef BASE_H_
+#define BASE_H_
 #pragma once
-
+//#pragma warning(disable:4251)
 
 #ifdef SERPENTSRPC_EXPORTS
 #define SERPENTSDLL __declspec (dllexport)
@@ -14,4 +14,5 @@
 //#include "easylogging++.h"
 #endif
 
-#endif
+
+#endif  // BASE_H_

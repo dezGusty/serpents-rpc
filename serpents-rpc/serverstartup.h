@@ -1,10 +1,10 @@
-#ifndef SERVERSTARTUP_H
-#define SERVERSTARTUP_H
+#ifndef SERVERSTARTUP_H_
+#define SERVERSTARTUP_H_
 #include "base.h"
 #include "implservermethod.h"
-
+#include <iostream>
 #include <thread>
-
+#include <algorithm>
 #ifdef SERPENTSRPC_EXPORTS
 #define SERVERSTARTUP_DLL _declspec(dllexport)
 #else
@@ -20,6 +20,7 @@ namespace serpents{
 	public:
 		bool runCon = true;
 		ServerStartUp();
+	    
 		virtual std::thread& execute(Server& server) = 0;
 		virtual void run(Server& server) = 0;
 		void start();
@@ -37,6 +38,7 @@ namespace serpents{
 		std::thread& execute(Server& server);
 		void controll();
 		void run(Server& server);
+		
 	};
 
 
@@ -46,8 +48,9 @@ namespace serpents{
 		std::thread& execute(Server& server);
 		void controll();
 		void run(Server& server);
+		
 	};
 
 }
 
-#endif
+#endif  // SERVERSTARTUP_H_

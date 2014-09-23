@@ -6,7 +6,6 @@ namespace serpents{
 	//choose impl of server 
 	void RPCSelector::selectRPCMethod(Server& server, std::string method){
 		server_ = &server;
-		//ServerStartUp* startUp =nullptr;
 		if (strcmp(method.c_str(), "xmlrpc_c") == 0){
 			ServerStartUpImpl_ = new XMLRPC_C_StartUp();
 			
@@ -15,10 +14,16 @@ namespace serpents{
 
 			ServerStartUpImpl_ = new XMLRPCpp_StartUp();
 		}
+#ifdef USE_LOG4CPP
+		auto map = server.getLogTargets();
+		for (auto it = map->begin(); it != map->end(); ++it){
+			Logger::getInstance().addAppender(it->second,it->first);
+		}
+		Logger::getInstance().info("---using library "+ method+"---");
+#endif
 
 	}
 	void RPCSelector::stopServer(){
-		assert(ss != nullptr);
 		ServerStartUpImpl_->runCon = false;
 	}
 

@@ -33,6 +33,12 @@ namespace serpents{
 	void Server::setRepository(FunctionRepository& fr){
 		this->repository = &fr;
 	}
+	void Server::addLogTarget(std::string type, std::string fileName){
+		Impl_->logmap.insert(std::pair<std::string, std::string>(fileName, type));
+	}
+	std::map<std::string, std::string>* Server::getLogTargets(){
+		return &Impl_->logmap;
+	}
 	FunctionRepository* Server::getRepository(){
 		return this->repository;
 	}
