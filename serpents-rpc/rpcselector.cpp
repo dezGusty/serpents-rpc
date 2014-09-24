@@ -24,6 +24,7 @@ namespace serpents{
 
 	}
 	void RPCSelector::stopServer(){
+		assert(ss != nullptr);
 		ServerStartUpImpl_->runCon = false;
 	}
 

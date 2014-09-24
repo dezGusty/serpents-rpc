@@ -1,9 +1,6 @@
 #ifndef RPCSELECTOR_H_
 #define RPCSELECTOR_H_
 
-
-
-
 #ifdef SERPENTSRPC_EXPORTS
 #define RPCSELECTDLL _declspec(dllexport)
 #else
@@ -15,7 +12,6 @@
 #  include <unistd.h>
 #endif
 
-
 #include "serverstartup.h"
 #include <stdexcept>
 #include <iostream>
@@ -23,7 +19,6 @@
 #include <cassert>
 #ifdef USE_LOG4CPP
 #include "log.h"
-
 #endif
 namespace serpents{
 	class ServerStartUp;
@@ -41,11 +36,6 @@ namespace serpents{
 		RPCSelector();
 		~RPCSelector();
 	};
-
-
-
-
-	
 }
 #endif  // RPCSELECTOR_H_
 

@@ -23,10 +23,13 @@ namespace serpents{
 			//	.registryP(&myRegistry)
 			//	.portNumber(server.getPort()));
 			this->serverAbyssPtr = &myAbyssServer; //change to set/get
-
+			
+			std::mutex mtx;
 			while (runCon){
+				mtx.lock();
 				myAbyssServer.runOnce();
 				// xmlrpc_c::serverAbyss.run() never returns
+				mtx.unlock();
 
 			}
 
@@ -48,10 +51,14 @@ namespace serpents{
 	void XMLRPC_C_StartUp::controll(){
 		std::cout << "Type \"exit\" to exit" << std::endl;
 		bool keppAlive = true;
+		bool isFirst = true;
 		while (keppAlive){
 			std::string command;
 			if (serverAbyssPtr != nullptr){
-
+				if (isFirst){
+					std::cout << "server started" << std::endl;
+					isFirst = false;
+				}
 				std::cin >> command;
 				std::transform(command.begin(), command.end(), command.begin(), ::tolower);
 				if (strcmp(command.c_str(), "exit") == 0){
@@ -90,6 +97,7 @@ namespace serpents{
 			s.bindAndListen(8081);
 			s.enableIntrospection(true);
 			xmlServerPnt = &s;
+			
 			//TODO: Figure out what that means
 			s.work(-1.0);
 		}
@@ -103,10 +111,14 @@ namespace serpents{
 		std::cout << "Type \"exit\" to exit" << std::endl;
 
 		bool keppAlive = true;
+		bool isFirst = true;
 		while (keppAlive){
 			std::string command;
 			if (xmlServerPnt != nullptr){
-
+				if (isFirst){
+					std::cout << "server started" << std::endl;
+					isFirst = false;
+				}
 				std::cin >> command;
 				std::transform(command.begin(), command.end(), command.begin(), ::tolower);
 				if (strcmp(command.c_str(), "exit") == 0){

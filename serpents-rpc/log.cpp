@@ -14,13 +14,13 @@ namespace serpents{
 		 
 	}
 	void Logger::error(std::string s){
-		root.error(s);
+		root.error("ERROR: "+s);
 	}
 	void Logger::info(std::string s){
-		root.info( s);
+		root.info("INFO: "+s);
 	}
 	void Logger::warn(std::string s){
-		root.warn( s);
+		root.warn("WARN: "+ s);
 	}
 	Logger::~Logger(void){
 	

@@ -1,14 +1,24 @@
 #include "implservermethod.h"
 
 namespace serpents{
-	void XmlRPC_CMethod::execute(xmlrpc_c::paramList const& paramList,
+	void XmlRPC_CMethod::execute(xmlrpc_c::paramList const& paramList, //execute
 		xmlrpc_c::value *   const  retvalP) {
+		mtx.lock();
 		serpents::ParameterContainer pc;
-		fillParameterContainer(pc, paramList);
-		XMLRPC_CRetValue rv;
-		method->execute(&pc, &rv); //execute
-		*retvalP = *(rv.getValue());
-#ifdef USE_LOG4CPP
+		try{			
+			fillParameterContainer(pc, paramList);
+			XMLRPC_CRetValue rv;
+			method->execute(&pc, &rv); //execute
+			*retvalP = *(rv.getValue());
+		}catch (std::exception& e){
+#ifdef USE_LOG4CPP //logging starts
+			Logger::getInstance().info(std::string("In method ") + method->getName());
+			Logger::getInstance().error(e.what());
+#endif //logging ends; 
+		}
+		
+
+#ifdef USE_LOG4CPP //logging starts
 		Logger::getInstance().info(std::string("In method ") + method->getName());
 		std::stringstream ss;
 		ss << "	Input parameter: ";
@@ -34,7 +44,8 @@ namespace serpents{
 			break;
 		}
 		Logger::getInstance().info(ss.str());
-#endif
+		mtx.unlock();
+#endif //logging ends; 
 
 	}
 	void XmlRPC_CMethod::fillParameterContainer(serpents::ParameterContainer& pc, const xmlrpc_c::paramList& paramList){
@@ -72,13 +83,21 @@ namespace serpents{
 			this->method = method;
 	}
 	void XMLRPC_Method::execute(XmlRpc::XmlRpcValue& params, XmlRpc::XmlRpcValue& result){
-
+		mtx.lock();
 		serpents::ParameterContainer pc;
 		XMLRPC_CPPRetValue rv;
 		fillParameterContainer(pc, params);
-		method->execute(&pc, &rv);
-		result = rv.getValue();
-#ifdef USE_LOG4CPP
+		try{
+			method->execute(&pc, &rv);
+			result = rv.getValue();
+		}catch (std::exception& e){
+
+#ifdef USE_LOG4CPP // start logging 
+			Logger::getInstance().error("In method "+method->getName()+" "+ e.what());
+#endif // end logging 
+		}
+		mtx.unlock();
+#ifdef USE_LOG4CPP // start logging 
 		Logger::getInstance().info(std::string("In method ") + method->getName());
 		std::stringstream ss;
 		ss << "	Input parameter: ";
@@ -101,7 +120,7 @@ namespace serpents{
 		case  XmlRpc::XmlRpcValue::Type::TypeString:ss << (static_cast<std::string>(result));  break;
 		}
 		Logger::getInstance().info(ss.str());
-#endif
+#endif  // end logging 
 
 	}
 	void XMLRPC_Method::fillParameterContainer(serpents::ParameterContainer& pc, XmlRpc::XmlRpcValue& params){

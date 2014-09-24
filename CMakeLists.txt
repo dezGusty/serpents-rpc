@@ -21,7 +21,7 @@ project(serpents-rpc)
 # Also load the CMakeLists file in sub-folders.
 #
 if (SERPENTS_RPC_BUILD_CORE)
-  add_subdirectory(serpents-src)
+  add_subdirectory(serpents-rpc)
 endif ()
 
 

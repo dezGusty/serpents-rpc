@@ -23,6 +23,8 @@ void XMLRPC_CRetValue::setValue(std::string s){
 	Impl_->value = new xmlrpc_c::value_string(s);
 }
 xmlrpc_c::value* XMLRPC_CRetValue::getValue(){
+	if (Impl_->value == nullptr)
+		throw(std::exception("no return value"));
 	return Impl_->value;
 }
 
@@ -47,5 +49,7 @@ void XMLRPC_CPPRetValue::setValue(std::string s){
 	Impl_->value = XmlRpc::XmlRpcValue(s);
 }
 XmlRpc::XmlRpcValue XMLRPC_CPPRetValue::getValue(){
+	if (!Impl_->value)
+		throw(std::exception("no return value"));
 	return Impl_->value;
 }
