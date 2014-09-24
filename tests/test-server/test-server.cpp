@@ -6,7 +6,7 @@
 #include "RPCSelector.h"
 #include <fstream>
 #include <random>
-
+#include <thread>
 serpents::ParameterContainer* internalContainer;
 
 class GenerateRandomString: public  serpents::Method {
@@ -24,7 +24,6 @@ class GenerateRandomString: public  serpents::Method {
 		fillWithRandomChars(&result, 4);
 		fillWithRandomChars(&result, 4);
 		fillWithRandomChars(&result, 12);
-		std::cout << result << std::endl;
 		rv->setValue(result);
 	}
 
@@ -52,7 +51,6 @@ class RPCMethod :public  serpents::Method{
 		setName("fileLookUp");
 	}
 	void execute(serpents::ParameterContainer* parameters, RetValue* rv){
-		std::cout << "File requested " << parameters->getString(0) << std::endl;
 		std::string filePath(parameters->getString(0));
 		std::ifstream file(filePath);
 		if (file.good()){
@@ -139,6 +137,23 @@ public:
 
 };
 
+
+class JustSleep: public serpents::Method{
+public:
+	JustSleep(){
+		setSignature(std::string("i:"));
+		setHelp(std::string("sleeps for i ammount of ttime * 1000"));
+		setName("sleep");
+	}
+	
+	void execute(serpents::ParameterContainer* parameters, RetValue* rv){
+		int i = parameters->getInt(0);
+		std::chrono::milliseconds dura(i * 1000);
+		std::this_thread::sleep_for(dura);
+		rv->setValue(true);
+	}
+};
+
 void main(){
 	internalContainer = new serpents::ParameterContainer();
 	serpents::Server server;
@@ -150,14 +165,16 @@ void main(){
 	PushInternalValue* push = new PushInternalValue();
 	PopInternalValue* pop = new PopInternalValue();
 	GenerateRandomString* gen = new GenerateRandomString();
-	
+	JustSleep* js = new JustSleep();
 	serpents::FunctionRepository fr;
-	fr.addMethod("fileLookUp", rpc);
-	fr.addMethod("sum", rpc2);
-	fr.addMethod("getMean", getmean);
-	fr.addMethod("pop",pop);
-	fr.addMethod("push", push);
-	fr.addMethod("generateUUID", gen);
+	
+	fr.addMethod(rpc);
+	fr.addMethod(rpc2);
+	fr.addMethod(getmean);
+	fr.addMethod(pop);
+	fr.addMethod(push);
+	fr.addMethod(gen);
+	fr.addMethod(js);
 	
 	server.setRepository(fr);
 	serpents::RPCSelector rpcselect;
@@ -169,4 +186,3 @@ void main(){
 	
 
 }
-

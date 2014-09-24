@@ -18,8 +18,14 @@ namespace serpents{
 			return m;
 		}
 	}
-	void FunctionRepository::addMethod(const std::string& name, Method* method){
-		Impl_->methodContainer.insert(std::pair<std::string, Method*>(name, method));
+	void FunctionRepository::addMethod(Method* method){
+		std::string name = method->getName();
+		if (!name.empty()){
+			Impl_->methodContainer.insert(std::pair<std::string, Method*>(name, method));
+		}
+		else{
+			throw(std::exception("no name found for method"));
+		}
 	}
 	Method::~Method(){
 		delete Impl_;
@@ -72,7 +78,7 @@ namespace serpents{
 		for each (auto var in fr.Impl_->methodContainer)
 		{
 			this->Impl_ = new Impl;
-			Impl_->methodContainer.insert(std::pair<std::string, Method*>(var.first, var.second));
+			this->Impl_->methodContainer.insert(std::pair<std::string, Method*>(var.first,&(*var.second)));
 		}
 	}
 	FunctionRepository::~FunctionRepository(){
