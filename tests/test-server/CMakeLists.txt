@@ -1,5 +1,5 @@
 include_directories("${PROJECT_SOURCE_DIR}/include/")
-include_directories("${PROJECT_SOURCE_DIR}/serpents-src/")
+include_directories("${PROJECT_SOURCE_DIR}/serpents-rpc/")
 
 link_directories("${PROJECT_SOURCE_DIR}/bin/release")
 
