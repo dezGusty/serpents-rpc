@@ -20,7 +20,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 # Also load the CMakeLists file in sub-folders.
 #
 if (SERPENTS_RPC_BUILD_CORE)
-  add_subdirectory(serpents-src)
+  add_subdirectory(serpents-rpc)
 endif ()
 
 
