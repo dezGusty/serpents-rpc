@@ -1,5 +1,61 @@
-include_directories("${PROJECT_SOURCE_DIR}/include/")
+#------------------------------------------------------------------------------
+# This file is part of the CMake build system for the serpents-rpc library.
+# The serpents-rpc library is distributed under the terms of the MIT software
+# license.
+#------------------------------------------------------------------------------
+# The MIT License (MIT)
+#
+# Copyright (c) 2014 - The serpents-rpc Team
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
+CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
+SET (SERPENTS_RPC_PROJECT_NAME serpents-rpc)
+
+# Set the project to use: the rpc DLL.
+PROJECT (${SERPENTS_RPC_PROJECT_NAME})
+
+# Set the include paths for the CMake scripts that will be used to find other libs.
+# Add the project's CMake directories first, so they take precedence over the default CMake files.
+SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMake/;${CMAKE_ROOT}/Modules;${CMAKE_MODULE_PATH}")
+SET(SERPENTS_RPC_LIB_TYPE SHARED)
+
+
+MESSAGE(STATUS "")
+MESSAGE(STATUS "### Welcome to the serpents-rpc build system ###")
+MESSAGE(STATUS "************************************************")
+MESSAGE(STATUS "")
+
+# 
+# Specify some user configurable options
+# 
+OPTION(SERPENTS_RPC_BUILD_TESTS "Specify whether to build the tests (via the google test framework) or not." ON)
+
+IF (${SERPENTS_RPC_BUILD_TESTS})
+
+  # Search for the Google Test framework.
+  ENABLE_TESTING()
+  FIND_PACKAGE(GTestLocal REQUIRED)
+  INCLUDE_DIRECTORIES(${GTEST_INCLUDE_DIRS})
+
+ENDIF ()
+
+
+INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/include/")
 
 link_directories("${PROJECT_SOURCE_DIR}/bin/release")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
@@ -9,12 +65,16 @@ file (GLOB SERPENTS-SRC
 	"*.h"
 	"*.cpp")
 
+# For MS Visual Studio, group the files in various folders.
+# TODO
 source_group("" FILES ${SERPENTS-SRC})
 
 
 add_library(serpents SHARED ${SERPENTS-SRC})
 
-target_link_libraries(serpents Ws2_32.lib odbc32.lib odbccp32.lib xmlrpc.lib libxmlrpc++.lib)
+# Set the link dependencies.
+# Note: This should be done for the test projects.
+#target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} Ws2_32.lib odbc32.lib odbccp32.lib xmlrpc.lib libxmlrpc++.lib)
 
 add_definitions(-DSERPENTSRPC_EXPORTS)
 
