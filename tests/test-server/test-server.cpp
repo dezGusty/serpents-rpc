@@ -1,12 +1,13 @@
+//serpents libs
+#include "serpents/rpc/server/repository.h"
+#include "serpents/rpc/server/server.h"
+#include "serpents/rpc/server/RPCSelector.h"
 
-#include "catch.hpp"
-#include "repository.h"
-#include <iostream>
-#include "server.h"
-#include "RPCSelector.h"
+//c++ system libs
 #include <fstream>
 #include <random>
 #include <thread>
+#include <iostream>
 serpents::ParameterContainer* internalContainer;
 
 class GenerateRandomString: public  serpents::Method {

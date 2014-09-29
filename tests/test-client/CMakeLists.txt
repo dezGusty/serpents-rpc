@@ -1,9 +1,10 @@
-include_directories("${PROJECT_SOURCE_DIR}/include/")
+project(test-client)
+include_directories("${CMAKE_SOURCE_DIR}/include/")
 
-link_directories("${PROJECT_SOURCE_DIR}/bin/release")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+link_directories("${CMAKE_SOURCE_DIR}/bin/release")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 
 file (GLOB SERPENTS-TEST-CLIENT
 	"*.h"
