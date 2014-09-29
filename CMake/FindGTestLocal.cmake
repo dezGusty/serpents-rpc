@@ -52,13 +52,13 @@ IF (NOT GTest_STATIC)
   FIND_FILE (GTest_BINARY_REL 
       NAMES "gtest.dll" 
       HINTS ${GTest_SEARCH_PATH}
-      PATH_SUFFIXES "" Release relwithdebinfo minsizerel
+      PATH_SUFFIXES "" lib libs bin build/lib build/Release Release relwithdebinfo minsizerel
   )
         
   FIND_FILE (GTest_BINARY_DBG 
       NAMES "gtest.dll" "gtestd.dll" 
       HINTS ${GTest_SEARCH_PATH}
-      PATH_SUFFIXES "" debug
+      PATH_SUFFIXES "" lib libs bin build/lib build/Debug debug
   )
 ENDIF ()
 

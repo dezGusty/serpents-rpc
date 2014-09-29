@@ -1,0 +1,98 @@
+
+Coding guidelines:
+------------------
+- remove catch lib.
+- use space, not tabs (indentation: 2 chars); 
+- google code style, with MINOR ADAPTATIONS: (http://google-styleguide.googlecode.com/svn/trunk/cppguide.html)
+  - allman bracket style:
+    E.g.
+    void MyFunction()
+    {
+    }
+    
+    Instead of:
+    void MyFunction(){
+    }  
+  - you are ALLOWED to use the line length: 120 chars.
+  - you are ALLOWED to use the #pragma once syntax
+  - use "cpp", "h" extensions under normal circumstances. use "hpp" extension for headers that also contain both 
+    the definition and the implementation 
+  - prefer using the C++11 notation where possible.
+
+Struturing the repository
+-------------------------
+- Use CMake to build the projects
+  - the BUILD output for the CMake executable should be placed in a SEPARATE DIRECTORY (recommended: a subdirectory
+    named [build] inside the checked out repository).
+- Allow the user to define the development environment variables.
+- The environment variable GTEST_ROOT should be defined for accessing the google test framework.
+  - E.g. If the env.var is set to: GTEST_ROOT=c:\code\gtest-1.7.0, then the following file will be found on the disk:
+      c:\code\gtest-1.7.0\include\gtest\gtest.h
+
+- dependencies folder is meant to be used as a folder where the user can COPY pre-built dependencies
+  - pre-build dependencies (E.g. google test framework, xmlrpc++, etc) shall be provided separately to facilitate development.
+- dependencies can contain:
+  - header files, static & dynamic libs for the used 3rd party libraries.
+- NOTE: dependencies will be delivered LATER ON.
+
+- Each component/sub-component shall be placed in its own directory and own namespace
+    E.g. 
+    [serpents]
+      [rpc]
+      [launcher]
+    
+    namespace serpents
+    {
+      namespace rpc
+      {
+        class ...
+      }
+    }
+
+Adapting files
+--------------
+Files that will need to have definitions or other adaptations based on what the user selects in the CMake UI (E.g. 
+the version number) should have the ".in" extension (E.g. version.h.in) and contain placeholders. Based on them, the 
+regular files should be created (E.g. version.h) by replacing the placeholders.
+
+
+(Older info)
+-------------
+Proiecte:
+1. serpents-rpc
+  Dll cu interfata de implementat de catre alte module.
+  Nu stie sa faca nimic efectiv fara module. E legat la build/config time de module.
+    (Ex: va sti ca are de incarcat 1, 2, 3 module; daca vreun modul nu se incarca: nu merge nimic, chiar daca nu e folosit)
+     
+  De implementat principii:
+    - repository de functii
+    - parametri 
+    - definitii de functii
+    - start/stop server.
+    
+2. serpents-rpc-xmlrpc
+  Un modul Dll cu o implementare de provider, care foloseste xml-rpc-c (lower-level).
+  Userii (de genul celor din "testapp") nu vor avea acces la implementarea interna.
+  De vazut: 
+    - modul in care CEGUI isi implementeaza parseri XML.
+    - Opaque pointer (pImpl idiom).
+   
+3. testapp-svr
+  Aplicatie de test - server (bazat pe XML-RPC-C)
+  Pune la dispozitie o aplicatie bazata pe un server xml-rpc, care are mai multe functii:
+  a) fc. "bool doesFileExist(string fileName)" => returneaza true (bool) daca fisierul exista, false in caz contrar.
+  b) fc. "void pushInternalValue(string internalValue)"   =>
+  c) fc. "string popInternalValue()"                     => functii complementare care seteaza/obtin o variabila interna de pe server.
+  d) fc. "string getRandomToken()" => obtine un string random, intr-un format de genul UUID. (http://en.wikipedia.org/wiki/Universally_unique_identifier).
+  e) fc. "float getMean(int value1, float weight1, int value2, float weight2)" => obtine o medie ponderata a value1, value2 cu ponderile weight1 si weight2.
+
+4. testapp-cln
+  Aplicatie de test - client (bazat pe XML-RPC-C)
+  O aplicatie console mode care apeleaza functiile serverului.
+
+
+Miscellaneous
+~~~~~~~~~~~~~
+Pentru mai tarziu, dupa ce e ceva functional: 
+De folosit CMake pentru configurarea proiectului (in ceea ce priveste ce se pune pe repository-ul de git)
+repo address: https://github.com/dezGusty/serpents-rpc
