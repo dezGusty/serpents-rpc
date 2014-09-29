@@ -54,23 +54,86 @@ IF (${SERPENTS_RPC_BUILD_TESTS})
 
 ENDIF ()
 
+include_directories("${CMAKE_SOURCE_DIR}/dependencies/")
 
-INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}/include/")
+link_directories("${CMAKE_SOURCE_DIR}/dependencies/bin/release")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
 
-link_directories("${PROJECT_SOURCE_DIR}/bin/release")
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-file (GLOB SERPENTS-SRC
-	"*.h"
-	"*.cpp")
+SET ( SOURCE_FILES_SERVER
+  "./serpents/rpc/server/server.h"
+  "./serpents/rpc/server/server.cpp"
+  "./serpents/rpc/server/implservermethod.h"
+  "./serpents/rpc/server/implservermethod.cpp"
+  "./serpents/rpc/server/repository.h"
+  "./serpents/rpc/server/repository.cpp"
+  "./serpents/rpc/server/rpcselector.h"
+  "./serpents/rpc/server/rpcselector.cpp"
+  "./serpents/rpc/server/serveroptions.h"
+  "./serpents/rpc/server/serveroptions.cpp"
+  "./serpents/rpc/server/serverstartup.h"
+  "./serpents/rpc/server/serverstartup.cpp"
+)
 
+<<<<<<< HEAD
 # For MS Visual Studio, group the files in various folders.
 # TODO
 source_group("" FILES ${SERPENTS-SRC})
+=======
+SET (SOURCE_FILES_LAUNCHER
+  "./serpents/rpc/launcher/processrunner.h"
+  "./serpents/rpc/launcher/processrunner.cpp"
+)
+SET (SOURCE_FILES_LOG
+  "./serpents/rpc/log/log.h"
+  "./serpents/rpc/log/log.cpp"
+)
+SET (SOURCE_FILES_PARAMETERS
+ "./serpents/rpc/parameters/parametercontainer.h"
+ "./serpents/rpc/parameters/parametercontainer.cpp"
+ "./serpents/rpc/parameters/retvalue.h"
+ "./serpents/rpc/parameters/retvalue.cpp"
+ )
+>>>>>>> 9eef07b4679f1ea68cfb8a52bff0cde5fbfbb50b
+
+SET (SOURCE_FILES_BASE
+ "./serpents/rpc/base.h"
+)
+SET (SOURCE_FILES
+  ${SOURCE_FILES_BASE}
+  ${SOURCE_FILES_PARAMETERS}
+  ${SOURCE_FILES_SERVER}
+  ${SOURCE_FILES_LAUNCHER}
+  ${SOURCE_FILES_LOG}
+ 
+)
+
+#visual studio
+SOURCE_GROUP("serpents\\rpc" FILES
+  ${SOURCE_FILES_BASE}
+)
+
+SOURCE_GROUP("serpents\\rpc\\server\\" FILES
+  ${SOURCE_FILES_SERVER}
+)
+
+SOURCE_GROUP("serpents\\rpc\\launcher\\" FILES
+  ${SOURCE_FILES_LAUNCHER}
+)
+
+SOURCE_GROUP("serpents\\rpc\\log" FILES
+  ${SOURCE_FILES_LOG}
+)
+SOURCE_GROUP("serpents\\rpc\\parameters" FILES
+  ${SOURCE_FILES_PARAMETERS}
+)
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+source_group("" FILES ${SOURCE_FILES})
 
 
-add_library(serpents SHARED ${SERPENTS-SRC})
+add_library(serpents SHARED ${SOURCE_FILES})
 
 # Set the link dependencies.
 # Note: This should be done for the test projects.
@@ -88,4 +151,3 @@ install (TARGETS serpents
 		LIBRARY DESTINATION lib
 		COMPONENT library
 		)
-		
