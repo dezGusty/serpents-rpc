@@ -7,8 +7,8 @@
 # Created by Augustin Preda. Adapted from the [FindALUT.cmake] module (by Eric Wing).
 # 
 
-INCLUDE(FindPackageHandleStandardArgs)
-INCLUDE(HandleLibraryTypes)
+#INCLUDE(FindPackageHandleStandardArgs) 
+INCLUDE(${CMAKE_SOURCE_DIR}/CMake/HandleLibraryTypes.cmake)
 
 # Set the paths to search for as possible locations of the library.
 SET (GTest_SEARCH_PATH ${PROJECT_SOURCE_DIR}/dependencies/gtest-1.7.0 
@@ -63,10 +63,10 @@ IF (NOT GTest_STATIC)
 ENDIF ()
 
 # Handle the REQUIRED argument and set GTest_FOUND
-FIND_PACKAGE_HANDLE_STANDARD_ARGS(GTest DEFAULT_MSG
-    GTest_LIBRARY_OPTIMIZED
-    GTest_INCLUDE_DIR
-)
+#FIND_PACKAGE_HANDLE_STANDARD_ARGS(GTest DEFAULT_MSG
+#    GTest_LIBRARY_OPTIMIZED
+  #  GTest_INCLUDE_DIR
+#)
 
 # Collect optimized and debug libraries
 HANDLE_LIBRARY_TYPES(GTest)
