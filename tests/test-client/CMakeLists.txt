@@ -1,7 +1,12 @@
 project(test-client)
-include_directories("${CMAKE_SOURCE_DIR}/dependencies/")
+include_directories("${CMAKE_SOURCE_DIR}/dependencies/" )
+include(${CMAKE_SOURCE_DIR}/CMake/FindGTestLocal.cmake)
 
 link_directories("${CMAKE_SOURCE_DIR}/dependencies/bin/release")
+link_directories("${GTest_INCLUDE_DIR}/../build/")
+
+
+include_directories("${GTest_INCLUDE_DIR}")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
@@ -24,4 +29,5 @@ target_link_libraries(testclient Ws2_32.lib odbc32.lib odbccp32.lib xmlrpc.lib l
 #		COMPONENT library
 #		)
 		
+
 
