@@ -26,6 +26,11 @@
 # Configure Components build
 cmake_minimum_required(VERSION 3.0)
 
+# Set the solution name to use
+PROJECT (serpents-rpc)
+
+SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMake/;${CMAKE_ROOT}/Modules;${CMAKE_MODULE_PATH}")
+
 # 
 # Specify some user configurable options
 # 

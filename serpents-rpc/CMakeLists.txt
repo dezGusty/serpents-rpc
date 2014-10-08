@@ -27,11 +27,12 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.0)
 SET (SERPENTS_RPC_PROJECT_NAME serpents-rpc)
 
 # Set the project to use: the rpc DLL.
-PROJECT (${SERPENTS_RPC_PROJECT_NAME})
+# PROJECT (${SERPENTS_RPC_PROJECT_NAME})
 
 # Set the include paths for the CMake scripts that will be used to find other libs.
 # Add the project's CMake directories first, so they take precedence over the default CMake files.
-SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMake/;${CMAKE_ROOT}/Modules;${CMAKE_MODULE_PATH}")
+SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMake/;${PROJECT_SOURCE_DIR}/CMake/;${CMAKE_ROOT}/Modules;${CMAKE_MODULE_PATH}")
+MESSAGE(STATUS "CMAKE_MODULE_PATH is ${CMAKE_MODULE_PATH}")
 SET(SERPENTS_RPC_LIB_TYPE SHARED)
 
 
@@ -76,11 +77,6 @@ SET ( SOURCE_FILES_SERVER
   "./serpents/rpc/server/serverstartup.cpp"
 )
 
-<<<<<<< HEAD
-# For MS Visual Studio, group the files in various folders.
-# TODO
-source_group("" FILES ${SERPENTS-SRC})
-=======
 SET (SOURCE_FILES_LAUNCHER
   "./serpents/rpc/launcher/processrunner.h"
   "./serpents/rpc/launcher/processrunner.cpp"
@@ -95,7 +91,6 @@ SET (SOURCE_FILES_PARAMETERS
  "./serpents/rpc/parameters/retvalue.h"
  "./serpents/rpc/parameters/retvalue.cpp"
  )
->>>>>>> 9eef07b4679f1ea68cfb8a52bff0cde5fbfbb50b
 
 SET (SOURCE_FILES_BASE
  "./serpents/rpc/base.h"
@@ -133,7 +128,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 source_group("" FILES ${SOURCE_FILES})
 
 
-add_library(serpents SHARED ${SOURCE_FILES})
+add_library(${SERPENTS_RPC_PROJECT_NAME} SHARED ${SOURCE_FILES})
 
 # Set the link dependencies.
 # Note: This should be done for the test projects.
@@ -143,10 +138,10 @@ add_definitions(-DSERPENTSRPC_EXPORTS)
 
 if (SERPENTS_RPC_USELOG4CPP)
 	link_directories("${PROJECT_SOURCE_DIR}/bin/release/log4cpp")
-  target_link_libraries(serpents log4cpp.lib)
+  target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} log4cpp.lib)
   add_definitions(-DUSE_LOG4CPP)
 endif ()
-install (TARGETS serpents
+install (TARGETS ${SERPENTS_RPC_PROJECT_NAME}
 		ARCHIVE DESTINATION lib
 		LIBRARY DESTINATION lib
 		COMPONENT library
