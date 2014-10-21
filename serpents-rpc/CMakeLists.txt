@@ -132,7 +132,13 @@ add_library(${SERPENTS_RPC_PROJECT_NAME} SHARED ${SOURCE_FILES})
 
 # Set the link dependencies.
 # Note: This should be done for the test projects.
-#target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} Ws2_32.lib odbc32.lib odbccp32.lib xmlrpc.lib libxmlrpc++.lib)
+
+FIND_PACKAGE(XMLRPC_C_Locall)
+FIND_PACKAGE(XMLRPCpp_Local)
+FIND_PACKAGE(LOG4CPP_Local)
+
+target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} Ws2_32.lib odbc32.lib odbccp32.lib ${XMLLIB_XMLRPC_C_LIBRARY} ${XMLLIB_XMLRPCpp_LIBRARY}  
+																					${LOG4CPP_LIBRARY})
 
 add_definitions(-DSERPENTSRPC_EXPORTS)
 
