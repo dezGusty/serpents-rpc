@@ -25,7 +25,7 @@ if (SERPENTS_RPC_BUILD_CORE)
 endif ()
 
 if (SERPENTS_RPC_BUILD_SSL_SERVER )
-  add_subdirectory(serpents-ssl-server)
+  add_subdirectory(serpents-ssl)
 endif ()
 
 if (SERPENTS_RPC_BUILD_UNIT_TESTS)
