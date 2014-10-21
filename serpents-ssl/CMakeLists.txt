@@ -1,4 +1,4 @@
-
+SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMake/;${PROJECT_SOURCE_DIR}/CMake/;${CMAKE_ROOT}/Modules;${CMAKE_MODULE_PATH}")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
@@ -78,7 +78,7 @@ SOURCE_GROUP("serpents\\ssl-server\\pugixml\\" FILES
 
 
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${PugiXML_BASE})
 
 source_group("" FILES ${SOURCE_FILES})
@@ -87,8 +87,14 @@ add_library(serpents_ssl SHARED ${SOURCE_FILES})
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${OPENSSL_INCLUDE_DIR} )
 
-add_definitions(/D _WIN32_WINNT=0x0501 -D_SCL_SECURE_NO_WARNINGS )
+add_definitions(/D _WIN32_WINNT=0x0501 -D_SCL_SECURE_NO_WARNINGS -DSSL_SERVER_EXPORT)
 target_link_libraries(serpents_ssl Ws2_32.lib odbc32.lib odbccp32.lib  ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
+
+if (SERPENTS_RPC_USELOG4CPP)
+ FIND_PACKAGE(LOG4CPP_Local)
+  target_link_libraries(serpents_ssl ${LOG4CPP_LIBRARY})
+  add_definitions(-DUSE_LOG4CPP)
+endif ()
 
 
 
