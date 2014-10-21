@@ -5,45 +5,68 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
 
 find_package(Boost 1.36.0 COMPONENTS system date_time regex REQUIRED)
 find_package(OpenSSL REQUIRED)
+set(PugiXML_BASE)
+
 include_directories(${Boost_INCLUDE_DIR} ${OPENSSL_INCLUDE_DIR})
-SET (SOURCE_FILES_INCLUDE
- "${CMAKE_CURRENT_SOURCE_DIR}/include/base.h"
- "${CMAKE_CURRENT_SOURCE_DIR}/include/server/coroutine.hpp"
- "${CMAKE_CURRENT_SOURCE_DIR}/include/server/header.hpp"
- "${CMAKE_CURRENT_SOURCE_DIR}/include/server/mime_types.hpp"
- "${CMAKE_CURRENT_SOURCE_DIR}/include/parametercontainer/parametercontainer.h"
- "${CMAKE_CURRENT_SOURCE_DIR}/include/server/reply.hpp"
- "${CMAKE_CURRENT_SOURCE_DIR}/include/server/request.hpp"
- "${CMAKE_CURRENT_SOURCE_DIR}/include/server/request_parser.hpp"
- "${CMAKE_CURRENT_SOURCE_DIR}/include/server/requesthandler.h"
- "${CMAKE_CURRENT_SOURCE_DIR}/include/server/server.hpp"
- "${CMAKE_CURRENT_SOURCE_DIR}/include/server/serverfunctionrepository.h"
- "${CMAKE_CURRENT_SOURCE_DIR}/include/server/session.hpp"
- "${CMAKE_CURRENT_SOURCE_DIR}/include/server/unyield.hpp"
- "${CMAKE_CURRENT_SOURCE_DIR}/include/server/yield.hpp"
- "${PugiXML_BASE}/src/pugixml.hpp"
+SET (SOURCE_FILES_SERVER
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/coroutine.hpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/header.hpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/mime_types.hpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/reply.hpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/request.hpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/request_parser.hpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/requesthandler.h"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/server.hpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/serverfunctionrepository.h"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/session.hpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/unyield.hpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/yield.hpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/mime_types.cpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/reply.cpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/request_parser.cpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/requesthandler.cpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/server.cpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/serverfunctionrepository.cpp"
  
 )
-set(PugiXML_BASE)
-SET (SOURCE_FILES_BASE
- "server/mime_types.cpp"
- "parametercontainer/parametercontainer.cpp"
- "server/reply.cpp"
- "server/request_parser.cpp"
- "server/requesthandler.cpp"
- "server/server.cpp"
- "server/serverfunctionrepository.cpp"
+SET(SOURCE_FILES_PARAMETER 
+	"${CMAKE_CURRENT_SOURCE_DIR}/parametercontainer/parametercontainer.h"
+	"${CMAKE_CURRENT_SOURCE_DIR}/parametercontainer/parametercontainer.cpp"
+	)
+
+SET (SOURCE_FILES_BASE "${CMAKE_CURRENT_SOURCE_DIR}/base.h")
+
+SET(SOURCE_FILES_PUGIXML 
  "${PugiXML_BASE}/src/pugixml.cpp"
  "${PugiXML_BASE}/src/pugiconfig.hpp"
-)
+ "${PugiXML_BASE}/src/pugixml.hpp"
+	)
 
 
 SET (SOURCE_FILES
   ${SOURCE_FILES_BASE}
-  ${SOURCE_FILES_INCLUDE}
+  ${SOURCE_FILES_SERVER}
+  ${SOURCE_FILES_PARAMETER}
+  ${SOURCE_FILES_PUGIXML}
   
 )
 
+#visual studio 
+
+SOURCE_GROUP("serpents\\ssl-server" FILES
+  ${SOURCE_FILES_BASE}
+)
+
+SOURCE_GROUP("serpents\\ssl-server\\server\\" FILES
+  ${SOURCE_FILES_SERVER}
+)
+
+SOURCE_GROUP("serpents\\ssl-server\\parameter\\" FILES
+  ${SOURCE_FILES_PARAMETER}
+)
+SOURCE_GROUP("serpents\\ssl-server\\pugixml\\" FILES
+  ${SOURCE_FILES_PUGIXML}
+)
 
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
