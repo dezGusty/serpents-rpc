@@ -1,11 +1,16 @@
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
 
 find_package(Boost 1.36.0 COMPONENTS system date_time regex REQUIRED)
 find_package(OpenSSL REQUIRED)
-set(PugiXML_BASE)
+
+
+find_path(PugiXML_BASE pugixml.hpp
+	PATHS ${PROJECT_SOURCE_DIR}
+	 PATH_SUFFIXES dependencies/pugixml
+	)
 
 include_directories(${Boost_INCLUDE_DIR} ${OPENSSL_INCLUDE_DIR})
 SET (SOURCE_FILES_SERVER
@@ -37,9 +42,9 @@ SET(SOURCE_FILES_PARAMETER
 SET (SOURCE_FILES_BASE "${CMAKE_CURRENT_SOURCE_DIR}/base.h")
 
 SET(SOURCE_FILES_PUGIXML 
- "${PugiXML_BASE}/src/pugixml.cpp"
- "${PugiXML_BASE}/src/pugiconfig.hpp"
- "${PugiXML_BASE}/src/pugixml.hpp"
+ "${PugiXML_BASE}/pugixml.cpp"
+ "${PugiXML_BASE}/pugiconfig.hpp"
+ "${PugiXML_BASE}/pugixml.hpp"
 	)
 
 
@@ -63,14 +68,19 @@ SOURCE_GROUP("serpents\\ssl-server\\server\\" FILES
 
 SOURCE_GROUP("serpents\\ssl-server\\parameter\\" FILES
   ${SOURCE_FILES_PARAMETER}
+  ${SOURCE_FILES_PARAMETER}
+  ${SOURCE_FILES_PARAMETER}
 )
 SOURCE_GROUP("serpents\\ssl-server\\pugixml\\" FILES
   ${SOURCE_FILES_PUGIXML}
 )
 
 
+
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-include_directories(${PugiXML_BASE}/src/)
+include_directories(${PugiXML_BASE})
+
 source_group("" FILES ${SOURCE_FILES})
 
 add_library(serpents_ssl SHARED ${SOURCE_FILES})
