@@ -15,7 +15,6 @@ SET (GTest_SEARCH_PATH ${PROJECT_SOURCE_DIR}/dependencies/gtest-1.7.0
         ${PROJECT_SOURCE_DIR}/../dependencies/gtest-1.6.0
         ${PROJECT_SOURCE_DIR}/../dependencies/gtest
         $ENV{GTEST_ROOT})
-        
 FIND_PATH(GTest_INCLUDE_DIR gtest/gtest.h
   PATHS  ${GTest_SEARCH_PATH}
   PATH_SUFFIXES include 
