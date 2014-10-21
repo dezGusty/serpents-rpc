@@ -1,3 +1,4 @@
+SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMake/;${PROJECT_SOURCE_DIR}/CMake/;${CMAKE_ROOT}/Modules;${CMAKE_MODULE_PATH}")
 project(test-client)
 include_directories("${CMAKE_SOURCE_DIR}/dependencies/" )
 include(${CMAKE_SOURCE_DIR}/CMake/FindGTestLocal.cmake)
@@ -17,10 +18,12 @@ file (GLOB SERPENTS-TEST-CLIENT
 
 source_group("Test-Client" FILES ${SERPENTS-TEST-CLIENT})
 
-
+FIND_PACKAGE(XMLRPC_C_Locall)
+FIND_PACKAGE(XMLRPCpp_Local)
+FIND_PACKAGE(GTestLocal)
 
 add_executable (testclient test-client.cpp)
-target_link_libraries(testclient Ws2_32.lib odbc32.lib odbccp32.lib xmlrpc.lib libxmlrpc++.lib gtest.lib)
+target_link_libraries(testclient Ws2_32.lib odbc32.lib odbccp32.lib ${XMLLIB_XMLRPC_C_LIBRARY} ${XMLLIB_XMLRPCpp_LIBRARY} ${GTest_LIBRARY})
 
 #add_definitions(-DSERPENTSRPC_EXPORTS)
 #install (TARGETS serpents
