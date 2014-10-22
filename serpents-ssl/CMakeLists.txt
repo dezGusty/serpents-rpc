@@ -32,7 +32,7 @@ SET (SOURCE_FILES_SERVER
  "${CMAKE_CURRENT_SOURCE_DIR}/server/requesthandler.cpp"
  "${CMAKE_CURRENT_SOURCE_DIR}/server/server.cpp"
  "${CMAKE_CURRENT_SOURCE_DIR}/server/serverfunctionrepository.cpp"
- 
+
 )
 SET(SOURCE_FILES_PARAMETER 
 	"${CMAKE_CURRENT_SOURCE_DIR}/parametercontainer/parametercontainer.h"
@@ -47,13 +47,16 @@ SET(SOURCE_FILES_PUGIXML
  "${PugiXML_BASE}/pugixml.hpp"
 	)
 
-
+SET(SOURCE_FILES_EXT
+	"${PROJECT_SOURCE_DIR}/serpents-rpc/serpents/rpc/log/log.h"
+	"${PROJECT_SOURCE_DIR}/serpents-rpc/serpents/rpc/log/log.cpp"
+)
 SET (SOURCE_FILES
   ${SOURCE_FILES_BASE}
   ${SOURCE_FILES_SERVER}
   ${SOURCE_FILES_PARAMETER}
   ${SOURCE_FILES_PUGIXML}
-  
+  ${SOURCE_FILES_EXT}
 )
 
 #visual studio 
@@ -73,6 +76,9 @@ SOURCE_GROUP("serpents\\ssl-server\\parameter\\" FILES
 )
 SOURCE_GROUP("serpents\\ssl-server\\pugixml\\" FILES
   ${SOURCE_FILES_PUGIXML}
+)
+SOURCE_GROUP("serpents\\ssl-server\\ext\\log" FILES
+  ${SOURCE_FILES_EXT}
 )
 
 
