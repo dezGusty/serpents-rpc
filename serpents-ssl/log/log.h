@@ -1,12 +1,13 @@
 #ifndef SSL_SERVER_LOG_H_
 #define SSL_SERVER_LOG_H_
 #pragma once
+#include "base.h"
 #include <sstream>
 
 // log4cpp
 
 #if USE_LOG4CPP ==1
-#include "log4cpp\Category.hh"
+#include "log4cpp/Category.hh"
 #include "log4cpp/Appender.hh"
 #include "log4cpp/FileAppender.hh"
 #include "log4cpp/OstreamAppender.hh"
@@ -15,9 +16,10 @@
 #include "log4cpp/PatternLayout.hh"
 #include "log4cpp/Priority.hh"
 
+
 namespace serpents{
 	namespace log{
-		class SSL_Server_Logger{
+		class SSL_SERVER_API SSL_Server_Logger{
 		public:
 			static SSL_Server_Logger& getInstance()
 			{
@@ -64,14 +66,14 @@ namespace serpents{
 
 #if USE_LOG4CPP ==1
 
-		void LOG_INFO_(const char* argFile,
+		SSL_SERVER_API void LOG_INFO_(const char* argFile,
 			int argLineNb,
 			const char* argFunction,
 			std::stringstream& argString)
 		{
 			SSL_Server_Logger::getInstance().info(std::string(argFile));
 		}
-		void LOG_WARN_(const char* argFile,
+		SSL_SERVER_API	void LOG_WARN_(const char* argFile,
 			int argLineNb,
 			const char* argFunction,
 			std::stringstream& argString)
@@ -81,7 +83,7 @@ namespace serpents{
 				<< "\tIn function: " << argFunction << std::endl << "\tWarning: " << argString.str();
 			SSL_Server_Logger::getInstance().error(ss.str());
 		}
-		void LOG_ERROR_(const char* argFile,
+		SSL_SERVER_API void LOG_ERROR_(const char* argFile,
 			int argLineNb,
 			const char* argFunction,
 			std::stringstream& argString)
@@ -92,7 +94,7 @@ namespace serpents{
 			SSL_Server_Logger::getInstance().error(ss.str());
 		}
 
-		void SetLogTarget_(std::string type, std::string name){
+		SSL_SERVER_API void SetLogTarget_(std::string type, std::string name){
 			serpents::log::SSL_Server_Logger::getInstance().addAppender(type, name);
 		}
 
