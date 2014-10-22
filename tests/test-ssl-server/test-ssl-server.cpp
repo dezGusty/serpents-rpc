@@ -2,12 +2,13 @@
 #include <iostream>
 #include <boost/bind.hpp>
 #include "server/server.hpp"
-
+#include "log\log.h"
 using namespace serpents::ssl;
 
 int main(){
 
 	try{
+		START_LOGGING("type", "log.txt");
 		boost::asio::io_service io_service;
 		size_t numThreads = 3;
 
@@ -24,6 +25,7 @@ int main(){
 		s3_method->setName(std::string("write"));
 		s.getfunctionRepo().addServerMethod(s3_method);
 		s.run();
+		
 	}
 	catch (std::exception& e){
 		std::cerr << e.what()<<std::endl;
