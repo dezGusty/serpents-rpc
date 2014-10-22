@@ -47,16 +47,16 @@ SET(SOURCE_FILES_PUGIXML
  "${PugiXML_BASE}/pugixml.hpp"
 	)
 
-SET(SOURCE_FILES_EXT
-	"${PROJECT_SOURCE_DIR}/serpents-rpc/serpents/rpc/log/log.h"
-	"${PROJECT_SOURCE_DIR}/serpents-rpc/serpents/rpc/log/log.cpp"
-)
+SET (SOURCE_FILES_LOG 
+"${CMAKE_CURRENT_SOURCE_DIR}/log/log.h"
+ "${CMAKE_CURRENT_SOURCE_DIR}/log/log.cpp"
+ )
 SET (SOURCE_FILES
   ${SOURCE_FILES_BASE}
   ${SOURCE_FILES_SERVER}
   ${SOURCE_FILES_PARAMETER}
   ${SOURCE_FILES_PUGIXML}
-  ${SOURCE_FILES_EXT}
+  ${SOURCE_FILES_LOG}
 )
 
 #visual studio 
@@ -71,22 +71,21 @@ SOURCE_GROUP("serpents\\ssl-server\\server\\" FILES
 
 SOURCE_GROUP("serpents\\ssl-server\\parameter\\" FILES
   ${SOURCE_FILES_PARAMETER}
-  ${SOURCE_FILES_PARAMETER}
-  ${SOURCE_FILES_PARAMETER}
 )
 SOURCE_GROUP("serpents\\ssl-server\\pugixml\\" FILES
   ${SOURCE_FILES_PUGIXML}
 )
-SOURCE_GROUP("serpents\\ssl-server\\ext\\log" FILES
-  ${SOURCE_FILES_EXT}
+SOURCE_GROUP("serpents\\ssl-server\\log" FILES
+	${SOURCE_FILES_LOG}
 )
+
 
 
 
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories(${PugiXML_BASE})
-
+include_directories(${PROJECT_SOURCE_DIR}/dependencies/)
 source_group("" FILES ${SOURCE_FILES})
 
 add_library(serpents_ssl SHARED ${SOURCE_FILES})

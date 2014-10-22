@@ -48,9 +48,6 @@ namespace serpents{
 				void handleRequest(request& req, reply& rep, ServerFunctionRepository& functionRepo);
 
 			};
-
-
-
 		}
 
 	}

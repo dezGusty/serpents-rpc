@@ -1,0 +1,84 @@
+#include <sstream>
+#include <iostream>
+
+// log4cpp
+
+#if USE_LOG4CPP ==1
+#include "log4cpp\Category.hh"
+#include "log4cpp/Appender.hh"
+#include "log4cpp/FileAppender.hh"
+#include "log4cpp/OstreamAppender.hh"
+#include "log4cpp/Layout.hh"
+#include "log4cpp/BasicLayout.hh"
+#include "log4cpp/PatternLayout.hh"
+#include "log4cpp/Priority.hh"
+
+namespace serpents{
+	namespace log{
+		class SSL_Server_Logger{
+		public:
+			static SSL_Server_Logger& getInstance()
+			{
+				static SSL_Server_Logger INSTANCE;
+				return INSTANCE;
+			}
+			~SSL_Server_Logger(void);
+			void addAppender(std::string&, std::string&);
+			void error(std::string&);
+			void info(std::string&);
+			void warn(std::string&);
+		protected:
+			log4cpp::Category& root;
+			SSL_Server_Logger(void);
+			SSL_Server_Logger(const SSL_Server_Logger& rLogger);
+			SSL_Server_Logger operator=(const SSL_Server_Logger& rLogger);
+		};
+		namespace detail{
+			void log_(
+				const char* argFile,
+				int argLineNb,
+				const char* argFunction,
+				std::stringstream& argString) {
+				std::string file(argFile);
+				std::string function(argFunction);
+				std::string lineNum(std::to_string(argLineNb));
+				//	serpents::log::SSL_Server_Logger::getInstance().info(file);
+				//serpents::log::SSL_Server_Logger::getInstance().info(function);
+				//serpents::log::SSL_Server_Logger::getInstance().info(lineNum);
+				//serpents::log::SSL_Server_Logger::getInstance().info(argString.str());
+			}
+			void SetLogTarget_(std::string type, std::string name){
+				//serpents::log::SSL_Server_Logger::getInstance().addAppender(type, name);
+
+			}
+		}
+
+#endif
+
+#if USE_LOG4CPP ==1
+		void LOG_(
+			const char* argFile,
+			int argLineNb,
+			const char* argFunction,
+			std::stringstream& argString) {
+			std::string file(argFile);
+			std::string function(argFunction);
+			std::string lineNum(std::to_string(argLineNb));
+			serpents::log::SSL_Server_Logger::getInstance().info(file);
+			serpents::log::SSL_Server_Logger::getInstance().info(function);
+			serpents::log::SSL_Server_Logger::getInstance().info(lineNum);
+			serpents::log::SSL_Server_Logger::getInstance().info(argString.str());
+		}
+		template <typename T>
+		void LOG(T msg){
+				std::stringstream s;
+				s << msg;
+				log(__FILE__, __LINE__, __FUNCTION__, s);
+		}
+		void SetLogTarget(std::string type, std::string name){
+			//serpents::log::SSL_Server_Logger::getInstance().addAppender(type, name);
+		}
+#endif
+		}
+	}
+}
