@@ -18,7 +18,7 @@ find_package(OpenSSL REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${OPENSSL_INCLUDE_DIR} )
 include_directories(${CMAKE_SOURCE_DIR}/serpents-ssl)
-include_directories(${CMAKE_SOURCE_DIR}/dependecies)
+include_directories(${CMAKE_SOURCE_DIR}/dependencies)
 
 link_directories(${CMAKE_SOURCE_DIR}/build)
 add_executable (test-ssl-server test-ssl-server.cpp)
