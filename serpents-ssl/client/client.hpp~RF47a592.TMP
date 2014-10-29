@@ -1,0 +1,154 @@
+#pragma once
+#define PUGIXML_HEADER_ONLY
+//boost libs
+#include <cstdlib>
+#include <iostream>
+#include <boost/bind.hpp>
+#include <boost/asio.hpp>
+#include <boost/asio/ssl.hpp>
+
+// prject libs
+#include "parametercontainer\parametercontainer.h"
+#include "serpents-ssl\server\reply.hpp"
+#include "util\xmlutil.hpp"
+
+enum { max_length = 1024 };
+
+class client
+{
+public:
+	client(boost::asio::io_service& io_service,const std::string& host,const std::string& port)
+		: io_service_(io_service),
+		ctx_(io_service_, boost::asio::ssl::context::sslv23),
+		socket_(io_service_, ctx_)
+	{		
+		boost::asio::ip::tcp::resolver resolver(io_service);
+		boost::asio::ip::tcp::resolver::query query(host, port);
+		boost::asio::ip::tcp::resolver::iterator endpoint_iterator = resolver.resolve(query);
+		boost::asio::ip::tcp::endpoint endpoint = *endpoint_iterator;
+		socket_.lowest_layer().async_connect(endpoint,
+			boost::bind(&client::handle_connect, this,
+			boost::asio::placeholders::error, ++endpoint_iterator));
+		
+	}
+
+	void handle_connect(const boost::system::error_code& error,
+		boost::asio::ip::tcp::resolver::iterator endpoint_iterator)
+	{
+		if (!error)
+		{
+			socket_.async_handshake(boost::asio::ssl::stream_base::client,
+				boost::bind(&client::handle_handshake, this,
+				boost::asio::placeholders::error));
+		}
+		else if (endpoint_iterator != boost::asio::ip::tcp::resolver::iterator())
+		{
+			socket_.lowest_layer().close();
+			boost::asio::ip::tcp::endpoint endpoint = *endpoint_iterator;
+			socket_.lowest_layer().async_connect(endpoint,
+				boost::bind(&client::handle_connect, this,
+				boost::asio::placeholders::error, ++endpoint_iterator));
+		}
+		else
+		{
+			std::cout << "Connect failed: " << error << "\n";
+		}
+	}
+
+	void handle_handshake(const boost::system::error_code& error)
+	{
+		if (!error)
+		{
+			//std::string replyString = serpents::util::xml::XMLFactory::getXMLParser()->generateXMLDoc(*requestParameters_);
+			//request_ = createHTTPPOST(replyString);
+
+			size_t request_length = strlen(request_.c_str());
+
+			boost::asio::async_write(socket_,
+				boost::asio::buffer(request_.c_str(), request_length),
+				boost::bind(&client::handle_write, this,
+				boost::asio::placeholders::error,
+				boost::asio::placeholders::bytes_transferred));
+		}
+		else
+		{
+			std::cout << "Handshake failed: " << error << "\n";
+		}
+	}
+
+	void handle_write(const boost::system::error_code& error,
+		size_t bytes_transferred)
+	{
+		if (!error)
+		{
+			boost::asio::async_read(socket_,
+				boost::asio::buffer(reply_, bytes_transferred),
+				boost::bind(&client::handle_read, this,
+				boost::asio::placeholders::error,
+				boost::asio::placeholders::bytes_transferred));
+		}
+		else
+		{
+			std::cout << "Write failed: " << error << "\n";
+		}
+	}
+
+	void handle_read(const boost::system::error_code& error,
+		size_t bytes_transferred)
+	{
+		if (!error)
+		{
+			std::cout << "Reply: ";
+			std::cout.write(reply_.c_array(), bytes_transferred);
+			std::cout << "\n";
+		}
+		else
+		{
+			std::cout << "Read failed: " << error << "\n";
+		}
+		
+	}
+	void loadVerifyFile(const std::string fileName){
+		ctx_.set_verify_mode(boost::asio::ssl::context::verify_peer);
+		ctx_.load_verify_file("private.pem");
+	}
+	void send(const std::string& methodName, serpents::param::ParameterContainer& request, serpents::param::ParameterContainer& reply){
+		requestParameters_ = &request;
+		replyParameters_   = &reply;
+		io_service_.run();
+	}
+	std::string& createHTTPPOST(std::string& content){
+		std::stringstream buffer; 
+		buffer << "POST /RPC2 HTTP/1.1\r\n";
+		buffer << "Content-Type: application/xml\r\n";
+		buffer << "Host: localhost:8080\r\n";
+		buffer << "Content-Length: " << content.size() << "\r\n";
+		buffer << "\r\n";
+		buffer << content;
+		buffer << "\r\n\r\n";
+		return buffer.str();
+		/*
+		serpents::http::server2::reply rep; 
+		rep.setContent(content);
+		rep.getHeaders().resize(2);
+		rep.getHeaders()[0].name = "Content-Length";
+		rep.getHeaders()[0].value = (boost::lexical_cast<std::string>(rep.getContent().size()));
+		rep.getHeaders()[1].name = ("Content-Type");
+		rep.getHeaders()[1].value = ("application/xml");*/
+	}
+	
+	~client(){
+	
+	}
+
+private:
+	serpents::param::ParameterContainer* requestParameters_;
+	serpents::param::ParameterContainer* replyParameters_;
+	boost::asio::ssl::context ctx_;
+	boost::asio::ssl::stream<boost::asio::ip::tcp::socket> socket_;
+	std::string request_;
+	boost::array<char, 8192> reply_;
+	boost::asio::io_service& io_service_;
+	boost::asio::ip::tcp::acceptor acceptor_;
+	boost::asio::ssl::context context_;
+};

@@ -25,8 +25,8 @@
 #include "parametercontainer.h"
 
 namespace serpents{
-	namespace http{
-		namespace server2{
+	namespace param{
+	
 			ParameterContainer::ParameterContainer(const ParameterContainer& pc){
 				for each (int var in pc.Impl_->intVec)
 				{
@@ -170,6 +170,5 @@ namespace serpents{
 			ParameterContainer::~ParameterContainer(){
 				delete Impl_;
 			}
-		} // server2
-	} // http 
+	} // parameter
 }// serpents 

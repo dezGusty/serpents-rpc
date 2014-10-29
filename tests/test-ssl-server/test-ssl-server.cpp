@@ -3,6 +3,7 @@
 #include <boost/bind.hpp>
 #include "server/server.hpp"
 #include "log\log.h"
+#define PUGIXML_HEADER_ONLY
 using namespace serpents::ssl;
 
 int main(){
@@ -13,6 +14,7 @@ int main(){
 		size_t numThreads = 3;
 
 		server s("localhost", io_service, 8080, numThreads);
+
 
 		std::shared_ptr<serpents::http::server2::ServerMethod> s_method(new serpents::http::server2::SampleMethod);
 		s_method->setName(std::string("sample"));

@@ -34,12 +34,13 @@
 #include "server\requesthandler.h"
 #include "server\request_parser.hpp"
 #include "server\reply.hpp"
-///system libs
-#include <iostream>
 #include "base.h"
+#include "log\log.h"
+///system libs
+
 namespace serpents{
 	namespace ssl{
-
+		
 		enum SSL_SERVER_API ErrorCodes {
 			SUCCESS = 0,
 			BAD_ARGUMENTS,
@@ -63,6 +64,7 @@ namespace serpents{
 					functionRepo_(repo)
 				{
 				}
+				
 				ssl_socket socket_;
 				boost::array<char, 8192> buffer_;
 				///function repository 
@@ -76,6 +78,7 @@ namespace serpents{
 
 				/// The reply to be sent back to the client.
 				http::server2::reply reply_;
+				
 			};
 			Impl* Impl_;
 		public:
@@ -131,10 +134,6 @@ namespace serpents{
 					if (result){
 						http::server2::RequestHandler* requestHandler = new http::server2::RequestHandler;
 						try{
-							std::cout << Impl_->request_.uri << std::endl;
-							std::cout << Impl_->request_.method << std::endl;
-							std::cout << Impl_->request_.content << std::endl;
-
 							requestHandler->handleRequest(Impl_->request_, Impl_->reply_, Impl_->functionRepo_);
 
 							//	boost::asio::async_write(socket_, rep.to_buffers(),
@@ -142,28 +141,29 @@ namespace serpents{
 							//	boost::asio::placeholders::error));
 						}
 						catch (boost::bad_lexical_cast& e){
-							std::cerr << e.what() << std::endl;
+							LOG_ERROR(e.what());
+							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
 						}
-						catch (serpents::http::server2::ParamContainerException& e){
-							std::cerr << e.what() << std::endl;
+						catch (serpents::param::ParamContainerException& e){
+							LOG_ERROR(e.what());
 							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
 						}
 						catch (http::server2::RepoException& e){
-							std::cerr << e.what() << std::endl;
+							LOG_ERROR(e.what());
 							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
 
 						}
 						catch (http::server2::RequestException& e){
-							std::cerr << e.what() << std::endl;
+							LOG_ERROR(e.what());
 							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, "unknown exception");
 						}
 						catch (std::exception& e){
-							std::cerr << e.what() << std::endl;
+							LOG_ERROR(e.what());
 							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
 
 						}
 						catch (...){
-							std::cerr << "unkonwn exception" << std::endl;
+							LOG_ERROR("unkown exception");
 							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, "unkonwn exception");
 
 						}
@@ -222,18 +222,7 @@ namespace serpents{
 			// handler returns. The connection class's destructor closes the socket.
 			}
 			*/
-			void parseRequest(std::stringstream& request){
-				std::string method(Impl_->buffer_.data());
-				std::cout << method << std::endl;
-				if (method.find("POST") != 0){
-					std::cerr << "Unsupported HTTP method: " << method << std::endl;
-					std::exit(UNSUPPORTED_REQUEST);
-				}
 
-				// We know it is a post
-
-				std::cout << "got a post request" << std::endl;
-			}
 			void handle_write(const boost::system::error_code& error)
 			{
 				if (!error)

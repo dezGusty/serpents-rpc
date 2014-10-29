@@ -144,7 +144,7 @@ namespace serpents{
 							LOG_ERROR(e.what());
 							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
 						}
-						catch (serpents::http::server2::ParamContainerException& e){
+						catch (serpents::param::ParamContainerException& e){
 							LOG_ERROR(e.what());
 							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
 						}
@@ -222,18 +222,7 @@ namespace serpents{
 			// handler returns. The connection class's destructor closes the socket.
 			}
 			*/
-			void parseRequest(std::stringstream& request){
-				std::string method(Impl_->buffer_.data());
-				std::cout << method << std::endl;
-				if (method.find("POST") != 0){
-					std::cerr << "Unsupported HTTP method: " << method << std::endl;
-					std::exit(UNSUPPORTED_REQUEST);
-				}
 
-				// We know it is a post
-
-				std::cout << "got a post request" << std::endl;
-			}
 			void handle_write(const boost::system::error_code& error)
 			{
 				if (!error)

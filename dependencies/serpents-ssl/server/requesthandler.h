@@ -33,7 +33,9 @@
 #include "parametercontainer/parametercontainer.h"
 #include "serverfunctionrepository.h"
 #include "base.h"
+#include "util\xmlutil.hpp"
 namespace serpents{
+
 	namespace http{
 		namespace server2{
 			class SSL_SERVER_API RequestException : public std::exception{
@@ -48,9 +50,6 @@ namespace serpents{
 				void handleRequest(request& req, reply& rep, ServerFunctionRepository& functionRepo);
 
 			};
-
-
-
 		}
 
 	}

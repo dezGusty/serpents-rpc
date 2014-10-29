@@ -42,7 +42,7 @@ namespace serpents{
 				class Impl;
 				Impl* Impl_;
 			public:
-				virtual void execute(ParameterContainer* pc, ParameterContainer* result) = 0;
+				virtual void execute(serpents::param::ParameterContainer* pc, serpents::param::ParameterContainer* result) = 0;
 				ServerMethod(std::string& name, std::string& help, std::string& signature);
 				ServerMethod();
 				~ServerMethod();
@@ -68,7 +68,7 @@ namespace serpents{
 
 				}
 				SampleMethod(){}
-				void execute(ParameterContainer* pc, ParameterContainer* result){
+				void execute(serpents::param::ParameterContainer* pc, serpents::param::ParameterContainer* result){
 					//result->add(pc->getInt(0) + pc->getInt(1));
 					std::chrono::milliseconds dura(5000);
 					std::this_thread::sleep_for(dura);
@@ -78,14 +78,14 @@ namespace serpents{
 			};
 			class EchoMethod : public ServerMethod{
 			public:
-				void execute(ParameterContainer* pc, ParameterContainer* result){
+				void execute(serpents::param::ParameterContainer* pc, serpents::param::ParameterContainer* result){
 					*result = *pc;
 				}
 			};
 
 			class WriteToFile : public ServerMethod{
 			public:
-				void execute(ParameterContainer* pc, ParameterContainer* result){
+				void execute(serpents::param::ParameterContainer* pc, serpents::param::ParameterContainer* result){
 					std::string fileName = pc->getString(0);
 					std::ofstream outfile(fileName, std::ofstream::binary);
 					std::string s("opened");

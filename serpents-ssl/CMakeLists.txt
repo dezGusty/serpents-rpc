@@ -42,22 +42,34 @@ SET(SOURCE_FILES_PARAMETER
 SET (SOURCE_FILES_BASE "${CMAKE_CURRENT_SOURCE_DIR}/base.h")
 
 SET(SOURCE_FILES_PUGIXML 
- "${PugiXML_BASE}/pugixml.cpp"
- "${PugiXML_BASE}/pugiconfig.hpp"
- "${PugiXML_BASE}/pugixml.hpp"
+ "${CMAKE_SOURCE_DIR}/dependencies/pugixml/pugiconfig.hpp"
+ "${CMAKE_SOURCE_DIR}/dependencies/pugixml/pugixml.hpp"
+ "${CMAKE_SOURCE_DIR}/dependencies/pugixml/pugixml.cpp"
 	)
 
 SET (SOURCE_FILES_LOG 
 "${CMAKE_CURRENT_SOURCE_DIR}/log/log.h"
  "${CMAKE_CURRENT_SOURCE_DIR}/log/log.cpp"
  )
+ 
+ SET(SOURCE_FILES_UTIL
+  "${CMAKE_CURRENT_SOURCE_DIR}/util/xmlutil.hpp")
+ 
+
+ SET(SOURCE_FILES_CLIENT
+"${CMAKE_CURRENT_SOURCE_DIR}/client/client.hpp")
+
+
 SET (SOURCE_FILES
   ${SOURCE_FILES_BASE}
   ${SOURCE_FILES_SERVER}
   ${SOURCE_FILES_PARAMETER}
   ${SOURCE_FILES_PUGIXML}
   ${SOURCE_FILES_LOG}
+  ${SOURCE_FILES_UTIL}
+  ${SOURCE_FILES_CLIENT}
 )
+
 
 #visual studio 
 
@@ -78,8 +90,12 @@ SOURCE_GROUP("serpents\\ssl-server\\pugixml\\" FILES
 SOURCE_GROUP("serpents\\ssl-server\\log" FILES
 	${SOURCE_FILES_LOG}
 )
-
-
+SOURCE_GROUP("serpents\\util" FILES
+	 ${SOURCE_FILES_UTIL}
+)
+SOURCE_GROUP("serpents\\client" FILES
+	 ${SOURCE_FILES_CLIENT}
+)
 
 
 

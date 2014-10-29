@@ -35,8 +35,7 @@
 #include <sstream>
 #include "base.h"
 namespace serpents{
-	namespace http{
-		namespace server2{
+	namespace param{
 			class SSL_SERVER_API ParamContainerException : public std::exception{
 				class Impl{ friend ParamContainerException;  std::string description; };
 				Impl* Impl_;
@@ -164,9 +163,7 @@ namespace serpents{
 				void push(std::string s);
 				std::string pop();
 			};
-
-		} //namespace server2
-	} //namespace http
+	} //namespace parameter
 } //namespace serpents 
 
 #endif

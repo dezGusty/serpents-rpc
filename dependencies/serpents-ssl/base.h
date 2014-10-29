@@ -1,5 +1,3 @@
-//todo chage this
-
 
 #ifdef SSL_SERVER_EXPORT
 #define SSL_SERVER_API _declspec(dllexport)

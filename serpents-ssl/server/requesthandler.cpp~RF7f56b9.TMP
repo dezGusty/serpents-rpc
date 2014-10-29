@@ -21,38 +21,47 @@
 //   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //   THE SOFTWARE.
 
+#include "requesthandler.h"
+#include "mime_types.hpp"
 
-#ifndef REQUEST_HANDLER_H_
-#define REQUEST_HANDLER_H_
+#include <thread>
+#include <chrono>
+#include <iostream>
 
-#include <string>
-#include <boost/noncopyable.hpp>
-#include <boost/any.hpp>
-#include "reply.hpp"
-#include "request.hpp"
-#include "parametercontainer/parametercontainer.h"
-#include "serverfunctionrepository.h"
-#include "base.h"
-#include "util\xmlutil.hpp"
+// project libs 
+
 namespace serpents{
-
 	namespace http{
 		namespace server2{
-			class SSL_SERVER_API RequestException : public std::exception{
-				std::string* error;
-			public:
-				RequestException(std::string& errorMsg){ *error = errorMsg; }
-				std::string what(){ return *error; }
-			};
+			void RequestHandler::handleRequest(request& req, reply& rep, ServerFunctionRepository& functionRepo){
 
-			class SSL_SERVER_API RequestHandler : private boost::noncopyable{
-			public:
-				void handleRequest(request& req, reply& rep, ServerFunctionRepository& functionRepo);
+				rep.status = reply::status_type::ok;
 
-			};
+				serpents::param::ParameterContainer pc;
+				std::string funcname;
+				util::xml::IXMLClass* xmlutil = new util::xml::PugiXML;
+				xmlutil->getXMLParameters(req.content, funcname, pc);
+				sptr_method method = functionRepo.lookUpMethod(funcname);
+
+				serpents::param::ParameterContainer result;
+				method->execute(&pc, &result);
+
+				pugi::xml_document responseDoc;
+				xmlutil->generateXMLResponse(responseDoc, result);
+				std::stringstream ss;
+				responseDoc.print(ss);
+				responseDoc.print(std::cout);
+				rep.setContent(ss.str());
+				rep.getHeaders().resize(2);
+				rep.getHeaders()[0].name = "Content-Length";
+				rep.getHeaders()[0].value = (boost::lexical_cast<std::string>(rep.getContent().length()));
+				rep.getHeaders()[1].name = ("Content-Type");
+				rep.getHeaders()[1].value = ("application/xml");
+
+			}
+
+
+
 		}
-
 	}
-}// namespace serpents
-
-#endif // end REQUEST_HANDLER_H_
+} // namespace serpents

@@ -29,6 +29,7 @@
 
 #include "session.hpp"
 #include "base.h"
+#include "util\xmlutil.hpp"
 namespace serpents{
 	namespace ssl{
 		class SSL_SERVER_API server
