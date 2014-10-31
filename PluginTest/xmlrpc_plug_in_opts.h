@@ -1,0 +1,14 @@
+
+
+#ifdef XMLRPC_C_PLUGIN_EXP
+#define XMLRPC_C_PLUGIN_EXPORT_SYMBOL __declspec (dllexport)
+#define XMLRPC_C_PLUGIN_EXPIMP_TEMPLATE
+#else
+#ifdef XMLRPC_C_PLUGIN_STANDALONE
+#define XMLRPC_C_PLUGIN_EXPORT_SYMBOL 
+#define XMLRPC_C_PLUGIN_EXPIMP_TEMPLATE 
+#else
+#define XMLRPC_C_PLUGIN_EXPORT_SYMBOL __declspec (dllimport)
+#define XMLRPC_C_PLUGIN_EXPIMP_TEMPLATE extern
+#endif
+#endif // XMLRPC_C_PLUGIN_EXP

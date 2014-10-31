@@ -182,40 +182,6 @@ namespace serpents{
 				}
 			}
 			/*
-			//other
-			void session::handle_read(const boost::system::error_code& e,
-			std::size_t bytes_transferred)
-			{
-			if (!e)
-			{
-			boost::tribool result;
-
-			boost::tie(result, boost::tuples::ignore) = request_parser_.parse(
-			request_, buffer_.data(), buffer_.data() + bytes_transferred);
-
-			if (result)
-			{
-			request_handler_.handle_request(request_, reply_);
-			boost::asio::async_write(socket_, reply_.to_buffers(),
-			boost::bind(&session::handle_write, this,
-			boost::asio::placeholders::error));
-			}
-			else if (!result)
-			{
-			reply_ = http::server2::reply::stock_reply(http::server2::reply::bad_request);
-			boost::asio::async_write(socket_, reply_.to_buffers(),
-			boost::bind(&session::handle_write, this,
-			boost::asio::placeholders::error));
-			}
-			else
-			{
-			socket_.async_read_some(boost::asio::buffer(buffer_),
-			boost::bind(&session::handle_read, this,
-			boost::asio::placeholders::error,
-			boost::asio::placeholders::bytes_transferred));
-			}
-			}
-
 			// If an error occurs then no new asynchronous operations are started. This
 			// means that all shared_ptr references to the connection object will
 			// disappear and the object will be destroyed automatically after this

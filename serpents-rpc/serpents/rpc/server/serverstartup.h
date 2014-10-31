@@ -24,23 +24,13 @@
 //   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //   THE SOFTWARE.
 
-//serpents libs
-#include "serpents/rpc/base.h"
-#include "serpents/rpc/server/implservermethod.h"
 
 //c++ system libs
-#include <iostream>
 #include <thread>
-#include <algorithm>
-#ifdef SERPENTSRPC_EXPORTS
-#define SERVERSTARTUP_DLL _declspec(dllexport)
-#else
-#define SERVERSTARTUP_DLL _declspec(dllimport)
-#endif
 
 namespace serpents{
-  
-  class SERVERSTARTUP_DLL ServerStartUp{
+  class Server;
+  class ServerStartUp{
   protected:
     class Impl;
     Impl* Impl_;
@@ -57,25 +47,6 @@ namespace serpents{
   public:
     std::thread thrd;
     std::thread controllThread;
-  };
-
-  class  XMLRPC_C_StartUp : public ServerStartUp{
-  public:
-    xmlrpc_c::serverAbyss* serverAbyssPtr;
-    std::thread& execute(Server& server);
-    void controll();
-    void run(Server& server);
-    
-  };
-
-
-  class  XMLRPCpp_StartUp : public ServerStartUp{
-  public:
-    XmlRpc::XmlRpcServer* xmlServerPnt;
-    std::thread& execute(Server& server);
-    void controll();
-    void run(Server& server);
-    
   };
 
 }

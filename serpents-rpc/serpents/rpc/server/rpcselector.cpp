@@ -22,9 +22,11 @@
 //   THE SOFTWARE.
 
 #include "RPCSelector.h"
+#include "serpents\rpc\server\xmlrpc_c_startup.h"
+#include "serpents\rpc\server\xmlrpc_cpp_start_up.h"
 
 namespace serpents{
-  class ServerStartUp;
+ 
   //choose impl of server 
   void RPCSelector::selectRPCMethod(Server& server, std::string method){
     server_ = &server;
