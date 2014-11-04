@@ -1,6 +1,6 @@
 #ifndef IMPLSERVERMETHOD_H_
 #define IMPLSERVERMETHOD_H_
-
+#pragma once
 //   This file is part of the serpents-rpc library, licensed under the terms of the MIT License.
 //
 //   The MIT License
@@ -28,15 +28,15 @@
 #include "serpents/rpc/base.h"
 #include "serpents/rpc/server/server.h"
 #include "serpents/rpc/log/log.h"
-#include "serpents/rpc/parameters/parametercontainer.h"
+#include "serpents/rpc/parameters/parametercontainer.hpp"
 
 //xmlrpc-c libs
-#include <xmlrpc-c/base.hpp>
-#include <xmlrpc-c/registry.hpp>
-#include <xmlrpc-c/server_abyss.hpp>
+//#include <xmlrpc-c/base.hpp>
+//#include <xmlrpc-c/registry.hpp>
+//#include <xmlrpc-c/server_abyss.hpp>
 
 //xmlrpc++ libs
-#include <xmlrpc++/XmlRpc.h>
+//#include <xmlrpc++/XmlRpc.h>
 
 //c++ system libs
 #include <sstream> 
@@ -48,7 +48,7 @@
 #else
 #define IMPLSERVERMETHOD_DLL _declspec(dllimport)
 #endif
-
+/*
 namespace serpents{
 
   class  XMLRPC_Method : public XmlRpc::XmlRpcServerMethod{
@@ -58,7 +58,7 @@ namespace serpents{
     XMLRPC_Method(Method* method, std::string methodName, XmlRpc::XmlRpcServer* s);
     void execute(XmlRpc::XmlRpcValue& params, XmlRpc::XmlRpcValue& result);
 
-    void fillParameterContainer(serpents::ParameterContainer& pc, XmlRpc::XmlRpcValue& params);
+    void fillParameterContainer(ParameterContainer& pc, XmlRpc::XmlRpcValue& params);
   };
 
   class  XmlRPC_CMethod : public xmlrpc_c::method {
@@ -68,10 +68,10 @@ namespace serpents{
     void setSignatureAndHelp();
     explicit XmlRPC_CMethod(Method* method);
     void execute(xmlrpc_c::paramList const& paramList,xmlrpc_c::value* const retvalP);
-    void fillParameterContainer(serpents::ParameterContainer& pc, const xmlrpc_c::paramList& paramList);
+    void fillParameterContainer(ParameterContainer& pc, const xmlrpc_c::paramList& paramList);
     ~XmlRPC_CMethod(){  }
   };
 
 }
-
+*/
 #endif // IMPLSERVERMETHOD_H_

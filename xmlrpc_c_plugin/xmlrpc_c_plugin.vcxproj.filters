@@ -14,4 +14,41 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="xmlrpc_c_serveroptions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\serpents-rpc\serpents\rpc\server\xmlrpc_c_startup.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="implservermethod.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="retvalue.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="xmlrpc_c_plugin.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="xmlrpc_c_buildopts.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\serpents-rpc\serpents\rpc\server\xmlrpc_c_startup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="xmlrpc_c_serveroptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="retvalue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="implservermethod.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="parametercontainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>

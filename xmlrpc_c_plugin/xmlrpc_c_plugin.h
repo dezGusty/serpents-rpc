@@ -2,13 +2,13 @@
 #define XMLRPC_C_PLUGIN_H_
 
 #include "guslib\util\plugin.h"
-#include "serpents\rpc\server\serverstartup.h"
+
 #include "servermanager.h"
 #include "xmlrpc_plug_in_opts.h"
 #include "guslib\system\dynamiclibmanager.h"
 namespace serpents{
-	class XMLRPC_C_Plugin : public XMLRPCpp_StartUp, 
-						public guslib::Plugin
+	class XMLRPC_C_Plugin : public ServerStartUp,
+		public guslib::Plugin
 	{
 	public:
 		//ServerStartUp overrides
@@ -22,7 +22,7 @@ namespace serpents{
 		virtual void shutdown() override;
 		virtual void uninstall() override;
 	private:
-		
+
 	};
 }
 

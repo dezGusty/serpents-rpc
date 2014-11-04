@@ -28,20 +28,15 @@
 #include "serpents/rpc/base.h"
 
 //xmlrpc-c libs
-#include <xmlrpc-c/base.hpp>
+
 
 //xmlrpc++ libs
-#include <xmlrpc++/XmlRpc.h>
+//#include <xmlrpc++\XmlRpc.h>
 
 //c++ system libs
 #include <string>
 
-#ifdef SERPENTSRPC_EXPORTS
-#define RET_VALUE_DLL _declspec(dllexport)
-#else
-#define RET_VALUE_DLL _declspec(dllimport)
-#endif
-class RET_VALUE_DLL RetValue{
+class RetValue{
 public:
   virtual void setValue(int n) = 0;
   virtual void setValue(double n) = 0; 
@@ -49,7 +44,7 @@ public:
   virtual void setValue(std::string s) = 0; 
 
 };
-
+/*
 
 class XMLRPC_CRetValue: public RetValue{
 public:
@@ -68,7 +63,8 @@ class XMLRPC_CRetValue::Impl{
   friend XMLRPC_CRetValue;
   xmlrpc_c::value* value;
 };
-
+*/
+/*/
 class XMLRPC_CPPRetValue: public RetValue{
 public:
   void setValue(int n);
@@ -88,5 +84,7 @@ class XMLRPC_CPPRetValue::Impl{
   friend XMLRPC_CPPRetValue;
   XmlRpc::XmlRpcValue value;
 };
+*/
+
 
 #endif  // RETVALUE_H_

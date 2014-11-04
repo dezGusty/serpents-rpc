@@ -1,3 +1,4 @@
+
 //   This file is part of the serpents-rpc library, licensed under the terms of the MIT License.
 //
 //   The MIT License
@@ -22,14 +23,58 @@
 //   THE SOFTWARE.
 
 #include "RPCSelector.h"
-#include "serpents\rpc\server\xmlrpc_c_startup.h"
-#include "serpents\rpc\server\xmlrpc_cpp_start_up.h"
-
+#include "guslib\system\dynamiclib.h"
+#include "guslib\system\dynamiclibmanager.h"
+#include "guslib/common/simpleexception.h"
+#include "..\build\ServerManager\servermanager.h"
+#include "serpents\rpc\server\rpcselector.h"
 namespace serpents{
+	void loadPlugin(const std::string& pluginName)
+	{
+		guslib::DynamicLib* lib = guslib::DynamicLibManager::getPtr()->load(pluginName);
+
+		DLL_START_PLUGIN pFunc = (DLL_START_PLUGIN)lib->getSymbol("dllStartPlugin");
+
+		if (!pFunc)
+		{
+			throw new guslib::SimpleException("Cannot find symbol dllStartPlugin in library ");
+		}
+
+		// This must call installPlugin
+		pFunc();
+	}
+
+	void unloadPlugin(const std::string& pluginName)
+	{
+		guslib::DynamicLib* lib = guslib::DynamicLibManager::getPtr()->load(pluginName);
+
+		DLL_START_PLUGIN pFunc = (DLL_START_PLUGIN)lib->getSymbol("dllStopPlugin");
+
+		if (!pFunc)
+		{
+			throw new guslib::SimpleException("Cannot find symbol dllStartPlugin in library ");
+		}
+
+		// This must call installPlugin
+		pFunc();
+	}
+
+	//plug in
  
   //choose impl of server 
   void RPCSelector::selectRPCMethod(Server& server, std::string method){
     server_ = &server;
+	
+	std::cout << "start" << std::endl;
+	std::string plugin_name("xmlrpc_c_plugin.dll");
+
+	std::cout << "loading plugin: " << plugin_name << std::endl;
+	loadPlugin(plugin_name);
+	std::cout << "loaded plugin: " << plugin_name << std::endl;
+
+	ServerStartUpImpl_ = serpents::ServerManager::getPtr()->getServerPointer("xmlrpc_c_plugin");
+	 
+	/*
     if (strcmp(method.c_str(), "xmlrpc_c") == 0){
       ServerStartUpImpl_ = new XMLRPC_C_StartUp();
       
@@ -38,21 +83,22 @@ namespace serpents{
 
       ServerStartUpImpl_ = new XMLRPCpp_StartUp();
     }
+	
 #ifdef USE_LOG4CPP
-    auto map = server.getLogTargets();
+	auto map = server_.getLogTargets();
     for (auto it = map->begin(); it != map->end(); ++it){
       Logger::getInstance().addAppender(it->second,it->first);
     }
     Logger::getInstance().info("---using library "+ method+"---");
 #endif
-
+	*/
   }
   void RPCSelector::stopServer(){
-    ServerStartUpImpl_->runCon = false;
+    //ServerStartUpImpl_->runCon = false;
   }
 
   void RPCSelector::startServer(){
-    ServerStartUpImpl_->execute(*server_);
+    ServerStartUpImpl_->execute(server_);
     ServerStartUpImpl_->start();
   }
   RPCSelector::RPCSelector()
@@ -65,11 +111,6 @@ namespace serpents{
     delete ServerStartUpImpl_;
     
   }
-
-
-  
-
-  
 
 
 }

@@ -11,21 +11,24 @@ using namespace std;
 TEST(fileLookUp, fileExists){
 	xmlrpc_c::clientSimple myClient;
 	xmlrpc_c::value result2;
-	myClient.call("http://localhost:8081/RPC2", "fileLookUp", "s", &result2, "D:\\test.txt");
+	myClient.call("http://localhost:8080/RPC2", "fileLookUp", "s", &result2, "D:\\test.txt");
 	bool response = xmlrpc_c::value_boolean(result2);
 	EXPECT_EQ(true, response);
 }
+
 TEST(fileLookUp, fileDoesNotExists){
 	xmlrpc_c::clientSimple myClient;
 	xmlrpc_c::value result2;
-	myClient.call("http://localhost:8081/RPC2", "fileLookUp", "s", &result2, "D:\\test.txt");
+	myClient.call("http://localhost:8080/RPC2", "fileLookUp", "s", &result2, "D:\\test2.txt");
 	bool response = xmlrpc_c::value_boolean(result2);
-	EXPECT_EQ(true, response);
+	EXPECT_EQ(false, response);
 }
+
+
 TEST(sleep, returns){
 	xmlrpc_c::clientSimple myClient;
 	xmlrpc_c::value result2;
-	myClient.call("http://localhost:8081/RPC2", "sleep", "i", &result2, 5);
+	myClient.call("http://localhost:8080/RPC2", "sleep", "i", &result2, 5);
 	bool response = xmlrpc_c::value_boolean(result2);
 	EXPECT_EQ(true, response);
 }
@@ -37,7 +40,7 @@ TEST(getMean, positive){
 	getMeanParms.add(xmlrpc_c::value_double(0.5));
 	getMeanParms.add(xmlrpc_c::value_int(2));
 	getMeanParms.add(xmlrpc_c::value_double(0.5));
-	myClient.call("http://localhost:8081/RPC2", "getMean", getMeanParms, &result);
+	myClient.call("http://localhost:8080/RPC2", "getMean", getMeanParms, &result);
 	float response = xmlrpc_c::value_double(result);
 	float res = 2.0f;
 	EXPECT_EQ(res, response);
@@ -51,7 +54,7 @@ TEST(getMean, negative){
 	getMeanParms.add(xmlrpc_c::value_double(-0.5));
 	getMeanParms.add(xmlrpc_c::value_int(-2));
 	getMeanParms.add(xmlrpc_c::value_double(-0.5));
-	myClient.call("http://localhost:8081/RPC2", "getMean", getMeanParms, &result);
+	myClient.call("http://localhost:8080/RPC2", "getMean", getMeanParms, &result);
 	float response = xmlrpc_c::value_double(result);
 	float res = -2.0f;
 	EXPECT_EQ(res, response);
@@ -64,7 +67,7 @@ TEST(getMean, other){
 	getMeanParms.add(xmlrpc_c::value_double(0.5));
 	getMeanParms.add(xmlrpc_c::value_int(4));
 	getMeanParms.add(xmlrpc_c::value_double(0.5));
-	myClient.call("http://localhost:8081/RPC2", "getMean", getMeanParms, &result);
+	myClient.call("http://localhost:8080/RPC2", "getMean", getMeanParms, &result);
 	float response = xmlrpc_c::value_double(result);
 	float res = 4.0f;
 	EXPECT_EQ(res, response);
@@ -72,7 +75,7 @@ TEST(getMean, other){
 TEST(push){
 	xmlrpc_c::clientSimple myClient;
 	xmlrpc_c::value result;
-	myClient.call("http://localhost:8081/RPC2", "push", "s", &result, "test");
+	myClient.call("http://localhost:8080/RPC2", "push", "s", &result, "test");
 	bool pushResponse = xmlrpc_c::value_boolean(result);
 	//EXPECT_EQ(true, result);
 	
@@ -80,7 +83,7 @@ TEST(push){
 TEST(pop){
 	xmlrpc_c::clientSimple myClient;
 	xmlrpc_c::value result;
-	myClient.call("http://localhost:8081/RPC2", "pop", "s", &result, "");
+	myClient.call("http://localhost:8080/RPC2", "pop", "s", &result, "");
 
 	std::string sr = xmlrpc_c::value_string(result);
 
@@ -89,7 +92,7 @@ TEST(pop){
 TEST(generateUUID){
 	xmlrpc_c::clientSimple myClient;
 	xmlrpc_c::value randomString;
-	myClient.call("http://localhost:8081/RPC2", "generateUUID", "s", &randomString, "");
+	myClient.call("http://localhost:8080/RPC2", "generateUUID", "s", &randomString, "");
 	std::string uuidResponse = xmlrpc_c::value_string(randomString);
 	std::cout << uuidResponse << std::endl;
 }

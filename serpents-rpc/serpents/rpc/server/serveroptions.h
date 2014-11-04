@@ -25,9 +25,7 @@
 //   THE SOFTWARE.
 
 //serpents libs
-#include "serpents/rpc/base.h"
 //xmlrpc-c libs
-#include "xmlrpc-c\server_abyss.hpp"
 //c++ system libs
 #include <string>
 
@@ -37,27 +35,22 @@
 #define SERVEROPT_DLL _declspec(dllimport)
 #endif
 namespace serpents{
-  class SERVEROPT_DLL XMLRPC_CServerOptions{
-    typedef xmlrpc_c::serverAbyss::constrOpt constrOpt;
-  public:
-    XMLRPC_CServerOptions();
-    void portNumber(unsigned int   const& arg);
-    void logFileName(std::string    const& arg);
-    void keepaliveTimeout(unsigned int   const& arg);
-    void keepaliveMaxConn(unsigned int   const& arg);
-    void timeout(unsigned int   const& arg);
-    void dontAdvertise(bool           const& arg);
-    void uriPath(std::string    const& arg);
-    void chunkResponse(bool           const& arg);
-    void allowOrigin(std::string    const& arg);
-    void accessCtlMaxAge(unsigned int const& arg);
-    void serverOwnsSignals(bool           const& arg);
-    void expectSigchld(bool           const& arg);
-    constrOpt* getConstrOpt();
-  private:
-    constrOpt* constrOpt_;
+  class ServerOptions{
+	  virtual void portNumber(unsigned int   const& arg) =0;
+	  virtual void logFileName(std::string    const& arg) = 0;
+	  virtual void keepaliveTimeout(unsigned int   const& arg) = 0;
+	  virtual void keepaliveMaxConn(unsigned int   const& arg) = 0;
+	  virtual void timeout(unsigned int   const& arg) = 0;
+	  virtual void dontAdvertise(bool           const& arg) = 0;
+	  virtual void uriPath(std::string    const& arg) = 0;
+	  virtual void chunkResponse(bool           const& arg) = 0;
+	  virtual void allowOrigin(std::string    const& arg) = 0;
+	  virtual void accessCtlMaxAge(unsigned int const& arg) = 0;
+	  virtual void serverOwnsSignals(bool           const& arg) = 0;
+	  virtual void expectSigchld(bool           const& arg) = 0;
   };
-
+  
+  /*
   class SERVEROPT_DLL XMLRPCPP_ServerOptions{
     class Impl;
     Impl* Impl_;
@@ -71,5 +64,6 @@ namespace serpents{
     friend XMLRPCPP_ServerOptions;
     unsigned int portNum;
   };
+  */
 }
 #endif  // SERVER_OPTIONS_H_

@@ -1,3 +1,4 @@
+/*
 #ifndef LOGGER_H_
 #define LOGGER_H_
 
@@ -28,9 +29,10 @@
 
 //serpent libs
 #include "serpents/rpc/base.h"
-
+#include "servermanager_build_opts.h"
 //log4cpp libs
 #include "log4cpp/Category.hh"
+
 #include "log4cpp/Appender.hh"
 #include "log4cpp/FileAppender.hh"
 #include "log4cpp/OstreamAppender.hh"
@@ -39,20 +41,15 @@
 #include "log4cpp/PatternLayout.hh"
 #include "log4cpp/Priority.hh"
 
-#ifdef SERPENTSRPC_EXPORTS
-#define LOG_DLL _declspec(dllexport)
-#else
-#define LOG_DLL _dlecpsec(dllimport)
-#endif
+//guslib
+
+#include "guslib\common\singleton.hpp"
+
 namespace serpents{
-  class LOG_DLL Logger
+  class SERPENTSDLL Logger
   {
   public:
-    static Logger& getInstance()
-    {
-      static Logger INSTANCE;
-      return INSTANCE;
-    }
+	  Logger(void);
     ~Logger(void);
     void addAppender(std::string, std::string);
     void error(std::string);
@@ -61,13 +58,15 @@ namespace serpents{
   protected:
 
     log4cpp::Category& root;
-    Logger(void);
-    Logger(const Logger& rLogger);
-    Logger operator=(const Logger& rLogger);
+
+
     
   };
-  
+  typedef guslib::Singleton<Logger> Log;
+  SERVERMGR_EXPIMP_TEMPLATE template class SERVERMGR_EXPORT_SYMBOL guslib::Singleton <Logger>;
 }
 
 #endif
 #endif // LOGGER_H_
+
+*/

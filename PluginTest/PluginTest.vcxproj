@@ -53,13 +53,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;XMLRPC_C_PLUGIN_EXP;SERVERMGR_EXP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\vlad.petrescu\Documents\GitHub\guslib\guslib;C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\dependencies;C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\serpents-rpc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\ServerManager;C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\xmlrpc_c_plugin;C:\Users\vlad.petrescu\Documents\GitHub\guslib\guslib;C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\serpents-rpc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>D:\libs\guslib\lib\$(Configuration);C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\Debug\;D:\libs\xmlrpc-advanced\bin\Debug-DLL-Win32;C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\dependencies\bin\Release</AdditionalLibraryDirectories>
-      <AdditionalDependencies>guslib.lib;libxmlrpc++.lib;serpents-rpc.lib;xmlrpc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>D:\libs\guslib\lib\$(Configuration);C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\Debug\;D:\libs\xmlrpc-advanced\bin\Debug-DLL-Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>guslib.lib;servermanager.lib;serpents-rpc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -82,15 +82,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="servermanager.cpp" />
-    <ClCompile Include="xmlrpcpp_plugin.cpp" />
-    <ClCompile Include="xmlrpc_c_plugin.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="servermanager.h" />
-    <ClInclude Include="servermanager_build_opts.h" />
-    <ClInclude Include="xmlrpc_c_plugin.h" />
-    <ClInclude Include="xmlrpc_plug_in_opts.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

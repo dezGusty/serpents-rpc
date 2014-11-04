@@ -31,23 +31,18 @@
 namespace serpents{
   class Server;
   class ServerStartUp{
-  protected:
-    class Impl;
-    Impl* Impl_;
   public:
-    bool runCon = true;
-    ServerStartUp();
-      
-    virtual std::thread& execute(Server& server) = 0;
-    virtual void run(Server& server) = 0;
-    void start();
+    virtual std::thread& execute(Server* server) = 0;
+    virtual void run(Server* server) = 0;
+	virtual void controll() = 0;
+    virtual void start() = 0;
+	virtual void stop() = 0;
   };
 
-  class ServerStartUp::Impl{
-  public:
-    std::thread thrd;
-    std::thread controllThread;
-  };
+//  void ServerStartUp::start(){
+//	  this->Impl_->controllThread.join();
+//  }
+  
 
 }
 

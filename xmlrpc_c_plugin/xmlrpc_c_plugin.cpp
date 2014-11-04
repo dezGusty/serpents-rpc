@@ -1,5 +1,5 @@
 #include "xmlrpc_c_plugin.h"
-#include "serpents/rpc/server/implservermethod.h"
+
 #include "guslib\util\pluginmanager.h"
 
 namespace serpents{
@@ -10,13 +10,14 @@ namespace serpents{
 	//
 	//ServerStartUp overrides
 	void XMLRPC_C_Plugin::run(Server& server){
-		XMLRPCpp_StartUp::run(server);
+		//ServerStartUp::run(server);
 	}
 
 
 
 	std::thread& XMLRPC_C_Plugin::execute(Server& server){
-		return XMLRPCpp_StartUp::execute(server);
+		//return ServerStartUp::execute(server);
+		return *(new std::thread);
 	}
 
 

@@ -1,3 +1,4 @@
+
 #ifndef RPCSELECTOR_H_
 #define RPCSELECTOR_H_
 
@@ -46,23 +47,23 @@
 #include <string>
 #include <cassert>
 namespace serpents{
-  class ServerStartUp;
-  
+	class ServerStartUp;
 
-  class RPCSELECTDLL RPCSelector
-  {
-  private:
-    ServerStartUp* ServerStartUpImpl_;
-    Server* server_;
-  public:
-    void startServer();
-    void selectRPCMethod(Server& server, std::string method);
-    void stopServer();
-    RPCSelector();
-    ~RPCSelector();
-  };
+
+	class RPCSELECTDLL RPCSelector
+	{
+	private:
+		ServerStartUp* ServerStartUpImpl_;
+		Server* server_;
+	public:
+		void startServer();
+		void selectRPCMethod(Server& server, std::string method);
+		void stopServer();
+		RPCSelector();
+		~RPCSelector();
+	};
 }
-#endif  // RPCSELECTOR_H_
 
+#endif  // RPCSELECTOR_H_
 
 

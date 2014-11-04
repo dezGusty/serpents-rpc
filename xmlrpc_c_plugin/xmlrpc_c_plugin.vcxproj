@@ -51,12 +51,15 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;XMLRPC_C_PLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;XMLRPC_C_PLUGIN_EXPORTS;PLUGINXMLRPC_C_EXP;GUSLIB_IMP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\ServerManager;C:\Users\vlad.petrescu\Documents\GitHub\guslib\guslib\;C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\serpents-rpc;C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\dependencies</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>D:\libs\guslib\lib\$(Configuration);D:\libs\xmlrpc-advanced\bin\Debug-DLL-Win32</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libxmlrpc++.lib;guslib.lib;C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\Debug\ServerManager.lib;C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\Debug\serpents-rpc.lib;D:\libs\log4cpp\lib\Debug\log4cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -78,6 +81,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\serpents-rpc\serpents\rpc\server\xmlrpc_c_startup.h" />
+    <ClInclude Include="retvalue.h" />
+    <ClInclude Include="xmlrpc_c_buildopts.h" />
+    <ClInclude Include="xmlrpc_c_plugin.h" />
+    <ClInclude Include="xmlrpc_c_serveroptions.h" />
+    <ClInclude Include="implservermethod.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\serpents-rpc\serpents\rpc\server\xmlrpc_c_startup.cpp" />
+    <ClCompile Include="implservermethod.cpp" />
+    <ClCompile Include="parametercontainer.cpp" />
+    <ClCompile Include="retvalue.cpp" />
+    <ClCompile Include="xmlrpc_c_serveroptions.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

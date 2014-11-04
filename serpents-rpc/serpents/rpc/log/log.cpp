@@ -1,3 +1,4 @@
+/*
 #ifdef USE_LOG4CPP
 
 //   This file is part of the serpents-rpc library, licensed under the terms of the MIT License.
@@ -24,7 +25,6 @@
 //   THE SOFTWARE.
 
 #include "serpents/rpc/log/log.h"
-#include "serpents/rpc/server/server.h"
 namespace serpents{
   void Logger::addAppender(std::string type, std::string fileName){
     log4cpp::Appender *appender = new log4cpp::FileAppender(type,fileName);
@@ -53,3 +53,4 @@ namespace serpents{
 }
 
 #endif
+*/

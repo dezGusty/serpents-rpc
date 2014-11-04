@@ -32,17 +32,9 @@
 #include <thread>
 #include <string>
 
-
-#ifdef SERPENTSRPC_EXPORTS
-#define SERVERDLL _declspec(dllexport)
-#else
-#define SERVERDLL _declspec(dllimport)
-#endif
-
-
 namespace serpents{
   
-  class SERVERDLL Server{
+  class Server{
     class Impl;
     Impl* Impl_;
       
@@ -55,10 +47,9 @@ namespace serpents{
     unsigned int getPort();
     void setURI(std::string URI);
     void setPort(const unsigned int Port);
-    void setRepository(FunctionRepository& fr);
+	void setRepository(FunctionRepository& fr);
     FunctionRepository* getRepository();
-    XMLRPC_CServerOptions* getXMLRPC_CServerOptions();
-    XMLRPCPP_ServerOptions* getXMLRPCPP_ServerOptions();
+	ServerOptions* getServerOptions();
     void addLogTarget(std::string type, std::string fileName);
     std::map<std::string, std::string>* getLogTargets();
   };
@@ -67,9 +58,53 @@ namespace serpents{
     std::string URI;
     unsigned int port;
     std::map<std::string, std::string> logmap;
-    XMLRPC_CServerOptions* soPtr;
-    XMLRPCPP_ServerOptions* socppPtr;
+    ServerOptions* soPtr;
+   
   };
+
+  //implementation to be moved to corresponding libs 
+  Server::Server() {
+	  Impl_ = new Impl();
+  }
+  Server::Server(unsigned int port){
+	  Impl_ = new Impl();
+	  this->Impl_->port = port;
+  }
+  std::string Server::getURI(){
+	  return this->Impl_->URI;
+  }
+
+
+  unsigned int Server::getPort(){
+	  return this->Impl_->port;
+  }
+  void Server::setURI(std::string URI){
+	  this->Impl_->URI = URI;
+  }
+  void Server::setPort(unsigned port){
+	  this->Impl_->port = port;
+  }
+//  void Server::run(){
+//	  this->repository->executeAll();
+ // }
+  void Server::setRepository(serpents::FunctionRepository& fr){
+	  this->repository = &fr;
+  }
+  void Server::addLogTarget(std::string type, std::string fileName){
+	  Impl_->logmap.insert(std::pair<std::string, std::string>(fileName, type));
+  }
+  std::map<std::string, std::string>* Server::getLogTargets(){
+	  return &Impl_->logmap;
+  }
+  FunctionRepository* Server::getRepository(){
+	  return this->repository;
+  }
+
+  ServerOptions* Server::getServerOptions(){
+	  if (Impl_->soPtr == nullptr)
+		  throw std::exception("server options is a null pointer");
+	  return this->Impl_->soPtr;
+  }
 
 }
 
