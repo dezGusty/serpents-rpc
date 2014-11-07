@@ -15,6 +15,11 @@
 
 #include "xmlrpc-c\server_abyss.h"
 namespace serpents{
+	class XMLRPC_C_StartUp::Impl{
+	public:
+		std::thread thrd;
+		std::thread controllThread;
+	};
 	XMLRPC_C_StartUp::XMLRPC_C_StartUp(){
 		Impl_ = new Impl;
 	}

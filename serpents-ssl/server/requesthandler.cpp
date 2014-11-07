@@ -29,7 +29,7 @@
 #include <iostream>
 
 // project libs 
-
+#include  "serpents\rpc\parameters\parametercontainer.hpp"
 namespace serpents{
 	namespace http{
 		namespace server2{
@@ -37,17 +37,17 @@ namespace serpents{
 
 				rep.status = reply::status_type::ok;
 
-				serpents::param::ParameterContainer pc;
+				serpents::ParameterContainer pc;
 				std::string funcname;
 				util::xml::IXMLClass* xmlutil = new util::xml::PugiXML;
 				xmlutil->getXMLParameters(req.content, funcname, pc);
 				sptr_method method = functionRepo.lookUpMethod(funcname);
 
-				serpents::param::ParameterContainer result;
-				method->execute(&pc, &result);
+				Serpents_SSL_RetValue result;
+				(*method)->execute(&pc, &result);
 
 				pugi::xml_document responseDoc;
-				xmlutil->generateXMLResponse(responseDoc, result);
+				xmlutil->generateXMLResponse(responseDoc, result.getRetValue());
 				std::stringstream ss;
 				responseDoc.print(ss);
 

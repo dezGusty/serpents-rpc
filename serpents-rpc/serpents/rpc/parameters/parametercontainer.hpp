@@ -26,7 +26,7 @@
 //   THE SOFTWARE.
 
 //serpents libs 
-#include "serpents\rpc\base.h"
+
 
 
 //c++ system libs

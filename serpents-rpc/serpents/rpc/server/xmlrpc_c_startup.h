@@ -31,10 +31,6 @@ namespace serpents {
 		virtual void shutdown() override;
 		virtual void uninstall() override;
 	};
-	class XMLRPC_C_StartUp::Impl{
-	public:
-		std::thread thrd;
-		std::thread controllThread;
-	};
+	
 }
 #endif //XMLRPC_C_START_UP 

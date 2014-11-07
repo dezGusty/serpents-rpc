@@ -27,22 +27,38 @@
 #define SERVER_FUNCTION_REPOSITORY_H_
 #include <map>
 #include <memory>
-#include "parametercontainer\parametercontainer.h"
+#include "serpents-rpc\serpents\rpc\parameters\parametercontainer.hpp"
+#include "serpents-rpc\serpents\rpc\parameters\retValue.h"
 
 #include <thread>
 #include <chrono>
 #include <fstream>
-#include "base.h"
+#include "serpents-ssl\base.h"
+#include "serpents-rpc\serpents\rpc\server\method.hpp"
+//TODO: change ServerMethod  and FunctionRepository to the serpents-rpc immplementations
+
 namespace serpents{
 	namespace http{
 		namespace server2{
+			class Serpents_SSL_RetValue :public RetValue{
+				class Impl;
+				Impl* Impl_;
+			public: 
+				Serpents_SSL_RetValue();
+				~Serpents_SSL_RetValue();
+				void setValue(int n) override;
+				void setValue(double n) override;
+				void setValue(bool b) override;
+				void setValue(std::string s)override;
+				ParameterContainer& getRetValue();
+			};
 
 			class SSL_SERVER_API ServerMethod{
 			private:
 				class Impl;
 				Impl* Impl_;
 			public:
-				virtual void execute(serpents::param::ParameterContainer* pc, serpents::param::ParameterContainer* result) = 0;
+				virtual void execute(serpents::ParameterContainer* pc, Serpents_SSL_RetValue* result) = 0;
 				ServerMethod(std::string& name, std::string& help, std::string& signature);
 				ServerMethod();
 				~ServerMethod();
@@ -53,54 +69,8 @@ namespace serpents{
 				std::string getHelp();
 				std::string getName();
 			};
-			class ServerMethod::Impl{
-				friend ServerMethod;
-				std::string signature_;
-				std::string help_;
-				std::string name_;
-			};
-			class SampleMethod : public ServerMethod{
-			public:
-				SampleMethod(std::string& name, std::string& help, std::string& signature) {
-					setName(name);
-					setHelp(help);
-					setSignature(signature);
-
-				}
-				SampleMethod(){}
-				void execute(serpents::param::ParameterContainer* pc, serpents::param::ParameterContainer* result){
-					//result->add(pc->getInt(0) + pc->getInt(1));
-					std::chrono::milliseconds dura(5000);
-					std::this_thread::sleep_for(dura);
-					result->add(pc->getInt(0) + pc->getDouble(1));
-
-				}
-			};
-			class EchoMethod : public ServerMethod{
-			public:
-				void execute(serpents::param::ParameterContainer* pc, serpents::param::ParameterContainer* result){
-					*result = *pc;
-				}
-			};
-
-			class WriteToFile : public ServerMethod{
-			public:
-				void execute(serpents::param::ParameterContainer* pc, serpents::param::ParameterContainer* result){
-					std::string fileName = pc->getString(0);
-					std::ofstream outfile(fileName, std::ofstream::binary);
-					std::string s("opened");
-					outfile.write(s.c_str(), s.length());
-					std::chrono::milliseconds dura(2000);
-					std::this_thread::sleep_for(dura);
-					outfile.close();
-
-					std::ifstream is(fileName.c_str());
-					result->add(is.good());
-
-				}
-			};
-
-			typedef std::shared_ptr<ServerMethod> sptr_method;
+	
+			typedef std::shared_ptr<serpents::Method*> sptr_method;
 			typedef std::map<std::string, sptr_method> repository_map;
 
 			//server function repo
@@ -112,22 +82,19 @@ namespace serpents{
 
 				ServerFunctionRepository();
 				~ServerFunctionRepository();
-				void addServerMethod(std::shared_ptr<ServerMethod>& method);
+				void ServerFunctionRepository::addServerMethod(serpents::Method* method);
+				void ServerFunctionRepository::addServerMethod(sptr_method& method);
 				sptr_method lookUpMethod(std::string& name);
 
 			};
-			class ServerFunctionRepository::Impl{
-				friend ServerFunctionRepository;
-				std::map<std::string, std::shared_ptr<ServerMethod>> map;
-			};
+			
 			class RepoException : public std::exception{
 				std::string error;
 			public:
-				RepoException(std::string& errorMsg) : error(errorMsg){	}
-				std::string what(){ return error; }
+				RepoException(std::string& errorMsg) ;
+				std::string what();
 			};
 		}
 	}
 } // namespace serpents
-
 #endif // SERVER_FUNCTION_REPOSITORY_H_

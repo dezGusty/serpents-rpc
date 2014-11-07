@@ -51,7 +51,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;XMLRPC_C_PLUGIN_EXPORTS;PLUGINXMLRPC_C_EXP;GUSLIB_IMP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;XMLRPC_C_PLUGIN_EXPORTS;PLUGINXMLRPC_C_EXP;GUSLIB_IMP;USE_LOG4CPP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\ServerManager;C:\Users\vlad.petrescu\Documents\GitHub\guslib\guslib\;C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\serpents-rpc;C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\dependencies</AdditionalIncludeDirectories>
     </ClCompile>

@@ -25,7 +25,7 @@
 //   THE SOFTWARE.
 
 //serpents libs
-#include "serpents/rpc/base.h"
+//#include "serpents/rpc/base.h"
 
 //xmlrpc-c libs
 

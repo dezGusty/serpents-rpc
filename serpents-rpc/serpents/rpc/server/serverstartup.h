@@ -38,12 +38,6 @@ namespace serpents{
     virtual void start() = 0;
 	virtual void stop() = 0;
   };
-
-//  void ServerStartUp::start(){
-//	  this->Impl_->controllThread.join();
-//  }
-  
-
 }
 
 #endif  // SERVERSTARTUP_H_

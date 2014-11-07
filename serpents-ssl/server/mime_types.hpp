@@ -26,7 +26,7 @@
 #define HTTP_SERVER2_MIME_TYPES_HPP
 
 #include <string>
-#include "base.h"
+#include "serpents-ssl\base.h"
 namespace serpents{
 	namespace http {
 		namespace server2 {

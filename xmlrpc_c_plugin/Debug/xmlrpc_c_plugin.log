@@ -1,14 +1,47 @@
-﻿Build started 11/4/2014 1:34:42 PM.
+﻿Build started 11/6/2014 5:28:32 PM.
      1>Project "C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\xmlrpc_c_plugin\xmlrpc_c_plugin.vcxproj" on node 2 (Build target(s)).
-     1>Link:
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\ServerManager" /IC:\Users\vlad.petrescu\Documents\GitHub\guslib\guslib\ /I"C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\serpents-rpc" /I"C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\dependencies" /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D XMLRPC_C_PLUGIN_EXPORTS /D PLUGINXMLRPC_C_EXP /D GUSLIB_IMP /D USE_LOG4CPP /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "..\serpents-rpc\serpents\rpc\server\xmlrpc_c_startup.cpp" implservermethod.cpp parametercontainer.cpp retvalue.cpp
+         xmlrpc_c_startup.cpp
+     1>c:\users\vlad.petrescu\documents\github\serpents-rpc\dependencies\xmlrpc-c\base.hpp(436): warning C4251: 'xmlrpc_c::fault::description' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'xmlrpc_c::fault'
+     1>c:\users\vlad.petrescu\documents\github\serpents-rpc\dependencies\xmlrpc-c\base.hpp(530): warning C4251: 'xmlrpc_c::paramList::paramVector' : class 'std::vector<xmlrpc_c::value,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'xmlrpc_c::paramList'
+                 with
+                 [
+                     _Ty=xmlrpc_c::value
+                 ]
+     1>c:\users\vlad.petrescu\documents\github\serpents-rpc\dependencies\xmlrpc-c\registry.hpp(53): warning C4251: 'xmlrpc_c::method::_signature' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'xmlrpc_c::method'
+     1>c:\users\vlad.petrescu\documents\github\serpents-rpc\dependencies\xmlrpc-c\registry.hpp(54): warning C4251: 'xmlrpc_c::method::_help' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'xmlrpc_c::method'
+         Generating Code...
+         Compiling...
+         retvalue.cpp
+     1>c:\users\vlad.petrescu\documents\github\serpents-rpc\dependencies\xmlrpc-c\base.hpp(436): warning C4251: 'xmlrpc_c::fault::description' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'xmlrpc_c::fault'
+     1>c:\users\vlad.petrescu\documents\github\serpents-rpc\dependencies\xmlrpc-c\base.hpp(530): warning C4251: 'xmlrpc_c::paramList::paramVector' : class 'std::vector<xmlrpc_c::value,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'xmlrpc_c::paramList'
+                 with
+                 [
+                     _Ty=xmlrpc_c::value
+                 ]
+         implservermethod.cpp
+     1>c:\users\vlad.petrescu\documents\github\serpents-rpc\dependencies\xmlrpc-c\base.hpp(436): warning C4251: 'xmlrpc_c::fault::description' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'xmlrpc_c::fault'
+     1>c:\users\vlad.petrescu\documents\github\serpents-rpc\dependencies\xmlrpc-c\base.hpp(530): warning C4251: 'xmlrpc_c::paramList::paramVector' : class 'std::vector<xmlrpc_c::value,std::allocator<_Ty>>' needs to have dll-interface to be used by clients of class 'xmlrpc_c::paramList'
+                 with
+                 [
+                     _Ty=xmlrpc_c::value
+                 ]
+     1>c:\users\vlad.petrescu\documents\github\serpents-rpc\dependencies\xmlrpc-c\registry.hpp(53): warning C4251: 'xmlrpc_c::method::_signature' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'xmlrpc_c::method'
+     1>c:\users\vlad.petrescu\documents\github\serpents-rpc\dependencies\xmlrpc-c\registry.hpp(54): warning C4251: 'xmlrpc_c::method::_help' : class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'xmlrpc_c::method'
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         parametercontainer.cpp
+       Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\Debug\xmlrpc_c_plugin.dll" /INCREMENTAL /NOLOGO /LIBPATH:D:\libs\guslib\lib\Debug /LIBPATH:"D:\libs\xmlrpc-advanced\bin\Debug-DLL-Win32" libxmlrpc++.lib guslib.lib "C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\Debug\ServerManager.lib" "C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\Debug\serpents-rpc.lib" D:\libs\log4cpp\lib\Debug\log4cpp.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\Debug\xmlrpc_c_plugin.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\Debug\xmlrpc_c_plugin.lib" /MACHINE:X86 /DLL Debug\xmlrpc_c_startup.obj
          Debug\implservermethod.obj
          Debug\parametercontainer.obj
          Debug\retvalue.obj
          Debug\xmlrpc_c_serveroptions.obj
+            Creating library C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\Debug\xmlrpc_c_plugin.lib and object C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\Debug\xmlrpc_c_plugin.exp
          xmlrpc_c_plugin.vcxproj -> C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\build\Debug\xmlrpc_c_plugin.dll
      1>Done Building Project "C:\Users\vlad.petrescu\Documents\GitHub\serpents-rpc\xmlrpc_c_plugin\xmlrpc_c_plugin.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.41
+Time Elapsed 00:00:07.89

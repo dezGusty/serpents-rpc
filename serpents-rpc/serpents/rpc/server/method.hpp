@@ -35,12 +35,12 @@ namespace serpents{
 	public:
 		Method();
 		~Method();
-		std::string getSignature();
-		std::string getHelp();
-		void setSignature(std::string sig);
-		void setHelp(std::string help);
-		void setName(std::string name);
-		std::string Method::getName();
+		virtual std::string getSignature();
+		virtual std::string getHelp();
+		virtual void setSignature(std::string sig);
+		virtual void setHelp(std::string help);
+		virtual void setName(std::string name);
+		virtual std::string Method::getName();
 		virtual void execute(ParameterContainer* parameters, RetValue* rv) = 0;
 		Method& operator=(Method& m);
 		Method(const Method& m);

@@ -12,8 +12,8 @@
 #define PUGIXML_HEADER_ONLY
 #include "pugixml/pugixml.hpp"
 // project libs
-#include "parametercontainer\parametercontainer.h"
-#include "base.h"
+#include "serpents-rpc\serpents\rpc\parameters\parametercontainer.hpp"
+#include "serpents-ssl\base.h"
 #include <iostream>
 namespace serpents{
 	namespace util{
@@ -22,14 +22,14 @@ namespace serpents{
 					class IXMLClass{
 					public:
 						
-						virtual void getXMLParameters(std::string& xmlDoc, std::string& functionName, serpents::param::ParameterContainer& pc) = 0;
+						virtual void getXMLParameters(std::string& xmlDoc, std::string& functionName, serpents::ParameterContainer& pc) = 0;
 						
-						virtual std::string generateXMLDoc(std::string& methodName, serpents::param::ParameterContainer* pc, std::string& result) = 0;
+						virtual std::string generateXMLDoc(std::string& methodName, serpents::ParameterContainer* pc, std::string& result) = 0;
 						
-						virtual void getResponseParameters(std::string& xmlDoc, serpents::param::ParameterContainer& pc) = 0;
+						virtual void getResponseParameters(std::string& xmlDoc, serpents::ParameterContainer& pc) = 0;
 
 						template< typename T>
-						T& generateXMLResponse(T& responseDoc, serpents::param::ParameterContainer& response){
+						T& generateXMLResponse(T& responseDoc, serpents::ParameterContainer& response){
 							PugiXML* pugi = new PugiXML;
 							pugi->generateXMLResponse(responseDoc, response);
 							delete pugi;
@@ -41,7 +41,7 @@ namespace serpents{
 					};
 
 					class PugiXML : public IXMLClass{
-						void getXMLParameters(std::string& xmlDoc, std::string& functionName, serpents::param::ParameterContainer& pc){
+						void getXMLParameters(std::string& xmlDoc, std::string& functionName, serpents::ParameterContainer& pc){
 							bool foundParams = false;
 							pugi::xml_document doc;
 							pugi::parse_wconv_attribute;
@@ -89,13 +89,13 @@ namespace serpents{
 								}
 							}
 							if (!foundParams){
-								throw(std::exception("No supported variable types found"));
+							//	throw(std::exception("No supported variable types found"));
 							}
 						}// getXMLParameters
 
 						
 					public:
-						void getResponseParameters(std::string& xmlDoc, serpents::param::ParameterContainer& pc){
+						void getResponseParameters(std::string& xmlDoc, serpents::ParameterContainer& pc){
 							bool foundParams = false;
 							pugi::xml_document doc;
 							pugi::parse_wconv_attribute;
@@ -138,7 +138,7 @@ namespace serpents{
 								throw(std::exception("No supported variable types found"));
 							}
 						}
-						pugi::xml_document& generateXMLResponse(pugi::xml_document& responseDoc, serpents::param::ParameterContainer& response){
+						pugi::xml_document& generateXMLResponse(pugi::xml_document& responseDoc, serpents::ParameterContainer& response){
 							pugi::xml_node root = responseDoc.append_child("methodResponse");
 							pugi::xml_node params = root.append_child("params");
 							auto it = response.getAll().begin();
@@ -152,7 +152,7 @@ namespace serpents{
 
 							return responseDoc;
 						} // generateXMLResponse
-						std::string generateXMLDoc(std::string& methodName, serpents::param::ParameterContainer* pc, std::string& result){
+						std::string generateXMLDoc(std::string& methodName, serpents::ParameterContainer* pc, std::string& result){
 							pugi::xml_document xmlDoc;
 							pugi::xml_node root = xmlDoc.append_child("methodCall");
 							pugi::xml_node mName = root.append_child("methodName");

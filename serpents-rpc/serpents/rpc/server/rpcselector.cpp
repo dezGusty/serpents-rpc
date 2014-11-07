@@ -28,6 +28,7 @@
 #include "guslib/common/simpleexception.h"
 #include "..\build\ServerManager\servermanager.h"
 #include "serpents\rpc\server\rpcselector.h"
+#include "serpents\rpc\server\server.h"
 namespace serpents{
 	void loadPlugin(const std::string& pluginName)
 	{
@@ -67,34 +68,28 @@ namespace serpents{
 	
 	std::cout << "start" << std::endl;
 	std::string plugin_name("xmlrpc_c_plugin.dll");
-
+	std::string ssl_plugin_name("serpents_ssl.dll");
 	std::cout << "loading plugin: " << plugin_name << std::endl;
 	loadPlugin(plugin_name);
 	std::cout << "loaded plugin: " << plugin_name << std::endl;
-
-	ServerStartUpImpl_ = serpents::ServerManager::getPtr()->getServerPointer("xmlrpc_c_plugin");
-	 
-	/*
-    if (strcmp(method.c_str(), "xmlrpc_c") == 0){
-      ServerStartUpImpl_ = new XMLRPC_C_StartUp();
-      
-    }
-    if (strcmp(method.c_str(), "xmlrpc++") == 0){
-
-      ServerStartUpImpl_ = new XMLRPCpp_StartUp();
-    }
+	std::cout << "loading plugin: " << ssl_plugin_name << std::endl;
+	loadPlugin(ssl_plugin_name);
+	std::cout << "loaded plugin: " << ssl_plugin_name << std::endl;
 	
+	this->ServerStartUpImpl_ = serpents::ServerManager::getPtr()->getServerPointer(method);
+	if (ServerStartUpImpl_ == nullptr)
+		throw std::exception("no plugin loaded");
 #ifdef USE_LOG4CPP
-	auto map = server_.getLogTargets();
+	auto map = server_->getLogTargets();
     for (auto it = map->begin(); it != map->end(); ++it){
-      Logger::getInstance().addAppender(it->second,it->first);
+		Log::getPtr()->addAppender(it->second,it->first);
     }
-    Logger::getInstance().info("---using library "+ method+"---");
+	Log::getPtr()->info("---using library " + method + "---");
 #endif
-	*/
+	
   }
   void RPCSelector::stopServer(){
-    //ServerStartUpImpl_->runCon = false;
+   // ServerStartUpImpl_->runCon = false;
   }
 
   void RPCSelector::startServer(){

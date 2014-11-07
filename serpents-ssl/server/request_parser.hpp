@@ -30,7 +30,7 @@
 #include <boost/logic/tribool.hpp>
 #include <boost/tuple/tuple.hpp>
 #include "coroutine.hpp"
-#include "base.h"
+#include "serpents-ssl\base.h"
 namespace serpents{
 	namespace http {
 		namespace server2 {

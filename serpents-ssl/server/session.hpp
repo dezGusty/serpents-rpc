@@ -23,6 +23,9 @@
 
 // based of the ASIO Server guide found at http://www.boost.org/doc/libs/1_55_0/doc/html/boost_asio/examples/cpp11_examples.html
 
+#ifndef SESSION_H_
+#define SESSION_H_
+#pragma once
 /// boost libs
 #include <boost/array.hpp>
 #include <boost/bind.hpp>
@@ -30,12 +33,12 @@
 #include <boost/asio/ssl.hpp>
 #include <boost/lexical_cast.hpp>
 /// programs libs
-#include "server\serverfunctionrepository.h"
-#include "server\requesthandler.h"
-#include "server\request_parser.hpp"
-#include "server\reply.hpp"
-#include "base.h"
-#include "log\log.h"
+#include "serpents-ssl\server\serverfunctionrepository.h"
+#include "serpents-ssl\server\requesthandler.h"
+#include "serpents-ssl\server\request_parser.hpp"
+#include "serpents-ssl\server\reply.hpp"
+#include "serpents-ssl\base.h"
+#include "serpents-ssl\log\log.h"
 ///system libs
 
 namespace serpents{
@@ -56,156 +59,23 @@ namespace serpents{
 
 		class SSL_SERVER_API session
 		{
-			class Impl{
-				friend session;
-				Impl(boost::asio::io_service& io_service, boost::asio::ssl::context& context,
-					http::server2::ServerFunctionRepository& repo)
-					: socket_(io_service, context),
-					functionRepo_(repo)
-				{
-				}
-				
-				ssl_socket socket_;
-				boost::array<char, 8192> buffer_;
-				///function repository 
-				http::server2::ServerFunctionRepository& functionRepo_;
-
-				/// The incoming request.
-				http::server2::request request_;
-
-				/// The parser for the incoming request.
-				http::server2::request_parser request_parser_;
-
-				/// The reply to be sent back to the client.
-				http::server2::reply reply_;
-				
-			};
+			class Impl;
 			Impl* Impl_;
 		public:
 			session(boost::asio::io_service& io_service, boost::asio::ssl::context& context,
-				http::server2::ServerFunctionRepository& repo)
-
-			{
-				Impl_ = new Impl(io_service, context, repo);
-			}
-			~session(){
-				delete Impl_;
-			}
-			ssl_socket::lowest_layer_type& socket()
-			{
-				return Impl_->socket_.lowest_layer();
-			}
-
-			void start()
-			{
-				Impl_->socket_.async_handshake(boost::asio::ssl::stream_base::server,
-					boost::bind(&session::handle_handshake, this,
-					boost::asio::placeholders::error));
-			}
-
-			void handle_handshake(const boost::system::error_code& error)
-			{
-				if (!error)
-				{
-					Impl_->socket_.async_read_some(boost::asio::buffer(Impl_->buffer_),
-						boost::bind(&session::handle_read, this,
-						boost::asio::placeholders::error,
-						boost::asio::placeholders::bytes_transferred));
-				}
-				else
-				{
-					delete this;
-				}
-			}
-
+				http::server2::ServerFunctionRepository& repo);
+			~session();
+			ssl_socket::lowest_layer_type& socket();
+			void start();
+			void handle_handshake(const boost::system::error_code& error);
 			void handle_read(const boost::system::error_code& error,
-				size_t bytes_transferred)
-			{
-				if (!error)
-				{
-
-					std::stringstream ss(Impl_->buffer_.data());
-					//parseRequest(ss);
-					std::string cont = ss.str();
-					http::server2::request_parser rp;
-					boost::tribool result;
-					boost::tie(result, boost::tuples::ignore) = rp.parse(Impl_->request_, cont.begin(), cont.end());
-
-					if (result){
-						http::server2::RequestHandler* requestHandler = new http::server2::RequestHandler;
-						try{
-							requestHandler->handleRequest(Impl_->request_, Impl_->reply_, Impl_->functionRepo_);
-
-							//	boost::asio::async_write(socket_, rep.to_buffers(),
-							//boost::bind(&session::handle_write, this,
-							//	boost::asio::placeholders::error));
-						}
-						catch (boost::bad_lexical_cast& e){
-							LOG_ERROR(e.what());
-							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
-						}
-						catch (serpents::param::ParamContainerException& e){
-							LOG_ERROR(e.what());
-							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
-						}
-						catch (http::server2::RepoException& e){
-							LOG_ERROR(e.what());
-							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
-
-						}
-						catch (http::server2::RequestException& e){
-							LOG_ERROR(e.what());
-							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, "unknown exception");
-						}
-						catch (std::exception& e){
-							LOG_ERROR(e.what());
-							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
-
-						}
-						catch (...){
-							LOG_ERROR("unkown exception");
-							Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, "unkonwn exception");
-
-						}
-
-						boost::asio::async_write(Impl_->socket_, Impl_->reply_.to_buffers(),
-							boost::bind(&session::handle_write, this,
-							boost::asio::placeholders::error));
-						delete requestHandler;
-
-					}
-
-				}
-				else
-				{
-					delete this;
-				}
-			}
-			/*
-			// If an error occurs then no new asynchronous operations are started. This
-			// means that all shared_ptr references to the connection object will
-			// disappear and the object will be destroyed automatically after this
-			// handler returns. The connection class's destructor closes the socket.
-			}
-			*/
-
-			void handle_write(const boost::system::error_code& error)
-			{
-				if (!error)
-				{
-					Impl_->socket_.async_read_some(boost::asio::buffer(Impl_->buffer_),
-						boost::bind(&session::handle_read, this,
-						boost::asio::placeholders::error,
-						boost::asio::placeholders::bytes_transferred));
-				}
-				else
-				{
-					delete this;
-				}
-			}
+				size_t bytes_transferred);
+			void handle_write(const boost::system::error_code& error);
 		};
 
-
+		
 
 	} //ssl
 } //serpents
+
+#endif //SESSION_H_

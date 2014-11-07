@@ -1,10 +1,30 @@
 #include <cstdlib>
 #include <iostream>
 #include <boost/bind.hpp>
-#include "server/server.hpp"
-#include "log\log.h"
+#include "serpents-ssl\server/server.hpp"
+#include "serpents-ssl\server\serverfunctionrepository.h"
+#include "serpents-ssl\log\log.h"
+#include "serpents-rpc\serpents\rpc\parameters\retValue.h"
+#include "serpents\rpc\server\implservermethod.h"
+#include "serpents\rpc\server\method.hpp"
 #define PUGIXML_HEADER_ONLY
 using namespace serpents::ssl;
+
+class SampleMethod : public serpents::Method{
+public:
+	SampleMethod(std::string& name, std::string& help, std::string& signature) {
+		setName(name);
+		setHelp(help);
+		setSignature(signature);
+
+	}
+	SampleMethod(){}
+	~SampleMethod(){}
+	void execute(serpents::ParameterContainer* pc, RetValue* ret) override{
+		//result->add(pc->getInt(0) + pc->getInt(1));
+		ret->setValue(pc->getInt(0));
+	}
+};
 
 int main(){
 
@@ -16,16 +36,9 @@ int main(){
 		server s("localhost", io_service, 8080, numThreads);
 
 
-		std::shared_ptr<serpents::http::server2::ServerMethod> s_method(new serpents::http::server2::SampleMethod);
-		s_method->setName(std::string("sample"));
-		s.getfunctionRepo().addServerMethod(s_method);
-		std::shared_ptr<serpents::http::server2::ServerMethod> s2_method(new serpents::http::server2::EchoMethod);
-		s2_method->setName(std::string("echo"));
-		s.getfunctionRepo().addServerMethod(s2_method);
-
-		std::shared_ptr<serpents::http::server2::ServerMethod> s3_method(new serpents::http::server2::WriteToFile);
-		s3_method->setName(std::string("write"));
-		s.getfunctionRepo().addServerMethod(s3_method);
+		std::shared_ptr<serpents::Method> s_method(new SampleMethod);
+	    s_method->setName(std::string("echo"));
+	    s.getfunctionRepo().addServerMethod(s_method);
 		s.run();
 		
 	}

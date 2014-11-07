@@ -30,10 +30,9 @@
 #include <boost/any.hpp>
 #include "reply.hpp"
 #include "request.hpp"
-#include "parametercontainer/parametercontainer.h"
-#include "serverfunctionrepository.h"
-#include "base.h"
-#include "util\xmlutil.hpp"
+#include "serpents-ssl\server\serverfunctionrepository.h"
+#include "serpents-ssl\base.h"
+#include "serpents-ssl\util\xmlutil.hpp"
 namespace serpents{
 
 	namespace http{

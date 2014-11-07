@@ -14,7 +14,7 @@
 #define HTTP_SERVER2_HEADER_HPP
 
 #include <string>
-#include "base.h"
+#include "serpents-ssl\base.h"
 namespace serpents{
 	namespace http {
 		namespace server2 {

@@ -33,7 +33,7 @@
 #include <string>
 #include <exception>
 #include <sstream>
-#include "base.h"
+#include "serpents-ssl\base.h"
 namespace serpents{
 	namespace param{
 			class SSL_SERVER_API ParamContainerException : public std::exception{

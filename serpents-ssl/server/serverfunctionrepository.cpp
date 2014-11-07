@@ -22,10 +22,41 @@
 //   THE SOFTWARE.
 
 #include "serverfunctionrepository.h"
+#include <sstream>
 namespace serpents{
 	namespace http{
 		namespace server2{
-
+			class Serpents_SSL_RetValue::Impl{
+				friend Serpents_SSL_RetValue;
+				serpents::ParameterContainer cont;
+			};
+			Serpents_SSL_RetValue::Serpents_SSL_RetValue(){
+				Impl_ = new Impl;
+			}
+			Serpents_SSL_RetValue::~Serpents_SSL_RetValue(){
+				delete Impl_;
+			}
+			void Serpents_SSL_RetValue::setValue(int n){
+				Impl_->cont.add(n);
+			}
+			void Serpents_SSL_RetValue::setValue(bool n){
+				Impl_->cont.add(n);
+			}
+			void Serpents_SSL_RetValue::setValue(double n){
+				Impl_->cont.add(n);
+			}
+			void Serpents_SSL_RetValue::setValue(std::string n){
+				Impl_->cont.add(n);
+			}
+			ParameterContainer& Serpents_SSL_RetValue::getRetValue(){
+				return Impl_->cont;
+			}
+			class ServerMethod::Impl{
+				friend ServerMethod;
+				std::string signature_;
+				std::string help_;
+				std::string name_;
+			};
 			void ServerMethod::setSignature(std::string& signature){
 				Impl_->signature_ = signature;
 			}
@@ -58,8 +89,16 @@ namespace serpents{
 				delete Impl_;
 			}
 
+
+			// exception 
+			RepoException::RepoException(std::string& errorMsg) : error(errorMsg){	}
+			std::string RepoException::what(){ return error; }
+			//server function repo
+			class ServerFunctionRepository::Impl{
+				friend ServerFunctionRepository;
+				std::map<std::string, sptr_method> map;
+			};
 			ServerFunctionRepository::ServerFunctionRepository(){
-				EchoMethod em;
 				Impl_ = new Impl;
 
 			}
@@ -68,9 +107,14 @@ namespace serpents{
 				delete Impl_;
 			}
 
-			void ServerFunctionRepository::addServerMethod(std::shared_ptr<ServerMethod>& method){
+			void ServerFunctionRepository::addServerMethod(sptr_method& method){
 
-				Impl_->map.insert(std::pair<std::string, std::shared_ptr<ServerMethod>>(method->getName(), std::move(method)));
+				Impl_->map.insert(std::pair<std::string, sptr_method>((*method)->getName(), std::move(method)));
+
+			}
+			void ServerFunctionRepository::addServerMethod(serpents::Method* method){
+				std::shared_ptr<serpents::Method*> smethod = std::make_shared<serpents::Method*>(method);
+				//Impl_->map.insert(std::pair<std::string, sptr_method>(method->getName(), std::move(smethod)));
 
 			}
 			sptr_method ServerFunctionRepository::lookUpMethod(std::string& name){
@@ -82,7 +126,7 @@ namespace serpents{
 						throw(RepoException(ss.str()));
 					}
 					else {
-						return Impl_->map.find(name)->second;
+						return Impl_->map.find(name)->second;						
 					}
 				}
 				else{

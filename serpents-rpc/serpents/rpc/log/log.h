@@ -1,4 +1,4 @@
-/*
+
 #ifndef LOGGER_H_
 #define LOGGER_H_
 
@@ -29,7 +29,7 @@
 
 //serpent libs
 #include "serpents/rpc/base.h"
-#include "servermanager_build_opts.h"
+#include "serpents\rpc\log\log_build_opts.h"
 //log4cpp libs
 #include "log4cpp/Category.hh"
 
@@ -69,4 +69,3 @@ namespace serpents{
 #endif
 #endif // LOGGER_H_
 
-*/
