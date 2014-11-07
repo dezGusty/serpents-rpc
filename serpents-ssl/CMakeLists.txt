@@ -32,6 +32,10 @@ SET (SOURCE_FILES_SERVER
  "${CMAKE_CURRENT_SOURCE_DIR}/server/requesthandler.cpp"
  "${CMAKE_CURRENT_SOURCE_DIR}/server/server.cpp"
  "${CMAKE_CURRENT_SOURCE_DIR}/server/serverfunctionrepository.cpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/serpents_ssl_startup.h"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/serpents_ssl_startup.cpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/ssl_server_build_opts.h"
+ 
 
 )
 SET(SOURCE_FILES_PARAMETER 
@@ -99,7 +103,8 @@ SOURCE_GROUP("serpents\\client" FILES
 
 
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${PROJECT_SOURCE_DIR})
+include_directories(${PROJECT_SOURCE_DIR}/serpents-rpc/)
 include_directories(${PugiXML_BASE})
 include_directories(${PROJECT_SOURCE_DIR}/dependencies/)
 source_group("" FILES ${SOURCE_FILES})
@@ -109,8 +114,8 @@ include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${OPENSSL_INCLUDE_DIR} )
 
 add_definitions(/D _WIN32_WINNT=0x0501 -D_SCL_SECURE_NO_WARNINGS -DSSL_SERVER_EXPORT)
-target_link_libraries(serpents_ssl Ws2_32.lib odbc32.lib odbccp32.lib  ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
-
+target_link_libraries(serpents_ssl Ws2_32.lib odbc32.lib odbccp32.lib  servermanager.lib ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES})
+#add guslib
 if (SERPENTS_RPC_USELOG4CPP)
  FIND_PACKAGE(LOG4CPP_Local)
   target_link_libraries(serpents_ssl ${LOG4CPP_LIBRARY})

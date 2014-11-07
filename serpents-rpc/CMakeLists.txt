@@ -56,7 +56,7 @@ IF (${SERPENTS_RPC_BUILD_TESTS})
 ENDIF ()
 
 include_directories("${CMAKE_SOURCE_DIR}/dependencies/")
-
+include_directories("${CMAKE_SOURCE_DIR}/server-manager/")
 link_directories("${CMAKE_SOURCE_DIR}/dependencies/bin/release")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
@@ -67,6 +67,8 @@ SET ( SOURCE_FILES_SERVER
   "./serpents/rpc/server/server.cpp"
   "./serpents/rpc/server/implservermethod.h"
   "./serpents/rpc/server/implservermethod.cpp"
+  "./serpents/rpc/server/method.hpp"
+  "./serpents/rpc/server/method.cpp"
   "./serpents/rpc/server/repository.h"
   "./serpents/rpc/server/repository.cpp"
   "./serpents/rpc/server/rpcselector.h"
@@ -84,9 +86,10 @@ SET (SOURCE_FILES_LAUNCHER
 SET (SOURCE_FILES_LOG
   "./serpents/rpc/log/log.h"
   "./serpents/rpc/log/log.cpp"
+  "./serpents/rpc/log/log_build_opts.h"
 )
 SET (SOURCE_FILES_PARAMETERS
- "./serpents/rpc/parameters/parametercontainer.h"
+ "./serpents/rpc/parameters/parametercontainer.hpp"
  "./serpents/rpc/parameters/parametercontainer.cpp"
  "./serpents/rpc/parameters/retvalue.h"
  "./serpents/rpc/parameters/retvalue.cpp"
@@ -138,8 +141,8 @@ FIND_PACKAGE(XMLRPC_C_Locall)
 FIND_PACKAGE(XMLRPCpp_Local)
 FIND_PACKAGE(LOG4CPP_Local)
 
-target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} Ws2_32.lib odbc32.lib odbccp32.lib ${XMLLIB_XMLRPC_C_LIBRARY} ${XMLLIB_XMLRPCpp_LIBRARY}  
-																					${LOG4CPP_LIBRARY})
+target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} Ws2_32.lib odbc32.lib odbccp32.lib servermanager.lib ${XMLLIB_XMLRPC_C_LIBRARY} ${XMLLIB_XMLRPCpp_LIBRARY} ) 
+#add guslib																				${LOG4CPP_LIBRARY})
 
 add_definitions(-DSERPENTSRPC_EXPORTS)
 

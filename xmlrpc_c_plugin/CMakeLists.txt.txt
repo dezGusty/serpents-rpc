@@ -53,6 +53,7 @@ source_group("xmlrpc_c_plugin" FILES ${SRC_FLIES_XMLRPC_C})
 add_library(XMLRPC_C_PLUGIN SHARED ${SOURCE_FILES})
 
 target_link_libraries(${XMLRPC_C_PLUGIN} Ws2_32.lib odbc32.lib odbccp32.lib ${XMLLIB_XMLRPC_C_LIBRARY} )
+#add guslib 
 
 add_definitions(-DXMLRPC_C_PLUGIN_EXPORTS)
 add_definitions(-DPLUGINXMLRPC_C_EXP)

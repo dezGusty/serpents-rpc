@@ -33,7 +33,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/serpents-rpc/serpents-rpc)
 
 #link_directories() complete after finding guslib dynamically
 
-target_link_libraries(${CMAKE_CURRENT_SOURCE_DIR} )#guslib.lib)
+#target_link_libraries(${CMAKE_CURRENT_SOURCE_DIR} ) guslib.lib)
 add_definitions(-DSERVERMANAGER_EXPORTS)
 add_definitions(-DSERVERMGR_EXP)
 add_definitions(-DGUSLIB_IMP)
