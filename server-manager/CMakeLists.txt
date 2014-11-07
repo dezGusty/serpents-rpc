@@ -1,0 +1,39 @@
+MESSAGE("")
+MESSAGE("*")
+MESSAGE("Building the server-manager")
+MESSAGE("*")
+MESSAGE("")
+SET (SERVER_MANAGER_PROJECT_NAME server_manager)
+SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMake/;${PROJECT_SOURCE_DIR}/CMake/;${CMAKE_ROOT}/Modules;${CMAKE_MODULE_PATH}")
+
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
+
+SET ( SOURCE_SERVER_MANAGER
+  "./servermanager.h"
+  "./servermanager.cpp"
+  "./servermanager_build_opts.h"
+)
+
+SET (SERVER_MANAGER_SOURCE_FILES
+  ${SOURCE_SERVER_MANAGER}
+ 
+)
+
+#visual studio
+
+SOURCE_GROUP("server-manager" FILES
+ ${SOURCE_SERVER_MANAGER}
+)
+add_library(${SERVER_MANAGER_PROJECT_NAME} SHARED ${SOURCE_SERVER_MANAGER})
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/serpents-rpc/serpents-rpc)
+#include guslib
+
+#link_directories() complete after finding guslib dynamically
+
+target_link_libraries(${CMAKE_CURRENT_SOURCE_DIR} )#guslib.lib)
+add_definitions(-DSERVERMANAGER_EXPORTS)
+add_definitions(-DSERVERMGR_EXP)
+add_definitions(-DGUSLIB_IMP)
