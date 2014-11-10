@@ -61,51 +61,51 @@ namespace serpents{
 	}
 
 	//plug in
- 
-  //choose impl of server 
-  void RPCSelector::selectRPCMethod(Server& server, std::string method){
-    server_ = &server;
-	
-	std::cout << "start" << std::endl;
-	std::string plugin_name("xmlrpc_c_plugin.dll");
-	std::string ssl_plugin_name("serpents_ssl.dll");
-	std::cout << "loading plugin: " << plugin_name << std::endl;
-	loadPlugin(plugin_name);
-	std::cout << "loaded plugin: " << plugin_name << std::endl;
-	std::cout << "loading plugin: " << ssl_plugin_name << std::endl;
-	loadPlugin(ssl_plugin_name);
-	std::cout << "loaded plugin: " << ssl_plugin_name << std::endl;
-	
-	this->ServerStartUpImpl_ = serpents::ServerManager::getPtr()->getServerPointer(method);
-	if (ServerStartUpImpl_ == nullptr)
-		throw std::exception("no plugin loaded");
+
+	//choose impl of server 
+	void RPCSelector::selectRPCMethod(Server& server, std::string method){
+		server_ = &server;
+
+		std::cout << "start" << std::endl;
+		std::string plugin_name("xmlrpc_c_plugin.dll");
+		std::string ssl_plugin_name("serpents_ssl.dll");
+		std::cout << "loading plugin: " << plugin_name << std::endl;
+		loadPlugin(plugin_name);
+		std::cout << "loaded plugin: " << plugin_name << std::endl;
+		std::cout << "loading plugin: " << ssl_plugin_name << std::endl;
+		loadPlugin(ssl_plugin_name);
+		std::cout << "loaded plugin: " << ssl_plugin_name << std::endl;
+
+		this->ServerStartUpImpl_ = serpents::ServerManager::getPtr()->getServerPointer(method);
+		if (ServerStartUpImpl_ == nullptr)
+			throw std::exception("no plugin loaded");
 #ifdef USE_LOG4CPP
-	auto map = server_->getLogTargets();
-    for (auto it = map->begin(); it != map->end(); ++it){
-		Log::getPtr()->addAppender(it->second,it->first);
-    }
-	Log::getPtr()->info("---using library " + method + "---");
+		auto map = server_->getLogTargets();
+		for (auto it = map->begin(); it != map->end(); ++it){
+			Log::getPtr()->addAppender(it->second, it->first);
+		}
+		Log::getPtr()->info("---using library " + method + "---");
 #endif
-	
-  }
-  void RPCSelector::stopServer(){
-   // ServerStartUpImpl_->runCon = false;
-  }
 
-  void RPCSelector::startServer(){
-    ServerStartUpImpl_->execute(server_);
-    ServerStartUpImpl_->start();
-  }
-  RPCSelector::RPCSelector()
-  {
-  }
+	}
+	void RPCSelector::stopServer(){
+		// ServerStartUpImpl_->runCon = false;
+	}
+
+	void RPCSelector::startServer(){
+		ServerStartUpImpl_->execute(server_);
+		ServerStartUpImpl_->start();
+	}
+	RPCSelector::RPCSelector()
+	{
+	}
 
 
-  RPCSelector::~RPCSelector()
-  {
-    delete ServerStartUpImpl_;
-    
-  }
+	RPCSelector::~RPCSelector()
+	{
+		delete ServerStartUpImpl_;
+
+	}
 
 
 }

@@ -135,53 +135,7 @@ public:
 	  buff << "Content-Length: " << result.length()<< "\r\n\r\n";
 	  buff << result;
 	  return buff;
-	  /*
-	  std::stringstream buff;
 	  
-	  buff << "POST " << "/RPC2" << " HTTP/1.1\r\n";
-	  buff << "Host: " << "localhost : 8080" << "\r\n";
-	  buff << "Accept: application/xml\r\n";
-	  buff << "Cache-Control: no-cache\r\n";
-	  buff << "Content-Type: application/xml; \r\n";//charset=UTF-8
-	  buff << "Content-Length: " << msg.size() << "\r\n";
-	  buff << "\r\n\r\n"; // THIS LINE ADDED
-	  buff << msg <<"\r\n";
-	  buff << "\r\n\r\n"; 
-	  return buff.str();
-	  */
-	  
-	  /*
-	  buff << "POST / RPC2 HTTP / 1.1 ";
-		  buff << "Host: localhost : 8080\r\n";
-	  buff << "Content - Type : application / xml\r\n";
-	  buff << "Cache - Control : no - cache\r\n";
-	  buff << "Postman - Token : aa1dba41 - c90f - 8b9d - a98c - 38f9d49fb921\r\n";
-	  buff << "\r\n\r\n";
-	  buff << "<methodCall>";
-	  buff << "<methodName>echo< / methodName>";
-	  buff << "<params>";
-	  buff << "<param>";
-	  buff << "<value><string>D:\test.txt< / string>< / value>";
-	  buff << "< / param>";
-	  buff << "<param>";
-	  buff << "<value><i4>2 < / i4 > < / value>";
-	  buff << "< / param>";
-	  buff << "<param>";
-	  buff << "<value><string>2 < / string > < / value>";
-	  buff << "< / param>";
-	  buff << "<param>";
-	  buff << "<value><double>2 < / double > < / value>";
-	  buff << "< / param>";
-	  buff << "<param>";
-	  buff << "<value><myvar>2 < / myvar > < / value>";
-	  buff << "< / param>";
-	  buff << "<param>";
-	  buff << "<value><boolean>1 < / boolean > < / value>";
-	  buff << "< / param>";
-	  buff << "< / params>";
-	  buff << "< / methodCall>";
-	  return buff.str();
-	  */
   }
 private:
   serpents::param::ParameterContainer* requestParam_; 

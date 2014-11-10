@@ -28,12 +28,10 @@ SOURCE_GROUP("server-manager" FILES
 )
 add_library(${SERVER_MANAGER_PROJECT_NAME} SHARED ${SOURCE_SERVER_MANAGER})
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/serpents-rpc/serpents-rpc)
-#include guslib
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/serpents-rpc/serpents-rpc ${GUSLIB_INCLUDE_DIR})
 
-#link_directories() complete after finding guslib dynamically
 
-#target_link_libraries(${CMAKE_CURRENT_SOURCE_DIR} ) guslib.lib)
+#target_link_libraries(${CMAKE_CURRENT_SOURCE_DIR} ) ${GUSLIB_LIBRARY})
 add_definitions(-DSERVERMANAGER_EXPORTS)
 add_definitions(-DSERVERMGR_EXP)
 add_definitions(-DGUSLIB_IMP)

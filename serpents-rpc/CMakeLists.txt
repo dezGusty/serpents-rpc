@@ -55,6 +55,8 @@ IF (${SERPENTS_RPC_BUILD_TESTS})
 
 ENDIF ()
 
+
+
 include_directories("${CMAKE_SOURCE_DIR}/dependencies/")
 include_directories("${CMAKE_SOURCE_DIR}/server-manager/")
 link_directories("${CMAKE_SOURCE_DIR}/dependencies/bin/release")
@@ -74,9 +76,7 @@ SET ( SOURCE_FILES_SERVER
   "./serpents/rpc/server/rpcselector.h"
   "./serpents/rpc/server/rpcselector.cpp"
   "./serpents/rpc/server/serveroptions.h"
-  "./serpents/rpc/server/serveroptions.cpp"
   "./serpents/rpc/server/serverstartup.h"
-  "./serpents/rpc/server/serverstartup.cpp"
 )
 
 SET (SOURCE_FILES_LAUNCHER
@@ -127,7 +127,7 @@ SOURCE_GROUP("serpents\\rpc\\log" FILES
 SOURCE_GROUP("serpents\\rpc\\parameters" FILES
   ${SOURCE_FILES_PARAMETERS}
 )
-
+link_directories("${CMAKE_SOURCE_DIR}/build")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 source_group("" FILES ${SOURCE_FILES})
 
@@ -140,15 +140,19 @@ add_library(${SERPENTS_RPC_PROJECT_NAME} SHARED ${SOURCE_FILES})
 FIND_PACKAGE(XMLRPC_C_Locall)
 FIND_PACKAGE(XMLRPCpp_Local)
 FIND_PACKAGE(LOG4CPP_Local)
+FIND_PACKAGE(GUSLIB_Local)
 
-target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} Ws2_32.lib odbc32.lib odbccp32.lib servermanager.lib ${XMLLIB_XMLRPC_C_LIBRARY} ${XMLLIB_XMLRPCpp_LIBRARY} ) 
+include_directories("${GUSLIB_INCLUDE_DIR}/guslib")
+
+
+target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} Ws2_32.lib odbc32.lib odbccp32.lib servermanager.lib ${XMLLIB_XMLRPC_C_LIBRARY} ${XMLLIB_XMLRPCpp_LIBRARY} ${GUSLIB_LIBRARY}) 
 #add guslib																				${LOG4CPP_LIBRARY})
 
 add_definitions(-DSERPENTSRPC_EXPORTS)
 
 if (SERPENTS_RPC_USELOG4CPP)
 	link_directories("${PROJECT_SOURCE_DIR}/bin/release/log4cpp")
-  target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} log4cpp.lib)
+  target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} ${LOG4CPP_LIBRARY})
   add_definitions(-DUSE_LOG4CPP)
 endif ()
 install (TARGETS ${SERPENTS_RPC_PROJECT_NAME}

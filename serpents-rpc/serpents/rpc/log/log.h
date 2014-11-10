@@ -46,24 +46,24 @@
 #include "guslib\common\singleton.hpp"
 
 namespace serpents{
-  class SERPENTSDLL Logger
-  {
-  public:
-	  Logger(void);
-    ~Logger(void);
-    void addAppender(std::string, std::string);
-    void error(std::string);
-    void info(std::string);
-    void warn(std::string);
-  protected:
+	class SERPENTSDLL Logger
+	{
+	public:
+		Logger(void);
+		~Logger(void);
+		void addAppender(std::string, std::string);
+		void error(std::string);
+		void info(std::string);
+		void warn(std::string);
+	protected:
 
-    log4cpp::Category& root;
+		log4cpp::Category& root;
 
 
-    
-  };
-  typedef guslib::Singleton<Logger> Log;
-  SERVERMGR_EXPIMP_TEMPLATE template class SERVERMGR_EXPORT_SYMBOL guslib::Singleton <Logger>;
+
+	};
+	typedef guslib::Singleton<Logger> Log;
+	SERVERMGR_EXPIMP_TEMPLATE template class SERVERMGR_EXPORT_SYMBOL guslib::Singleton <Logger>;
 }
 
 #endif
