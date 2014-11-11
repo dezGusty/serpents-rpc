@@ -26,7 +26,7 @@
 #include "guslib\system\dynamiclib.h"
 #include "guslib\system\dynamiclibmanager.h"
 #include "guslib/common/simpleexception.h"
-#include "..\build\ServerManager\servermanager.h"
+#include "servermanager.h"
 #include "serpents\rpc\server\rpcselector.h"
 #include "serpents\rpc\server\server.h"
 namespace serpents{

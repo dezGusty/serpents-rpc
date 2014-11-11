@@ -5,7 +5,7 @@ SET(SERPENTS_RPC_LIB_TYPE SHARED)
 project(test-server)
 include_directories("${CMAKE_SOURCE_DIR}/dependencies/")
 include_directories("${CMAKE_SOURCE_DIR}/serpents-rpc/")
-link_directories("${CMAKE_SOURCE_DIR}/dependencies/bin/release")
+link_directories("${CMAKE_SOURCE_DIR}/build")
 
 link_directories("${CMAKE_SOURCE_DIR}/bin/release")
   
@@ -23,8 +23,8 @@ FIND_PACKAGE(XMLRPCpp_Local)
 FIND_PACKAGE(GTestLocal)
 
 add_executable (testserver test-server.cpp)
-target_link_libraries(testserver Ws2_32.lib odbc32.lib odbccp32.lib ${XMLLIB_XMLRPC_C_LIBRARY} ${XMLLIB_XMLRPCpp_LIBRARY} ${GTest_LIBRARY})
-target_link_libraries(testserver serpents.lib)
+target_link_libraries(testserver Ws2_32.lib odbc32.lib odbccp32.lib server_manager.lib ${GTest_LIBRARY})
+target_link_libraries(testserver serpents-rpc.lib)
 #add_definitions(-DSERPENTSRPC_EXPORTS)
 #install (TARGETS serpents
 #		ARCHIVE DESTINATION lib

@@ -3,15 +3,30 @@
 
 #include "serpents\rpc\server\serverstartup.h"
 #include "serpents\rpc\server\repository.h"
-#include "xmlrpc-c\server_abyss.h"
-#include "serpents\rpc\server\implservermethod.h"
+#include "xmlrpc-c\server_abyss.hpp"
+#include "implservermethod.h"
+#include "guslib\util\plugin.h"
 namespace serpents {
-	class  XMLRPC_C_StartUp : public ServerStartUp{
+	class  XMLRPC_C_StartUp : public ServerStartUp, public guslib::Plugin{
+	private:
+		class Impl;
+		Impl* Impl_;
 	public:
-		xmlrpc_c::serverAbyss* serverAbyssPtr;
-		std::thread& execute(Server& server);
-		void controll();
-		void run(Server& server);
+		XMLRPC_C_StartUp();
+		~XMLRPC_C_StartUp();
+		//ServerStartUp overrides
+		virtual std::thread& execute(Server* server) override;
+		virtual void run(Server* server) override;
+		virtual void controll()override;
+		virtual void start() override;
+		virtual void stop() override;
+
+		//Plugin overrides
+		virtual const std::string& getName() const override;
+		virtual void install() override;
+		virtual void initialize() override;
+		virtual void shutdown() override;
+		virtual void uninstall() override;
 
 	};
 }

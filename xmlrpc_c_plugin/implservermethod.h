@@ -14,6 +14,7 @@ namespace serpents{
 		Method* method;
 		void setSignatureAndHelp();
 		explicit XmlRPC_CMethod(Method* method);
+		XmlRPC_CMethod();
 		void execute(xmlrpc_c::paramList const& paramList, xmlrpc_c::value* const retvalP);
 		void fillParameterContainer(serpents::ParameterContainer& pc, const xmlrpc_c::paramList& paramList);
 		~XmlRPC_CMethod(){  }

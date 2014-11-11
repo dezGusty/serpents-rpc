@@ -145,10 +145,10 @@ FIND_PACKAGE(GUSLIB_Local)
 include_directories("${GUSLIB_INCLUDE_DIR}/guslib")
 
 
-target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} Ws2_32.lib odbc32.lib odbccp32.lib servermanager.lib ${XMLLIB_XMLRPC_C_LIBRARY} ${XMLLIB_XMLRPCpp_LIBRARY} ${GUSLIB_LIBRARY}) 
+target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} Ws2_32.lib odbc32.lib odbccp32.lib server_manager.lib ${GUSLIB_LIBRARY}) 
 #add guslib																				${LOG4CPP_LIBRARY})
 
-add_definitions(-DSERPENTSRPC_EXPORTS)
+add_definitions(-DSERPENTSRPC_EXPORTS -DSERVERMGR_EXP)
 
 if (SERPENTS_RPC_USELOG4CPP)
 	link_directories("${PROJECT_SOURCE_DIR}/bin/release/log4cpp")

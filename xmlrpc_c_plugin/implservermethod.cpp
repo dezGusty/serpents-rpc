@@ -4,10 +4,10 @@
 #include <iostream>
 #include "serpents\rpc\log\log.h"
 namespace serpents{
-	
+
 	void XmlRPC_CMethod::execute(xmlrpc_c::paramList const& paramList, //execute
 		xmlrpc_c::value *   const  retvalP) {
-		mtx.lock();
+		//mtx.lock();
 		serpents::ParameterContainer pc;
 		try{
 			fillParameterContainer(pc, paramList);
@@ -51,7 +51,7 @@ namespace serpents{
 		Log::getPtr()->info(ss.str());
 		
 #endif //logging ends; 
-		mtx.unlock();
+		//mtx.unlock();
 	}
 	void XmlRPC_CMethod::fillParameterContainer(serpents::ParameterContainer& pc, const xmlrpc_c::paramList& paramList){
 
@@ -72,14 +72,16 @@ namespace serpents{
 
 		}
 	}
+	XmlRPC_CMethod::XmlRPC_CMethod() :xmlrpc_c::method() {
+		method = nullptr;
+	}
 	void XmlRPC_CMethod::setSignatureAndHelp(){
 		this->_signature = method->getSignature();
-		this->_help = method->getHelp();
 	}
 	XmlRPC_CMethod::XmlRPC_CMethod(Method* method) {
-		this->_signature = method->getSignature();
-		this->_help = method->getHelp();
+		XmlRPC_CMethod();
 		this->method = method;
+		this->setSignatureAndHelp();
 	}
 	
 }
