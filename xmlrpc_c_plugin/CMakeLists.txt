@@ -53,7 +53,7 @@ source_group("" FILES ${SRC_FLIES_XMLRPC_C})
 
 add_library(xmlrpc_c_plugin SHARED ${SRC_FLIES_XMLRPC_C})
 
-target_link_libraries(xmlrpc_c_plugin serpents-rpc.lib ${XMLLIB_XMLRPC_C_LIBRARY} ${GUSLIB_LIBRARY})
+target_link_libraries(xmlrpc_c_plugin serpents-rpc.lib server_manager.lib ${XMLLIB_XMLRPC_C_LIBRARY} ${GUSLIB_LIBRARY})
 #add guslib 
 add_definitions(-DXMLRPC_C_PLUGIN_EXPORTS -DPLUGINXMLRPC_C_EXP -DGUSLIB_IMP )
 
