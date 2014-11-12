@@ -18,12 +18,12 @@ int main(int argc, char* argv[])
 
 		client c(io_service, ctx, iterator);
 
-		serpents::param::ParameterContainer request;
-		serpents::param::ParameterContainer reply;
+		serpents::ParameterContainer request;
+		serpents::ParameterContainer reply;
 		std::string s = "hello";
 
 		request.add(9,10);
-		c.send("echo", request, reply);
+		c.send("generateUUID", request, reply);
 		std::cout << reply.size();
 		for each (auto  var in reply.getAll())
 		{

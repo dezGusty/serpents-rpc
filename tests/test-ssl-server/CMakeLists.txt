@@ -17,7 +17,7 @@ find_package(Boost 1.36.0 COMPONENTS system date_time regex REQUIRED)
 find_package(OpenSSL REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${OPENSSL_INCLUDE_DIR} )
-include_directories(${CMAKE_SOURCE_DIR}/serpents-ssl)
+include_directories(${CMAKE_SOURCE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/dependencies)
 
 link_directories(${CMAKE_SOURCE_DIR}/build)

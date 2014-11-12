@@ -119,7 +119,7 @@ public:
 	  std::cout << s;
 	  XMLParser_->getResponseParameters(s, *replyParam_);
   }
-  void send(const std::string methodName, serpents::param::ParameterContainer& request, serpents::param::ParameterContainer& reply){
+  void send(const std::string methodName, serpents::ParameterContainer& request, serpents::ParameterContainer& reply){
 	  requestParam_ = &request;
 	  replyParam_ = &reply;
 	  methodName_ = methodName;
@@ -138,8 +138,8 @@ public:
 	  
   }
 private:
-  serpents::param::ParameterContainer* requestParam_; 
-  serpents::param::ParameterContainer* replyParam_;
+  serpents::ParameterContainer* requestParam_; 
+  serpents::ParameterContainer* replyParam_;
   std::string methodName_; 
   serpents::util::xml::IXMLClass* XMLParser_;
   boost::asio::io_service& io_service_;
