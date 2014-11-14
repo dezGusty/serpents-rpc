@@ -4,14 +4,26 @@
 #include "xmlrpc++\XmlRpc.h"
 #include "serpents\rpc\server\implservermethod.h"
 #include "serpents\rpc\server\server.h"
+#include "guslib\util\plugin.h"
 namespace serpents{
 
-	class  XMLRPCpp_StartUp : public ServerStartUp{
+	class  XMLRPCpp_StartUp : public ServerStartUp, public guslib::Plugin{
+	private:
+		class Impl;
+		Impl* Impl_;
 	public:
-		XmlRpc::XmlRpcServer* xmlServerPnt;
-		std::thread& execute(Server& server);
-		void controll();
-		void run(Server& server);
+		virtual std::thread& execute(Server* server) override;
+		virtual void run(Server* server) override;
+		virtual void controll()override;
+		virtual void start() override;
+		virtual void stop() override;
+
+		//Plugin overrides
+		virtual const std::string& getName() const override;
+		virtual void install() override;
+		virtual void initialize() override;
+		virtual void shutdown() override;
+		virtual void uninstall() override;
 
 	};
 }
