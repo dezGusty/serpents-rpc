@@ -71,6 +71,8 @@ namespace serpents{
 			std::this_thread::yield();
 		}
 	}
+	void XMLRPCpp_StartUp::start(){}
+	void XMLRPCpp_StartUp::stop(){}
 
 	// Plugi overrides
 	//Plugin overrides

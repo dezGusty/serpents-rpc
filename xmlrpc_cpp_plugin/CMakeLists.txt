@@ -36,10 +36,10 @@ find_package(Guslib_Local)
 include_directories(${CMAKE_SOURCE_DIR}/serpents-rpc/ ${CMAKE_SOURCE_DIR}/dependencies 
 								${CMAKE_SOURCE_DIR}/server-manager ${GUSLIB_INCLUDE_DIR}/guslib 
 )
-link_directories(${PROJECT_SOURCE_DIR}/build)
+link_directories( ${CMAKE_SOURCE_DIR}/build)
 
 add_definitions(-DXMLRPC_CPP_EXP)
 
 add_library( ${XMLRPC_CPP_PLUGIN_NAME} SHARED ${XMLRPCPP_PLUGIN_V} )
 
-target_link_libraries(${XMLRPC_CPP_PLUGIN_NAME} xmlrpcpp.lib server_manager.lib serpents-rpc.lib)
+target_link_libraries(${XMLRPC_CPP_PLUGIN_NAME} xmlrpc.lib server_manager.lib serpents-rpc.lib ${GUSLIB_LIBRARY})
