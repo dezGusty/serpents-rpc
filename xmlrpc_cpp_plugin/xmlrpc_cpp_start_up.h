@@ -13,6 +13,8 @@ namespace serpents{
 		class Impl;
 		Impl* Impl_;
 	public:
+		XMLRPCpp_StartUp();
+		~XMLRPCpp_StartUp();
 		virtual std::thread& execute(Server* server) override;
 		virtual void run(Server* server) override;
 		virtual void controll()override;

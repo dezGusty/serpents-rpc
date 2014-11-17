@@ -14,7 +14,13 @@ namespace serpents{
 		mtx.lock();
 		serpents::ParameterContainer pc;
 		XMLRPC_CPPRetValue rv;
-		fillParameterContainer(pc, params);
+		
+		try{
+			fillParameterContainer(pc, params);
+		}
+		catch (XmlRpc::XmlRpcException e){
+			std::cout << e.getMessage() << std::endl;
+		}
 		try{
 			method->execute(&pc, &rv);
 			result = rv.getValue();
@@ -22,9 +28,12 @@ namespace serpents{
 			#ifdef USE_LOG4CPP // start logging
 			Logger::getInstance().error("In method "+method->getName()+" "+ e.what());
 			#endif // end logging
-			e.what();
+			mtx.unlock();
 		}
+
 		mtx.unlock();
+		
+		
 		#ifdef USE_LOG4CPP // start logging
 		Logger::getInstance().info(std::string("In method ") + method->getName());
 		std::stringstream ss;
@@ -51,17 +60,19 @@ namespace serpents{
 		#endif  // end logging
 		}
 	void XMLRPC_Method::fillParameterContainer(serpents::ParameterContainer& pc, XmlRpc::XmlRpcValue& params){
-		int paramSize = params.size();
-		for (int i = 0; i < paramSize; ++i){
-			switch (params[i].getType()){
-			//int
-			case XmlRpc::XmlRpcValue::Type::TypeInt: pc.add(static_cast<int>(params[i]));  break;
-			//bool
-			case  XmlRpc::XmlRpcValue::Type::TypeBoolean: pc.add(static_cast<bool>(params[i])); break;
-			//double
-			case  XmlRpc::XmlRpcValue::Type::TypeDouble: pc.add(static_cast<double>(params[i]));  break;
-			//string
-			case  XmlRpc::XmlRpcValue::Type::TypeString: pc.add(static_cast<std::string>(params[i]));  break;
+		if (params.size() > 0){
+			int paramSize = params.size();
+			for (int i = 0; i < paramSize; ++i){
+				switch (params[i].getType()){
+					//int
+				case XmlRpc::XmlRpcValue::Type::TypeInt: pc.add(static_cast<int>(params[i]));  break;
+					//bool
+				case  XmlRpc::XmlRpcValue::Type::TypeBoolean: pc.add(static_cast<bool>(params[i])); break;
+					//double
+				case  XmlRpc::XmlRpcValue::Type::TypeDouble: pc.add(static_cast<double>(params[i]));  break;
+					//string
+				case  XmlRpc::XmlRpcValue::Type::TypeString: pc.add(static_cast<std::string>(params[i]));  break;
+				}
 			}
 		}
 	}

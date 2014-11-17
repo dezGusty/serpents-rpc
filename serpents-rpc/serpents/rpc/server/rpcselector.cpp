@@ -76,10 +76,10 @@ namespace serpents{
 		loadPlugin(ssl_plugin_name);
 		std::cout << "loaded plugin: " << ssl_plugin_name << std::endl;
 
-		std::string plugin_name("xmlrpcpp_plugin.dll");
-		std::cout << "loading plugin: " << ssl_plugin_name << std::endl;
-		loadPlugin(ssl_plugin_name);
-		std::cout << "loaded plugin: " << ssl_plugin_name << std::endl;
+		std::string plugin_name_xmlrpc("xmlrpcpp_plugin.dll");
+		std::cout << "loading plugin: " << plugin_name_xmlrpc << std::endl;
+		loadPlugin(plugin_name_xmlrpc);
+		std::cout << "loaded plugin: " << plugin_name_xmlrpc << std::endl;
 
 		this->ServerStartUpImpl_ = serpents::ServerManager::getPtr()->getServerPointer(method);
 		if (ServerStartUpImpl_ == nullptr)

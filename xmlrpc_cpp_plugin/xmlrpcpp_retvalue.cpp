@@ -25,7 +25,7 @@ namespace serpents {
 		Impl_->value = XmlRpc::XmlRpcValue(s);
 	}
 	XmlRpc::XmlRpcValue XMLRPC_CPPRetValue::getValue(){
-		if (!Impl_->value)
+		if (!Impl_->value.valid())
 			throw(std::exception("no return value"));
 		return Impl_->value;
 	}

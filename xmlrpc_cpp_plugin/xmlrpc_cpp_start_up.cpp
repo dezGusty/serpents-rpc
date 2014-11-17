@@ -14,6 +14,13 @@ namespace serpents{
 
 	};
 
+	XMLRPCpp_StartUp::XMLRPCpp_StartUp(){
+		Impl_ = new Impl;
+	}
+	XMLRPCpp_StartUp::~XMLRPCpp_StartUp(){
+		delete Impl_;
+	}
+
 	std::thread& XMLRPCpp_StartUp::execute(Server* server){
 
 		Impl_->controllThread = std::thread(&XMLRPCpp_StartUp::controll, this);
@@ -24,7 +31,7 @@ namespace serpents{
 	}
 
 	void XMLRPCpp_StartUp::run(Server* server){
-
+		
 		try {
 			XmlRpc::XmlRpcServer s;
 			FunctionRepository* fr = server->getRepository();
@@ -35,7 +42,7 @@ namespace serpents{
 				s.addMethod(b);
 			}
 
-			s.bindAndListen(8081);
+			s.bindAndListen(8080);
 			s.enableIntrospection(true);
 			Impl_->xmlServerPnt = &s;
 
@@ -45,10 +52,11 @@ namespace serpents{
 		catch (std::exception const& e) {
 			std::cerr << "Something failed.  " << e.what() << std::endl;
 		}
+		
 
 	}
 	void XMLRPCpp_StartUp::controll(){
-
+		
 		std::cout << "Type \"exit\" to exit" << std::endl;
 
 		bool keppAlive = true;
@@ -71,13 +79,16 @@ namespace serpents{
 			}
 			std::this_thread::yield();
 		}
+		
 	}
-	void XMLRPCpp_StartUp::start(){}
+	void XMLRPCpp_StartUp::start(){
+		Impl_->controllThread.join();
+	}
 	void XMLRPCpp_StartUp::stop(){}
 
 	//Plugin overrides
 	XMLRPCpp_StartUp* xmlrpc_cpp_plugin_Inst = nullptr;
-	std::string hiddenName = "xmlrpc_cpp_plugin";
+	std::string hiddenName = "xmlrpcpp_plugin";
 
 	const std::string& XMLRPCpp_StartUp::getName() const{
 		return hiddenName;
