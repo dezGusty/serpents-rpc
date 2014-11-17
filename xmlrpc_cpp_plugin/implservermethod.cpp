@@ -22,6 +22,7 @@ namespace serpents{
 			#ifdef USE_LOG4CPP // start logging
 			Logger::getInstance().error("In method "+method->getName()+" "+ e.what());
 			#endif // end logging
+			e.what();
 		}
 		mtx.unlock();
 		#ifdef USE_LOG4CPP // start logging

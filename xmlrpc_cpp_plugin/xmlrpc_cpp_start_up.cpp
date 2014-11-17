@@ -4,6 +4,7 @@
 #include <algorithm>
 #include "xmlrpc_cpp_buildopts.h"
 #include "guslib\util\pluginmanager.h"
+
 namespace serpents{
 	class XMLRPCpp_StartUp::Impl{
 		friend XMLRPCpp_StartUp;

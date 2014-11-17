@@ -42,4 +42,5 @@ add_definitions(-DXMLRPC_CPP_EXP)
 
 add_library( ${XMLRPC_CPP_PLUGIN_NAME} SHARED ${XMLRPCPP_PLUGIN_V} )
 
-target_link_libraries(${XMLRPC_CPP_PLUGIN_NAME} xmlrpc.lib server_manager.lib serpents-rpc.lib ${GUSLIB_LIBRARY})
+target_link_libraries(${XMLRPC_CPP_PLUGIN_NAME} xmlrpc.lib server_manager.lib serpents-rpc.lib Ws2_32.lib odbc32.lib 
+												odbccp32.lib ${GUSLIB_LIBRARY})

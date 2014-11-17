@@ -5,6 +5,7 @@
 #include "serpents\rpc\server\implservermethod.h"
 #include "serpents\rpc\server\server.h"
 #include "guslib\util\plugin.h"
+#include "xmlrpc++\XmlRpc.h"
 namespace serpents{
 
 	class  XMLRPCpp_StartUp : public ServerStartUp, public guslib::Plugin{

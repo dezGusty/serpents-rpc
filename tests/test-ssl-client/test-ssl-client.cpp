@@ -20,7 +20,6 @@ int main(int argc, char* argv[])
 
 		serpents::ParameterContainer request;
 		serpents::ParameterContainer reply;
-		std::string s = "hello";
 
 		request.add(9,10);
 		c.send("generateUUID", request, reply);
