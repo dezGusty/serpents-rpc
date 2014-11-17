@@ -75,10 +75,9 @@ namespace serpents{
 	void XMLRPCpp_StartUp::start(){}
 	void XMLRPCpp_StartUp::stop(){}
 
-	// Plugi overrides
 	//Plugin overrides
 	XMLRPCpp_StartUp* xmlrpc_cpp_plugin_Inst = nullptr;
-	std::string hiddenName = "xmlrpc_plugin";
+	std::string hiddenName = "xmlrpc_cpp_plugin";
 
 	const std::string& XMLRPCpp_StartUp::getName() const{
 		return hiddenName;

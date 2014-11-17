@@ -4,6 +4,7 @@ INCLUDE(${CMAKE_SOURCE_DIR}/CMake/HandleLibraryTypes.cmake)
 # Set the paths to search for as possible locations of the library.
 SET (GUSLIB_SEARCH_PATH ${PROJECT_SOURCE_DIR}/../guslib
 		${PROJECT_SOURCE_DIR}/../
+		${PROJECT_SOURCE_DIR}/../../guslib
         $ENV{GUSLIB_ROOT})
 		
 
@@ -13,7 +14,6 @@ FIND_PATH(GUSLIB_INCLUDE_DIR guslib/common/singleton.h
                 guslib/guslib
                 guslib/guslib
 )
-
 
 
 FIND_LIBRARY(GUSLIB_LIBRARY_OPTIMIZED
