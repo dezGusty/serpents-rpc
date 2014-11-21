@@ -13,7 +13,7 @@
 #include <boost/bind.hpp>
 #include <boost/asio.hpp>
 #include <boost/asio/ssl.hpp>
-#include "serpents-ssl/parametercontainer/parametercontainer.h"
+#include "serpents-rpc\serpents\rpc\parameters\parametercontainer.hpp"
 #include "serpents-ssl\util\xmlutil.hpp"
 #define PUGIXML_HEADER_ONLY
 enum { max_length =2024 };
@@ -116,7 +116,9 @@ public:
 	  std::ostringstream ss;
 	  ss << &reply_;
 	  std::string s = ss.str();
-	  std::cout << s;
+	  //std::cout << s;
+
+
 	  XMLParser_->getResponseParameters(s, *replyParam_);
   }
   void send(const std::string methodName, serpents::ParameterContainer& request, serpents::ParameterContainer& reply){

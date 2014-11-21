@@ -184,7 +184,7 @@ void main(){
 	
 	server.setRepository(fr);
 	serpents::RPCSelector rpcselect;
-	rpcselect.selectRPCMethod(server, "serpents_ssl");
+	rpcselect.selectRPCMethod(server, "xmlrpc_plugin");
 //	server.getXMLRPC_CServerOptions()->portNumber(8081);
 //	server.getXMLRPC_CServerOptions()->uriPath("/RPC2");
 //	server.getXMLRPCPP_ServerOptions()->setPort(8081);

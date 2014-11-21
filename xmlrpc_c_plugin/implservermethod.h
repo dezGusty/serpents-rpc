@@ -19,5 +19,6 @@ namespace serpents{
 		void fillParameterContainer(serpents::ParameterContainer& pc, const xmlrpc_c::paramList& paramList);
 		~XmlRPC_CMethod(){  }
 	};
+	
 }
 #endif // XMLRPC_C_IMPLSERVMETHOD_H_

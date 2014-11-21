@@ -1,4 +1,6 @@
 #pragma once
+
+/*
 #ifndef PARAMETER_CON_H
 #define PARAMETER_CON_H
 
@@ -26,7 +28,6 @@
 //   THE SOFTWARE.
 
 //serpents libs 
-
 
 
 //c++ system libs
@@ -238,5 +239,5 @@ namespace serpents{
 
 
 }
-
+*/
 #endif

@@ -33,6 +33,7 @@
 #include <vector>
 #include <string>
 #include <exception>
+#include <sstream>
 
 namespace serpents{
 	class  ParamContainerException : public std::exception{
@@ -68,6 +69,7 @@ namespace serpents{
 			int get_int() const { return INT; }
 			float get_float() const { return FLOAT; }
 			std::string get_string() const { return STRING; }
+			bool get_bool() const{ return BOOL; }
 		private:
 			type m_type;
 			int   INT = 0;
@@ -86,6 +88,7 @@ namespace serpents{
 			std::vector<double> doubleVec;
 			std::vector<std::string> stringVec;
 			std::vector<std::string> allVec;
+			std::vector<bool> boolVec;
 		};
 		Impl* Impl_;
 
@@ -108,6 +111,12 @@ namespace serpents{
 					case any::String:   Impl_->stringVec.push_back(vec[i].get_string());
 						Impl_->allVec.push_back(vec[i].get_string());
 						Impl_->typeVec.push_back(type::String);
+						break;
+					case any::Bool:   Impl_->boolVec.push_back(vec[i].get_bool());
+						std::stringstream converter;
+						converter << vec[i].get_bool();
+						Impl_->allVec.push_back(converter.str());
+						Impl_->typeVec.push_back(type::Bool);
 						break;
 					}
 				}
@@ -151,6 +160,7 @@ namespace serpents{
 				this->Impl_->allVec.push_back(var);
 			}
 		}
+		// get vectors 
 
 		std::vector<int>& ParameterContainer::getInts(){
 			return Impl_->intVec;
@@ -161,6 +171,24 @@ namespace serpents{
 		}
 		std::vector<std::string>& ParameterContainer::getStrings(){
 			return Impl_->stringVec;
+		}
+
+		//get single results 
+
+		bool ParameterContainer::getBool(unsigned int n){
+			if (n > Impl_->allVec.size()){
+				throw(ParamContainerException("out of bounds exception"));
+			}
+			try{
+				bool b;
+				std::stringstream ss; 
+				ss<< Impl_->allVec.at(n);
+				ss >> b;
+				return b;
+			}
+			catch (std::exception& e){
+				throw(ParamContainerException(std::string("boolean not found") + e.what()));
+			}
 		}
 		int ParameterContainer::getInt(unsigned int n){
 			if (n < 0 || n > Impl_->allVec.size())

@@ -51,6 +51,7 @@ namespace serpents{
 							if (!result){
 								throw std::exception("unable to read xml doc");
 							}
+						
 							pugi::xml_node root = doc.child("methodCall");
 							functionName = root.child_value("methodName");
 							if (functionName.compare("") == 0){
@@ -78,7 +79,7 @@ namespace serpents{
 										pc.add(boost::lexical_cast<double>(nodeWithCorectStructure));
 										foundParams = true;
 									}
-									if (name.compare("boolean") == 0){
+									if (name.compare("boolean") == 0 || name.compare("bool") == 0){
 										pc.add(boost::lexical_cast<bool>(nodeWithCorectStructure));
 										foundParams = true;
 									}
@@ -97,24 +98,31 @@ namespace serpents{
 					public:
 						void getResponseParameters(std::string& xmlDoc, serpents::ParameterContainer& pc){
 							bool foundParams = false;
-							pugi::xml_document doc;
+							pugi::xml_document* doc = new pugi::xml_document;
 							pugi::parse_wconv_attribute;
-
-							pugi::xml_parse_result result = doc.load(xmlDoc.c_str(), xmlDoc.size());
+							pugi::parse_default;
+							pugi::parse_comments;
+						
+							pugi::xml_parse_result result = doc->load(xmlDoc.c_str(), xmlDoc.size());
 
 							if (!result){
 								throw std::exception("unable to read xml doc");
 							}
-							pugi::xml_node root = doc.child("methodResponse");
+							pugi::xml_node root = doc->child("methodResponse");
 							pugi::xml_node params = root.child("params");
 
 							for each(pugi::xml_node param in params.children())
 							{
-
+							//	pugi::xml_node var = param.child("value");
+							//	for (var; var; var = param.next_sibling("value"))
+							//	{
+							//		std::string nodeWithCorectStructure = var.first_child().child_value();
+							//	}
 								pugi::xml_node value = param.first_child();
 								std::string nodeWithCorectStructure = value.first_child().child_value();
 
 								std::string name = value.first_child().name();
+								
 								toLower(name);
 								if (name.compare("i4") == 0 || name.compare("int") == 0){
 									pc.add(boost::lexical_cast<int>(nodeWithCorectStructure));
@@ -124,7 +132,7 @@ namespace serpents{
 									pc.add(boost::lexical_cast<double>(nodeWithCorectStructure));
 									foundParams = true;
 								}
-								if (name.compare("boolean") == 0){
+								if (name.compare("boolean") == 0 || name.compare("bool")==0){
 									pc.add(boost::lexical_cast<bool>(nodeWithCorectStructure));
 									foundParams = true;
 								}
@@ -133,10 +141,11 @@ namespace serpents{
 									foundParams = true;
 								}
 							}
-				
+							delete doc;
 							if (!foundParams){
 								throw(std::exception("No supported variable types found"));
 							}
+
 						}
 						pugi::xml_document& generateXMLResponse(pugi::xml_document& responseDoc, serpents::ParameterContainer& response){
 							pugi::xml_node root = responseDoc.append_child("methodResponse");
@@ -149,7 +158,7 @@ namespace serpents{
 								pugi::xml_node child = value.append_child(response.getType(i).c_str());
 								child.text().set(response.getString(i).c_str());
 							}
-
+							//responseDoc.print(std::cout);
 							return responseDoc;
 						} // generateXMLResponse
 						std::string generateXMLDoc(std::string& methodName, serpents::ParameterContainer* pc, std::string& result){
@@ -164,10 +173,11 @@ namespace serpents{
 								pugi::xml_node param = params.append_child("param");
 								pugi::xml_node value = param.append_child("value");
 								pugi::xml_node child = value.append_child(pc->getType(i).c_str());
-								child.text().set(pc->getString(i).c_str());
+								child.append_child(pugi::node_pcdata).set_value(pc->getString(i).c_str());
+								//child.text().set(pc->getString(i).c_str());
 							}
 							std::stringstream ss;
-							xmlDoc.save(ss, "  ", pugi::format_raw | pugi::format_no_declaration);
+							xmlDoc.save(ss, "  ", pugi::format_raw );
 							
 							return ss.str();
 						}

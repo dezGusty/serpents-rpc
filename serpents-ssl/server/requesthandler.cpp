@@ -49,7 +49,7 @@ namespace serpents{
 				pugi::xml_document responseDoc;
 				xmlutil->generateXMLResponse(responseDoc, result.getRetValue());
 				std::stringstream ss;
-				responseDoc.print(ss);
+				responseDoc.print(ss, " ", pugi::format_raw);
 
 				ss << "\n\0";
 				rep.setContent(ss.str());

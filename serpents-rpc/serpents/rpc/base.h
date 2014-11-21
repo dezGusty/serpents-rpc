@@ -29,9 +29,11 @@
 
 #ifdef SERPENTSRPC_EXPORTS
 #define SERPENTSDLL __declspec (dllexport)
+#define  SERPENTSDLL_EXPIMP_TEMPLATE
+
 #else
 #define SERPENTSDLL __declspec (dllimport)
-
+#define  SERPENTSDLL_EXPIMP_TEMPLATE extern
 #endif
 
 
