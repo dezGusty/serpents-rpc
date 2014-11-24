@@ -37,12 +37,19 @@
 
 namespace serpents{
 	class  ParamContainerException : public std::exception{
-		class Impl{ friend ParamContainerException;  std::string description; };
+		class Impl{ friend ParamContainerException; std::string description; };
 		Impl* Impl_;
 
 	public:
-		ParamContainerException(std::string d)  { Impl_ = new Impl; Impl_->description = d; }
-		std::string getDescription(){ return Impl_->description; }
+		ParamContainerException(){ Impl_ = new Impl; }
+		ParamContainerException(const ParamContainerException& paramEx){ this->Impl_ = new Impl; 
+			this->Impl_->description = paramEx.getDescription();
+		}
+		ParamContainerException(std::string d)  { Impl_ = new Impl; Impl_->description =d; }
+		std::string getDescription()const { return Impl_->description; }
+		virtual const char* what() const override{
+			return Impl_->description.c_str();
+		}
 		friend std::ostream& operator<<(std::ostream& is, ParamContainerException e){
 			is << e.getDescription();
 			return is;
@@ -199,8 +206,8 @@ namespace serpents{
 			}
 			catch (std::exception& e){
 				std::stringstream ss; 
-				ss << "invalid num " << e.what();
-				throw(ParamContainerException(ss.str());
+				ss << "parameter not found /" << e.what();
+				throw(ParamContainerException(ss.str()));
 
 			}
 		}

@@ -94,6 +94,7 @@ namespace serpents{
 						Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
 					}
 					catch (serpents::ParamContainerException& e){
+						Log::getPtr()->addAppender("default", "D:\\program.log");
 						Log::getPtr()->error(e.what());
 						Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
 					}
