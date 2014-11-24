@@ -104,7 +104,7 @@ namespace serpents{
 					}
 					catch (http::server2::RequestException& e){
 						Log::getPtr()->error(e.what());
-						Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
+						Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, "unknown exception");
 					}
 					catch (std::exception& e){
 						Log::getPtr()->error(e.what());
@@ -112,8 +112,8 @@ namespace serpents{
 
 					}
 					catch (...){
-						Log::getPtr()->error("unkonwn exception [catch(...) cought something]");
-						Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, "unkonwn exception [catch(...) cought something]");
+						Log::getPtr()->error(e.what());
+						Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, "unkonwn exception");
 
 					}
 

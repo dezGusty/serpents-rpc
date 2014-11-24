@@ -2,6 +2,7 @@
 #include "serpents_ssl_startup.h"
 #include "servermanager.h"
 #include "serpents-rpc\serpents\rpc\server\server.h"
+#include "serpents\rpc\log\log.h"
 //guslibs
 #include "guslib\util\pluginmanager.h"
 #include "guslib\system\dynamiclibmanager.h"
@@ -54,7 +55,7 @@ namespace serpents{
 		}
 	}
 	void SerpentsSSLStartUp::run(Server* server){
-		START_LOGGING("type", "log.txt");
+		
 		boost::asio::io_service io_service;
 		size_t numThreads = 3;
 		Impl_->server = new serpents::ssl::server("localhost", io_service, 8080, numThreads);

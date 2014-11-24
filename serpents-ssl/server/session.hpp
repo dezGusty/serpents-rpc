@@ -38,7 +38,7 @@
 #include "serpents-ssl\server\request_parser.hpp"
 #include "serpents-ssl\server\reply.hpp"
 #include "serpents-ssl\base.h"
-#include "serpents-ssl\log\log.h"
+
 ///system libs
 
 namespace serpents{

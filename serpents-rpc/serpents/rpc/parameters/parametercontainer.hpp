@@ -198,8 +198,9 @@ namespace serpents{
 				return std::stoi(Impl_->allVec.at(n));
 			}
 			catch (std::exception& e){
-
-				throw(ParamContainerException(std::string("invalid num") + e.what()));
+				std::stringstream ss; 
+				ss << "invalid num " << e.what();
+				throw(ParamContainerException(ss.str());
 
 			}
 		}
