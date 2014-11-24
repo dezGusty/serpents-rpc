@@ -24,6 +24,7 @@ namespace {
 		boost::asio::ip::tcp::resolver::iterator iterator;
 		boost::asio::ssl::context ctx;
 	};
+
 	TEST_F(SSL_Server_Test, add){
 		serpents::ParameterContainer request;
 		request.add(2);
@@ -57,9 +58,11 @@ namespace {
 		c->send("fileLookUp", request, reply);
 		EXPECT_EQ(false, reply.getBool(0));
 	}
+
 	
 	TEST_F(SSL_Server_Test,push){
-		serpents::ParameterContainer request = "test";
+		serpents::ParameterContainer request;
+		request.add("test");
 		serpents::ParameterContainer reply;
 		c->send("push", request, reply);
 
@@ -71,7 +74,7 @@ namespace {
 		serpents::ParameterContainer reply;
 		c->send("pop", request, reply);
 
-		std::cout <<"reply:"<< reply.getString(0);
+		std::cout <<"reply:"<< reply.getString(0)<<std::endl;
 		EXPECT_EQ("test", reply.getString(0));
 	}
 	

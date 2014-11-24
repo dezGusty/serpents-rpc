@@ -63,6 +63,7 @@ namespace serpents{
 			explicit any(int   e) : INT(e), m_type(Int) {}
 			explicit any(float e) :FLOAT(e), m_type(Float){ }
 			explicit any(std::string e) : STRING(e), m_type(String){ }
+			explicit any(const char* e) : STRING(e), m_type(String){ }
 			explicit any(double e) : DOUBLE(e), m_type(Double){ }
 			explicit any(bool e) : BOOL(e), m_type(Bool){}
 			type get_type() const { return m_type; }
