@@ -64,7 +64,16 @@ namespace serpents{
 
 	//choose impl of server 
 	void RPCSelector::selectRPCMethod(Server& server, std::string method){
+
 		server_ = &server;
+
+#ifdef USE_LOG4CPP
+		auto map = server_->getLogTargets();
+		for (auto it = map->begin(); it != map->end(); ++it){
+			Log::getPtr()->addAppender(it->second, it->first);
+		}
+		Log::getPtr()->info("---using library " + method + "---");
+#endif
 
 		std::cout << "start" << std::endl;
 		std::string plugin_name("xmlrpc_c_plugin.dll");
@@ -80,17 +89,17 @@ namespace serpents{
 		std::cout << "loading plugin: " << plugin_name_xmlrpc << std::endl;
 		loadPlugin(plugin_name_xmlrpc);
 		std::cout << "loaded plugin: " << plugin_name_xmlrpc << std::endl;
-
-		this->ServerStartUpImpl_ = serpents::ServerManager::getPtr()->getServerPointer(method);
-		if (ServerStartUpImpl_ == nullptr)
-			throw std::exception("no plugin loaded");
-#ifdef USE_LOG4CPP
-		auto map = server_->getLogTargets();
-		for (auto it = map->begin(); it != map->end(); ++it){
-			Log::getPtr()->addAppender(it->second, it->first);
+		try{
+			this->ServerStartUpImpl_ = serpents::ServerManager::getPtr()->getServerPointer(method);
 		}
-		Log::getPtr()->info("---using library " + method + "---");
-#endif
+		catch (std::exception& e){
+			throw std::exception(e.what());
+			Log::getPtr()->error(e.what());
+		}
+		if (ServerStartUpImpl_ == nullptr){
+			Log::getPtr()->error("selected plugin was not found");
+			throw std::exception("selected plugin was not found");
+		}
 
 	}
 	void RPCSelector::stopServer(){

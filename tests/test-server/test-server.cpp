@@ -184,7 +184,12 @@ void main(){
 	
 	server.setRepository(fr);
 	serpents::RPCSelector rpcselect;
-	rpcselect.selectRPCMethod(server, "serpents_ssl");
+	try{
+		rpcselect.selectRPCMethod(server, "serpents_ssl");
+	}
+	catch (std::exception& e){
+		std::cout << e.what() << std::endl;
+	}
 //	server.getXMLRPC_CServerOptions()->portNumber(8081);
 //	server.getXMLRPC_CServerOptions()->uriPath("/RPC2");
 //	server.getXMLRPCPP_ServerOptions()->setPort(8081);

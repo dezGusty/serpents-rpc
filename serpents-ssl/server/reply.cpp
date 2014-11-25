@@ -25,7 +25,7 @@
 #include "reply.hpp"
 #include <string>
 #include <boost/lexical_cast.hpp>
-
+#include "serpents-ssl\util\xmlutil.hpp"
 namespace serpents{
 	namespace http {
 		namespace server2 {
@@ -253,43 +253,48 @@ namespace serpents{
 				}
 
 			} // namespace stock_replies
+
+			reply::reply(const reply& repl){
+				Impl_ = new Impl;
+				Impl_->content = repl.getContent();
+				Impl_->headers = repl.getHeaders();
+			}
 			reply::reply(){
 				Impl_ = new Impl();
 			}
 			reply::~reply(){
 				delete Impl_;
 			}
-			reply reply::stock_reply(reply::status_type status, std::string content)
+			void reply::stock_reply(reply::status_type status, std::string content, reply& reply)
 			{
-				reply rep;
-				rep.status = status;
-				rep.Impl_->content = content;
-				rep.Impl_->headers.resize(2);
-				rep.Impl_->headers[0].name = ("Content-Length");
-				rep.Impl_->headers[0].value = (boost::lexical_cast<std::string>(rep.Impl_->content.size()));
-				rep.Impl_->headers[1].name = ("Content-Type");
-				rep.Impl_->headers[1].value = ("text/html");
-				return rep;
+				serpents::util::xml::PugiXML pugiXML;
+				reply.status = status;
+				reply.Impl_->content = pugiXML.generateErrorResponseDoc(content, 5);
+				reply.Impl_->headers.resize(2);
+				reply.Impl_->headers[0].name = ("Content-Length");
+				reply.Impl_->headers[0].value = (boost::lexical_cast<std::string>(reply.Impl_->content.size()));
+				reply.Impl_->headers[1].name = ("Content-Type");
+				reply.Impl_->headers[1].value = ("text/html");
+
 			}
-			reply reply::stock_reply(reply::status_type status)
+			void reply::stock_reply(reply::status_type status, reply& reply)
 			{
-				reply rep;
-				rep.status = status;
-				rep.Impl_->content = boost::lexical_cast<std::string>(status);
-				rep.Impl_->headers.resize(2);
-				rep.Impl_->headers[0].name = ("Content-Length");
-				rep.Impl_->headers[0].value = (boost::lexical_cast<std::string>(rep.Impl_->content.size()));
-				rep.Impl_->headers[1].name = ("Content-Type");
-				rep.Impl_->headers[1].value = ("text/html");
-				return rep;
+				serpents::util::xml::PugiXML pugiXML;
+				reply.status = status;
+				reply.Impl_->content = pugiXML.generateErrorResponseDoc(boost::lexical_cast<std::string>(status), 5);
+				reply.Impl_->headers.resize(2);
+				reply.Impl_->headers[0].name = ("Content-Length");
+				reply.Impl_->headers[0].value = (boost::lexical_cast<std::string>(reply.Impl_->content.size()));
+				reply.Impl_->headers[1].name = ("Content-Type");
+				reply.Impl_->headers[1].value = ("text/html");
 			}
-			void reply::setContent(std::string& content){
+			void reply::setContent(std::string& content) {
 				Impl_->content = content;
 			}
-			std::string& reply::getContent(){
+			std::string& reply::getContent() const {
 				return Impl_->content;
 			}
-			std::vector<header>& reply::getHeaders(){
+			std::vector<header>& reply::getHeaders() const {
 				return Impl_->headers;
 			}
 

@@ -41,6 +41,7 @@ namespace serpents{
 			{
 				class RequestHandler;
 				friend RequestHandler;
+				reply(const reply& repl);
 				reply();
 				~reply();
 				/// The status of the reply.
@@ -71,14 +72,14 @@ namespace serpents{
 
 				/// set/get for content reply
 				void setContent(std::string& content);
-				std::string& getContent();
+				std::string& getContent() const;
 
 				///get headers
-				std::vector<header>& getHeaders();
+				std::vector<header>& getHeaders() const;
 
 				/// Get a stock reply.
-				static reply stock_reply(status_type status, std::string content);
-				static reply reply::stock_reply(reply::status_type status);
+				static void stock_reply(status_type status, std::string content, reply& reply);
+				static void reply::stock_reply(reply::status_type status, reply& reply);
 			private:
 				class Impl;
 				Impl* Impl_;

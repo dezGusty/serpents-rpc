@@ -91,30 +91,31 @@ namespace serpents{
 					}
 					catch (boost::bad_lexical_cast& e){
 						Log::getPtr()->error(e.what());						
-						Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
+						http::server2::reply::stock_reply(http::server2::reply::ok, e.what(),Impl_->reply_);
 					}
 					catch (serpents::ParamContainerException& e){
-						Log::getPtr()->addAppender("default", "D:\\program.log");
 						Log::getPtr()->error(e.what());
-						Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
+						http::server2::reply::stock_reply(http::server2::reply::ok, e.what(), Impl_->reply_);
+
 					}
 					catch (http::server2::RepoException& e){
 						Log::getPtr()->error(e.what());
-						Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
+						http::server2::reply::stock_reply(http::server2::reply::ok, e.what(), Impl_->reply_);
 
 					}
 					catch (http::server2::RequestException& e){
 						Log::getPtr()->error(e.what());
-						Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
+						http::server2::reply::stock_reply(http::server2::reply::ok, e.what(), Impl_->reply_);
 					}
 					catch (std::exception& e){
 						Log::getPtr()->error(e.what());
-						Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, e.what());
+						http::server2::reply::stock_reply(http::server2::reply::ok, e.what(), Impl_->reply_);
 
 					}
 					catch (...){
 						Log::getPtr()->error("unkonwn exception [catch(...) cought something]");
-						Impl_->reply_ = http::server2::reply::stock_reply(http::server2::reply::ok, "unkonwn exception [catch(...) cought something]");
+						http::server2::reply::stock_reply(http::server2::reply::ok, "unkonwn exception [catch(...) cought something]"
+														, Impl_->reply_);
 
 					}
 
