@@ -63,6 +63,7 @@ namespace serpents{
 	void XMLRPC_Method::fillParameterContainer(serpents::ParameterContainer& pc, XmlRpc::XmlRpcValue& params){
 		if (params.size() > 0){
 			int paramSize = params.size();
+
 			for (int i = 0; i < paramSize; ++i){
 				switch (params[i].getType()){
 					//int

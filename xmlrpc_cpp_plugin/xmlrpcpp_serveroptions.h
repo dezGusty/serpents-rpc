@@ -9,6 +9,7 @@ namespace serpents{
 		Impl* Impl_;
 	public:
 		XMLRpcpp_ServerOptions();
+		XMLRpcpp_ServerOptions(const XMLRpcpp_ServerOptions&) = delete;
 		~XMLRpcpp_ServerOptions();
 		virtual void portNumber(unsigned int   const& arg);
 		//method to access xmlrpc_c's logger. Only availible if the option

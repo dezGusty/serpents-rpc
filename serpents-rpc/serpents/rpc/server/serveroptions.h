@@ -38,9 +38,8 @@ namespace serpents{
   class ServerOptions{
   public:
 	  virtual void portNumber(unsigned int   const& arg) =0;
-	 
-	  //method to access xmlrpc_c's logger. Only availible if the option
-	  //is selected when buidling xmlrpc_c, if not it does nothing.
+	  //sets the log file for serpents' logger if USELOG4CPP is define
+	  //does not set te log file for the underlying libs' logger
 	  virtual void logFileName(std::string    const& arg) = 0;
 	  virtual void keepaliveTimeout(unsigned int   const& arg) = 0;
 	  virtual void keepaliveMaxConn(unsigned int   const& arg) = 0;

@@ -6,6 +6,9 @@ namespace serpents{
 		constrOpt_ = new constrOpt();
 		constrOpt_->portNumber(8080);
 	}
+	XMLRPC_CServerOptions::~XMLRPC_CServerOptions(){
+		delete constrOpt_;
+	}
 	void XMLRPC_CServerOptions::portNumber(unsigned int const& arg){
 		constrOpt_->portNumber(arg);
 	}

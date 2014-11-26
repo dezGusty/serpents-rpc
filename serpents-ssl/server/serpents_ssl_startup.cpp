@@ -6,6 +6,7 @@
 //guslibs
 #include "guslib\util\pluginmanager.h"
 #include "guslib\system\dynamiclibmanager.h"
+#include "serpents_ssl_serveroptions.h"
 #include <string>
 #include <memory>
 
@@ -17,6 +18,7 @@ namespace serpents{
 		ssl::server* server;
 		std::thread thrd;
 		std::thread controllThread;
+		SSL_ServerOptions serveroptions;
 	};
 	SerpentsSSLStartUp::SerpentsSSLStartUp(){
 		Impl_ = new Impl;
@@ -24,7 +26,10 @@ namespace serpents{
 	SerpentsSSLStartUp::~SerpentsSSLStartUp(){
 		delete Impl_;
 	}
-	// server startUp overrides
+	ServerOptions* SerpentsSSLStartUp::getImplServerOptions(){
+		return &Impl_->serveroptions;
+	}
+	/// server startUp overrides
 	std::thread& SerpentsSSLStartUp::execute(Server* server){
 		Impl_->controllThread = std::thread(&SerpentsSSLStartUp::controll, this);
 
@@ -58,7 +63,7 @@ namespace serpents{
 		
 		boost::asio::io_service io_service;
 		size_t numThreads = 3;
-		Impl_->server = new serpents::ssl::server("localhost", io_service, 8080, numThreads);
+		Impl_->server = new serpents::ssl::server("localhost", io_service, Impl_->serveroptions.getPortNumber(), numThreads);
 		FunctionRepository* fr = server->getRepository();
 		auto it = fr->getImpl()->methodContainer.begin();
 		for (it; it != fr->getImpl()->methodContainer.end(); ++it){

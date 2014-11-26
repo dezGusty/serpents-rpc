@@ -9,6 +9,9 @@ namespace serpents{
 		
 	public:
 		XMLRPC_CServerOptions();
+		~XMLRPC_CServerOptions();
+		XMLRPC_CServerOptions(const XMLRPC_CServerOptions&) = delete;
+
 		void portNumber(unsigned int   const& arg) override;
 		void logFileName(std::string    const& arg) override;
 		void keepaliveTimeout(unsigned int   const& arg) override;

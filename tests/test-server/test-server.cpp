@@ -185,13 +185,13 @@ void main(){
 	server.setRepository(fr);
 	serpents::RPCSelector rpcselect;
 	try{
-		rpcselect.selectRPCMethod(server, "xmlrpcpp_plugin");
+		rpcselect.selectRPCMethod(server, "serpents_ssl");
 	}
 	catch (std::exception& e){
 		std::cout << e.what() << std::endl;
 	}
-	server.getServerOptions()->portNumber(8081);
-	server.getServerOptions()->uriPath("/RPC3");
+	server.getServerOptions()->portNumber(8080);
+	server.getServerOptions()->uriPath("/RPC2");
 	try{
 		rpcselect.startServer();
 	}
