@@ -185,15 +185,20 @@ void main(){
 	server.setRepository(fr);
 	serpents::RPCSelector rpcselect;
 	try{
-		rpcselect.selectRPCMethod(server, "xmlrpc_cpp_plugin");
+		rpcselect.selectRPCMethod(server, "xmlrpcpp_plugin");
 	}
 	catch (std::exception& e){
 		std::cout << e.what() << std::endl;
 	}
 	server.getServerOptions()->portNumber(8081);
 	server.getServerOptions()->uriPath("/RPC3");
-
-	rpcselect.startServer();
+	try{
+		rpcselect.startServer();
+	}
+	catch (std::exception& e){
+		std::cout << e.what() << std::endl;
+	}
+	
 	
 	
 }

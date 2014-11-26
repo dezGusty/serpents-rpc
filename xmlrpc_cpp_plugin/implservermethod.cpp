@@ -25,10 +25,11 @@ namespace serpents{
 			method->execute(&pc, &rv);
 			result = rv.getValue();
 		}catch (std::exception& e){
+			e.what(); //just wanted to get rid of the warning
 			#ifdef USE_LOG4CPP // start logging
 			Logger::getInstance().error("In method "+method->getName()+" "+ e.what());
 			#endif // end logging
-			mtx.unlock();
+			//mtx.unlock();
 		}
 
 		mtx.unlock();

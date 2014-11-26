@@ -20,7 +20,7 @@ namespace serpents{
 		virtual void controll()override;
 		virtual void start() override;
 		virtual void stop() override;
-
+		virtual ServerOptions* getImplServerOptions() override;
 		//Plugin overrides
 		virtual const std::string& getName() const override;
 		virtual void install() override;

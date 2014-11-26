@@ -3,6 +3,7 @@
 #include "servermanager.h"
 #include <algorithm>
 #include "xmlrpc_cpp_buildopts.h"
+#include "xmlrpcpp_serveroptions.h"
 #include "guslib\util\pluginmanager.h"
 
 namespace serpents{
@@ -11,7 +12,7 @@ namespace serpents{
 		XmlRpc::XmlRpcServer* xmlServerPnt;
 		std::thread controllThread;
 		std::thread thrd;
-
+		XMLRpcpp_ServerOptions serveroptions;
 	};
 
 	XMLRPCpp_StartUp::XMLRPCpp_StartUp(){
@@ -29,7 +30,9 @@ namespace serpents{
 		return Impl_->thrd;
 
 	}
-
+	ServerOptions* XMLRPCpp_StartUp::getImplServerOptions(){
+		return &Impl_->serveroptions;
+	}
 	void XMLRPCpp_StartUp::run(Server* server){
 		
 		try {
@@ -42,7 +45,8 @@ namespace serpents{
 				s.addMethod(b);
 			}
 
-			s.bindAndListen(8080);
+			s.bindAndListen(Impl_->serveroptions.getPortNumber());
+		
 			s.enableIntrospection(true);
 			Impl_->xmlServerPnt = &s;
 
