@@ -1,11 +1,12 @@
 #include "xmlrpc_c_serveroptions.h"
 
 namespace serpents{
+	//initiaize xmlrpc_c specific server opt with port 8080
 	XMLRPC_CServerOptions::XMLRPC_CServerOptions(){
 		constrOpt_ = new constrOpt();
-		constrOpt_->portNumber(8081);
+		constrOpt_->portNumber(8080);
 	}
-	void XMLRPC_CServerOptions::portNumber(unsigned int   const& arg){
+	void XMLRPC_CServerOptions::portNumber(unsigned int const& arg){
 		constrOpt_->portNumber(arg);
 	}
 	void  XMLRPC_CServerOptions::logFileName(std::string    const& arg){

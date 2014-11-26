@@ -24,29 +24,16 @@
 #include "serpents\rpc\server\server.h"
 
 namespace serpents{
+	class Server::Impl{
+	public:
+		std::map<std::string, std::string> logmap;
+		ServerOptions* soPtr;
+
+	};
 	//implementation to be moved to corresponding libs 
 	Server::Server() {
 		Impl_ = new Impl();
 	}
-	Server::Server(unsigned int port){
-		Impl_ = new Impl();
-		this->Impl_->port = port;
-	}
-	std::string Server::getURI(){
-		return this->Impl_->URI;
-	}
-
-
-	unsigned int Server::getPort(){
-		return this->Impl_->port;
-	}
-	void Server::setURI(std::string URI){
-		this->Impl_->URI = URI;
-	}
-	void Server::setPort(unsigned port){
-		this->Impl_->port = port;
-	}
-
 	void Server::setRepository(serpents::FunctionRepository& fr){
 		this->repository = &fr;
 	}
@@ -59,7 +46,9 @@ namespace serpents{
 	FunctionRepository* Server::getRepository(){
 		return this->repository;
 	}
-
+	void Server::setServerOptionsImpl(ServerOptions* so){
+		Impl_->soPtr = so;
+	}
 	ServerOptions* Server::getServerOptions(){
 		if (Impl_->soPtr == nullptr)
 			throw std::exception("server options is a null pointer");

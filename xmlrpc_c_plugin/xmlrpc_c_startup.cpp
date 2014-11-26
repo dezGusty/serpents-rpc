@@ -6,6 +6,7 @@
 #include "serpents\rpc\server\server.h"
 #include "guslib\util\pluginmanager.h"
 #include "servermanager.h"
+#include "xmlrpc_c_serveroptions.h"
 #include "xmlrpc_c_buildopts.h"
 namespace serpents{
 	class XMLRPC_C_StartUp::Impl{
@@ -16,6 +17,7 @@ namespace serpents{
 		xmlrpc_c::serverAbyss* serverAbyssPtr;
 		bool runCon;
 		xmlrpc_c::registry myRegistry;
+		XMLRPC_CServerOptions serveroptions;
 	};
 
 	XMLRPC_C_StartUp::XMLRPC_C_StartUp(){
@@ -24,7 +26,9 @@ namespace serpents{
 	XMLRPC_C_StartUp::~XMLRPC_C_StartUp(){
 		delete Impl_;
 	}
-
+	ServerOptions* XMLRPC_C_StartUp::getImplServerOptions(){
+		return &Impl_->serveroptions;
+	}
 
 	void XMLRPC_C_StartUp::run(serpents::Server* server){
 		try {
@@ -38,12 +42,9 @@ namespace serpents{
 				//Impl_->mtx.unlock();
 			}
 			//xmlrpc_c::serverAbyss::constrOpt conOpt = *server.getServerOptions()->getConstrOpt(); // TODO: FIX THIS
-			xmlrpc_c::serverAbyss myAbyssServer(xmlrpc_c::serverAbyss::constrOpt()
-				.registryP(&Impl_->myRegistry)
-				.portNumber(8080)
-				);
-			//.registryP(&myRegistry)
-			//.portNumber(server.getPort()));
+			Impl_->serveroptions.getConstrOpt()->registryP(&Impl_->myRegistry);
+			xmlrpc_c::serverAbyss myAbyssServer(*Impl_->serveroptions.getConstrOpt());
+		
 			Impl_->serverAbyssPtr = &myAbyssServer; //change to set/get
 
 			std::mutex mtx;

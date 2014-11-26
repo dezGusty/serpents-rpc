@@ -91,6 +91,8 @@ namespace serpents{
 		std::cout << "loaded plugin: " << plugin_name_xmlrpc << std::endl;
 		try{
 			this->ServerStartUpImpl_ = serpents::ServerManager::getPtr()->getServerPointer(method);
+			server.setServerOptionsImpl(ServerStartUpImpl_->getImplServerOptions());
+			server_->setServerOptionsImpl(ServerStartUpImpl_->getImplServerOptions()); //TODO this is silly, find a better way to do it
 		}
 		catch (std::exception& e){
 			throw std::exception(e.what());

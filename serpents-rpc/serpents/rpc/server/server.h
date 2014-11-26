@@ -43,24 +43,14 @@ namespace serpents{
 		Server();
 		Server(unsigned int port);
 		void run();
-		std::string getURI();
-		unsigned int getPort();
-		void setURI(std::string URI);
-		void setPort(const unsigned int Port);
 		void setRepository(FunctionRepository& fr);
 		FunctionRepository* getRepository();
 		ServerOptions* getServerOptions();
+		void setServerOptionsImpl(ServerOptions* so);
 		void addLogTarget(std::string type, std::string fileName);
 		std::map<std::string, std::string>* getLogTargets();
 	};
-	class Server::Impl{
-	public:
-		std::string URI;
-		unsigned int port;
-		std::map<std::string, std::string> logmap;
-		ServerOptions* soPtr;
 
-	};
 }
 #endif
 

@@ -36,6 +36,7 @@
 #endif
 namespace serpents{
   class ServerOptions{
+  public:
 	  virtual void portNumber(unsigned int   const& arg) =0;
 	  virtual void logFileName(std::string    const& arg) = 0;
 	  virtual void keepaliveTimeout(unsigned int   const& arg) = 0;
