@@ -43,6 +43,8 @@ SET (SOURCE_FILES_SERVER
  "${CMAKE_CURRENT_SOURCE_DIR}/server/serpents_ssl_startup.h"
  "${CMAKE_CURRENT_SOURCE_DIR}/server/serpents_ssl_startup.cpp"
  "${CMAKE_CURRENT_SOURCE_DIR}/server/ssl_server_build_opts.h"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/serpents_ssl_serveroptions.h"
+ "${CMAKE_CURRENT_SOURCE_DIR}/server/serpents_ssl_serveroptions.cpp"
  
 
 )

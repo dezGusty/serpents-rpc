@@ -21,6 +21,8 @@ SET (XMLRPCPP_SRC
 	"./xmlrpcpp_retvalue.h"
 	"./xmlrpcpp_retvalue.cpp"
 	"./xmlrpc_cpp_buildopts"
+	"./xmlrpcpp_serveroptions.h"
+	"./xmlrpcpp_serveroptions.cpp"
 )
 
 
