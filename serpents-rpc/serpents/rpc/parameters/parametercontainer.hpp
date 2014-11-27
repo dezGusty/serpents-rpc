@@ -42,14 +42,21 @@ namespace serpents{
 
 	public:
 		ParamContainerException(){ Impl_ = new Impl; }
-		ParamContainerException(const ParamContainerException& paramEx){ this->Impl_ = new Impl; 
+
+		ParamContainerException(const ParamContainerException& paramEx){
+			this->Impl_ = new Impl; 
 			this->Impl_->description = paramEx.getDescription();
 		}
-		ParamContainerException(std::string d)  { Impl_ = new Impl; Impl_->description =d; }
-		std::string getDescription()const { return Impl_->description; }
+		ParamContainerException(std::string d)  { 
+			Impl_ = new Impl; Impl_->description =d;
+		}
+		std::string getDescription()const { 
+			return Impl_->description; 
+		}
 		virtual const char* what() const override{
 			return Impl_->description.c_str();
 		}
+
 		friend std::ostream& operator<<(std::ostream& is, ParamContainerException e){
 			is << e.getDescription();
 			return is;
@@ -163,6 +170,10 @@ namespace serpents{
 			{
 				this->Impl_->stringVec.push_back(var);
 			}
+			for each (bool var in pc.Impl_->boolVec)
+			{
+				this->Impl_->boolVec.push_back(var);
+			}
 			for each (std::string var in pc.Impl_->allVec)
 			{
 				this->Impl_->allVec.push_back(var);
@@ -180,7 +191,12 @@ namespace serpents{
 		std::vector<std::string>& ParameterContainer::getStrings(){
 			return Impl_->stringVec;
 		}
-
+		std::vector<bool>& ParameterContainer::getBools(){
+			return Impl_->boolVec;
+		}
+		std::vector<std::string>& ParameterContainer::getAll(){
+			return Impl_->allVec;
+		}
 		//get single results 
 
 		bool ParameterContainer::getBool(unsigned int n){
@@ -262,18 +278,14 @@ namespace serpents{
 				return "";
 			}
 		}
-		std::vector<std::string>& ParameterContainer::getAll(){
-			return Impl_->allVec;
-		}
+	
 		ParameterContainer::~ParameterContainer(){
 			delete Impl_;
 		}
+
+	
 	};
 }
 
-namespace serpents{
-
-
-}
 
 #endif

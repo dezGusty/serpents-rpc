@@ -29,7 +29,13 @@
 namespace serpents{
 	namespace http {
 		namespace server2 {
-
+			class reply::Impl{
+				friend reply;
+				/// The content to be sent in the reply.
+				std::string content;
+				/// The headers to be included in the reply.
+				std::vector<header> headers;
+			};
 			namespace status_strings {
 
 				const std::string ok =

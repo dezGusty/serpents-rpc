@@ -13,6 +13,7 @@ namespace serpents {
 		Impl* Impl_;
 	public:
 		XMLRPC_C_StartUp();
+		XMLRPC_C_StartUp(const XMLRPC_C_StartUp&) = delete;
 		~XMLRPC_C_StartUp();
 		//ServerStartUp overrides
 		virtual std::thread& execute(Server* server) override;

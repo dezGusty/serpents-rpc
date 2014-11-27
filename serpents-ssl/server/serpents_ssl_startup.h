@@ -12,6 +12,7 @@ namespace serpents{
 		Impl* Impl_;
 	public:
 		SerpentsSSLStartUp();
+		SerpentsSSLStartUp(const SerpentsSSLStartUp&) = delete;
 		~SerpentsSSLStartUp();
 		// server startUp overrides
 		virtual std::thread& execute(Server* server) override;

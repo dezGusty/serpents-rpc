@@ -14,6 +14,7 @@ namespace serpents {
 		void setValue(bool b);
 		void setValue(std::string s);
 		XmlRpc::XmlRpcValue getValue();
+		XMLRPC_CPPRetValue(const XMLRPC_CPPRetValue&) = delete;
 		XMLRPC_CPPRetValue();
 		~XMLRPC_CPPRetValue();
 	private:

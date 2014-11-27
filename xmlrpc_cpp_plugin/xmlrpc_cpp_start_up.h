@@ -14,6 +14,7 @@ namespace serpents{
 		Impl* Impl_;
 	public:
 		XMLRPCpp_StartUp();
+		XMLRPCpp_StartUp(const XMLRPCpp_StartUp&) = delete;
 		~XMLRPCpp_StartUp();
 		virtual std::thread& execute(Server* server) override;
 		virtual void run(Server* server) override;

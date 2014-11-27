@@ -1,6 +1,10 @@
 #include "retvalue.h"
 
 namespace serpents{
+	class XMLRPC_CRetValue::Impl{
+		friend XMLRPC_CRetValue;
+		xmlrpc_c::value* value;
+	};
 	XMLRPC_CRetValue::XMLRPC_CRetValue(){
 		Impl_ = new Impl();
 
@@ -28,4 +32,5 @@ namespace serpents{
 			throw(std::exception("no return value"));
 		return Impl_->value;
 	}
+	
 }
