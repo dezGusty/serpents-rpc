@@ -6,19 +6,19 @@
 #include "serpents\rpc\server\serverstartup.h"
 #include "servermanager_build_opts.h"
 namespace serpents{
-	class SERVERMGR_EXPORT_SYMBOL ServerManagerUtil{
-	private:
-		class Impl;
-		Impl* Impl_;
-	public:
-		ServerManagerUtil();
-		~ServerManagerUtil();
-		void registerServer(const std::string name, ServerStartUp* server);
-		void unregisterServer(const std::string name, ServerStartUp* server);
-		static ServerStartUp* getServerPointer(const std::string& name);
-	};
-	typedef guslib::Singleton<ServerManagerUtil> ServerManager;
-	SERVERMGR_EXPIMP_TEMPLATE template class SERVERMGR_EXPORT_SYMBOL guslib::Singleton <ServerManagerUtil>;
+  class SERVERMGR_EXPORT_SYMBOL ServerManagerUtil{
+  private:
+    class Impl;
+    Impl* Impl_;
+  public:
+    ServerManagerUtil();
+    ~ServerManagerUtil();
+    void registerServer(const std::string name, ServerStartUp* server);
+    void unregisterServer(const std::string name, ServerStartUp* server);
+    static ServerStartUp* getServerPointer(const std::string& name);
+  };
+  typedef guslib::Singleton<ServerManagerUtil> ServerManager;
+  SERVERMGR_EXPIMP_TEMPLATE template class SERVERMGR_EXPORT_SYMBOL guslib::Singleton <ServerManagerUtil>;
 }
 
 

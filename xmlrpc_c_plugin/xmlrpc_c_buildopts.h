@@ -1,6 +1,6 @@
 #pragma once
 
-// Add platform specific definitions.
+//  Add platform specific definitions.
 #include "guslib/guslib_platform.h"
 
 #ifdef PLUGINXMLRPC_C_EXP

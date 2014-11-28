@@ -7,8 +7,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 file (GLOB TEST-SSL-SERVER
-	"*.h"
-	"*.cpp")
+  "*.h"
+  "*.cpp")
 
 source_group("Test-SSL-Server" FILES ${TEST-SSL-SERVER})
 
@@ -25,7 +25,7 @@ link_directories(${CMAKE_SOURCE_DIR}/build)
 add_executable (test-ssl-server test-ssl-server.cpp)
 add_definitions(/D _WIN32_WINNT=0x0501 -D_SCL_SECURE_NO_WARNINGS -DSSL_SERVER_EXPORT)
 target_link_libraries(test-ssl-server Ws2_32.lib odbc32.lib odbccp32.lib ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES} 
-						${GTEST_LIBRARIES} serpents_ssl.lib)
+            ${GTEST_LIBRARIES} serpents_ssl.lib)
 
 if (SERPENTS_RPC_USELOG4CPP)
  FIND_PACKAGE(LOG4CPP_Local)
@@ -35,8 +35,8 @@ endif ()
 
 #add_definitions(-DSERPENTSRPC_EXPORTS)
 #install (TARGETS serpents
-#		ARCHIVE DESTINATION lib
-#		LIBRARY DESTINATION lib
-#		COMPONENT library
-#		)
-		
+#    ARCHIVE DESTINATION lib
+#    LIBRARY DESTINATION lib
+#    COMPONENT library
+#    )
+    

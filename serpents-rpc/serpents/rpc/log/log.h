@@ -26,13 +26,15 @@
 //   THE SOFTWARE.
 
 #ifdef USE_LOG4CPP
+//  system libs
+#include <string>
 
-//serpent libs
+//  serpent libs
 #include "serpents/rpc/base.h"
 #include "serpents\rpc\log\log_build_opts.h"
-//log4cpp libs
-#include "log4cpp/Category.hh"
 
+//  log4cpp libs
+#include "log4cpp/Category.hh"
 #include "log4cpp/Appender.hh"
 #include "log4cpp/FileAppender.hh"
 #include "log4cpp/OstreamAppender.hh"
@@ -41,31 +43,28 @@
 #include "log4cpp/PatternLayout.hh"
 #include "log4cpp/Priority.hh"
 
-//guslib
+//  guslib
 
 #include "guslib\common\singleton.hpp"
 
-namespace serpents{
-	class SERPENTSDLL Logger
-	{
-	public:
-		Logger(void);
-		~Logger(void);
-		void addAppender(std::string, std::string);
-		void error(std::string);
-		void info(std::string);
-		void warn(std::string);
-	protected:
-
-		log4cpp::Category& root;
-
-
-
-	};
-	typedef guslib::Singleton<Logger> Log;
-	SERVERMGR_EXPIMP_TEMPLATE template class SERVERMGR_EXPORT_SYMBOL guslib::Singleton <Logger>;
+namespace serpents
+{
+  class SERPENTSDLL Logger
+  {
+    public:
+    Logger(void);
+    ~Logger(void);
+    void addAppender(std::string, std::string);
+    void error(std::string);
+    void info(std::string);
+    void warn(std::string);
+    protected:
+    log4cpp::Category& root;
+  };
+  typedef guslib::Singleton<Logger> Log;
+  SERVERMGR_EXPIMP_TEMPLATE template class SERVERMGR_EXPORT_SYMBOL guslib::Singleton <Logger>;
 }
 
 #endif
-#endif // LOGGER_H_
+#endif  //  LOGGER_H_
 

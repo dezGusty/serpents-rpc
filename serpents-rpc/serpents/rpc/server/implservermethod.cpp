@@ -26,7 +26,7 @@
 
 namespace serpents{
  
-	/*
+  /*
   XMLRPC_Method::XMLRPC_Method(Method* method, std::string methodName, XmlRpc::XmlRpcServer* s) :XmlRpc::XmlRpcServerMethod(methodName, s){
     if (method != nullptr)
       this->method = method;
@@ -90,3 +90,4 @@ namespace serpents{
   }
   */
 }
+

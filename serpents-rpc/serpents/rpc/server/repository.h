@@ -53,8 +53,8 @@ namespace serpents{
   };
   class FunctionRepository::Impl{
   public:
-	  friend FunctionRepository;
-	  methodMap methodContainer;
+    friend FunctionRepository;
+    methodMap methodContainer;
   };
 }
 

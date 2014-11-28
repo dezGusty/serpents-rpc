@@ -34,22 +34,22 @@
 
 namespace serpents{
 
-	class SERPENTSDLL Server{
-		class Impl;
-		Impl* Impl_;
+  class SERPENTSDLL Server{
+    class Impl;
+    Impl* Impl_;
 
-		FunctionRepository* repository;
-	public:
-		Server();
-		Server(unsigned int port);
-		void run();
-		void setRepository(FunctionRepository& fr);
-		FunctionRepository* getRepository();
-		ServerOptions* getServerOptions();
-		void setServerOptionsImpl(ServerOptions* so);
-		void addLogTarget(std::string type, std::string fileName);
-		std::map<std::string, std::string>* getLogTargets();
-	};
+    FunctionRepository* repository;
+  public:
+    Server();
+    Server(unsigned int port);
+    void run();
+    void setRepository(FunctionRepository& fr);
+    FunctionRepository* getRepository();
+    ServerOptions* getServerOptions();
+    void setServerOptionsImpl(ServerOptions* so);
+    void addLogTarget(std::string type, std::string fileName);
+    std::map<std::string, std::string>* getLogTargets();
+  };
 
 }
 #endif

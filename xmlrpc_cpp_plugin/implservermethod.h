@@ -15,15 +15,15 @@
 
 namespace serpents{
 
-	class  XMLRPC_Method : public XmlRpc::XmlRpcServerMethod{
-	public:
-		std::mutex mtx;
-		Method* method;
-		XMLRPC_Method(Method* method, std::string methodName, XmlRpc::XmlRpcServer* s);
-		void execute(XmlRpc::XmlRpcValue& params, XmlRpc::XmlRpcValue& result);
+  class  XMLRPC_Method : public XmlRpc::XmlRpcServerMethod{
+  public:
+    std::mutex mtx;
+    Method* method;
+    XMLRPC_Method(Method* method, std::string methodName, XmlRpc::XmlRpcServer* s);
+    void execute(XmlRpc::XmlRpcValue& params, XmlRpc::XmlRpcValue& result);
 
-		void fillParameterContainer(ParameterContainer& pc, XmlRpc::XmlRpcValue& params);
-	};
+    void fillParameterContainer(ParameterContainer& pc, XmlRpc::XmlRpcValue& params);
+  };
 
 
 }

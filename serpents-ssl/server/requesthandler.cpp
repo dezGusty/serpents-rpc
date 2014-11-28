@@ -31,38 +31,38 @@
 // project libs 
 #include  "serpents\rpc\parameters\parametercontainer.hpp"
 namespace serpents{
-	namespace http{
-		namespace server2{
-			void RequestHandler::handleRequest(request& req, reply& rep, ServerFunctionRepository& functionRepo){
+  namespace http{
+    namespace server2{
+      void RequestHandler::handleRequest(request& req, reply& rep, ServerFunctionRepository& functionRepo){
 
-				rep.status = reply::status_type::ok;
+        rep.status = reply::status_type::ok;
 
-				serpents::ParameterContainer pc;
-				std::string funcname;
-				util::xml::IXMLClass* xmlutil = new util::xml::PugiXML;
-				xmlutil->getXMLParameters(req.content, funcname, pc);
-				sptr_method method = functionRepo.lookUpMethod(funcname);
+        serpents::ParameterContainer pc;
+        std::string funcname;
+        util::xml::IXMLClass* xmlutil = new util::xml::PugiXML;
+        xmlutil->getXMLParameters(req.content, funcname, pc);
+        sptr_method method = functionRepo.lookUpMethod(funcname);
 
-				Serpents_SSL_RetValue result;
-				(*method)->execute(&pc, &result);
+        Serpents_SSL_RetValue result;
+        (*method)->execute(&pc, &result);
 
-				pugi::xml_document responseDoc;
-				xmlutil->generateXMLResponse(responseDoc, result.getRetValue());
-				std::stringstream ss;
-				responseDoc.print(ss, " ", pugi::format_raw);
+        pugi::xml_document responseDoc;
+        xmlutil->generateXMLResponse(responseDoc, result.getRetValue());
+        std::stringstream ss;
+        responseDoc.print(ss, " ", pugi::format_raw);
 
-				ss << "\n\0";
-				rep.setContent(ss.str());
-				rep.getHeaders().resize(2);
-				rep.getHeaders()[0].name = "Content-Length";
-				rep.getHeaders()[0].value = (boost::lexical_cast<std::string>(rep.getContent().length()));
-				rep.getHeaders()[1].name = ("Content-Type");
-				rep.getHeaders()[1].value = ("application/xml");
+        ss << "\n\0";
+        rep.setContent(ss.str());
+        rep.getHeaders().resize(2);
+        rep.getHeaders()[0].name = "Content-Length";
+        rep.getHeaders()[0].value = (boost::lexical_cast<std::string>(rep.getContent().length()));
+        rep.getHeaders()[1].name = ("Content-Type");
+        rep.getHeaders()[1].value = ("application/xml");
 
-			}
+      }
 
 
 
-		}
-	}
+    }
+  }
 } // namespace serpents

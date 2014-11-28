@@ -42,40 +42,41 @@
 ///system libs
 
 namespace serpents{
-	namespace ssl{
-		
-		enum SSL_SERVER_API ErrorCodes {
-			SUCCESS = 0,
-			BAD_ARGUMENTS,
-			ACCEPTOR_FAILURE,
-			CONNECTION_FAILURE,
-			WRITE_FAILURE,
-			READ_FAILURE,
-			SOCKET_CLOSE_FAILURE,
-			UNSUPPORTED_REQUEST
-		};
+  namespace ssl{
+    
+    enum SSL_SERVER_API ErrorCodes {
+      SUCCESS = 0,
+      BAD_ARGUMENTS,
+      ACCEPTOR_FAILURE,
+      CONNECTION_FAILURE,
+      WRITE_FAILURE,
+      READ_FAILURE,
+      SOCKET_CLOSE_FAILURE,
+      UNSUPPORTED_REQUEST
+    };
 
-		typedef boost::asio::ssl::stream<boost::asio::ip::tcp::socket> ssl_socket;
+    typedef boost::asio::ssl::stream<boost::asio::ip::tcp::socket> ssl_socket;
 
-		class SSL_SERVER_API session
-		{
-			class Impl;
-			Impl* Impl_;
-		public:
-			session(boost::asio::io_service& io_service, boost::asio::ssl::context& context,
-				http::server2::ServerFunctionRepository& repo);
-			~session();
-			ssl_socket::lowest_layer_type& socket();
-			void start();
-			void handle_handshake(const boost::system::error_code& error);
-			void handle_read(const boost::system::error_code& error,
-				size_t bytes_transferred);
-			void handle_write(const boost::system::error_code& error);
-		};
+    class SSL_SERVER_API session
+    {
+      class Impl;
+      Impl* Impl_;
+    public:
+      session(const session&) = delete;
+      session(boost::asio::io_service& io_service, boost::asio::ssl::context& context,
+        http::server2::ServerFunctionRepository& repo);
+      ~session();
+      ssl_socket::lowest_layer_type& socket();
+      void start();
+      void handle_handshake(const boost::system::error_code& error);
+      void handle_read(const boost::system::error_code& error,
+        size_t bytes_transferred);
+      void handle_write(const boost::system::error_code& error);
+    };
 
-		
+    
 
-	} //ssl
+  } //ssl
 } //serpents
 
 #endif //SESSION_H_

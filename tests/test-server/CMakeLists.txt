@@ -13,8 +13,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 file (GLOB SERPENTS-TEST-SERVER
-	"*.h"
-	"*.cpp")
+  "*.h"
+  "*.cpp")
 
 source_group("Test-Server" FILES ${SERPENTS-TEST-SERVER})
 
@@ -27,8 +27,8 @@ target_link_libraries(testserver Ws2_32.lib odbc32.lib odbccp32.lib server_manag
 target_link_libraries(testserver serpents-rpc.lib)
 #add_definitions(-DSERPENTSRPC_EXPORTS)
 #install (TARGETS serpents
-#		ARCHIVE DESTINATION lib
-#		LIBRARY DESTINATION lib
-#		COMPONENT library
-#		)
-		
+#    ARCHIVE DESTINATION lib
+#    LIBRARY DESTINATION lib
+#    COMPONENT library
+#    )
+    

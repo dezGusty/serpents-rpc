@@ -16,18 +16,18 @@
 #include <string>
 #include "serpents-ssl\base.h"
 namespace serpents{
-	namespace http {
-		namespace server2 {
+  namespace http {
+    namespace server2 {
 
-			class header
-			{
-			public:
-				std::string name;
-				std::string value;
-			};
+      class header
+      {
+      public:
+        std::string name;
+        std::string value;
+      };
 
 
-		} // namespace server2
-	} // namespace http
+    } // namespace server2
+  } // namespace http
 } // serpents
 #endif // HTTP_SERVER2_HEADER_HPP

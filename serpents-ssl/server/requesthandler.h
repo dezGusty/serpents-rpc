@@ -35,23 +35,23 @@
 #include "serpents-ssl\util\xmlutil.hpp"
 namespace serpents{
 
-	namespace http{
-		namespace server2{
-			class SSL_SERVER_API RequestException : public std::exception{
-				std::string* error;
-			public:
-				RequestException(std::string& errorMsg){ *error = errorMsg; }
-				std::string what(){ return *error; }
-			};
+  namespace http{
+    namespace server2{
+      class SSL_SERVER_API RequestException : public std::exception{
+        std::string* error;
+      public:
+        RequestException(std::string& errorMsg){ *error = errorMsg; }
+        std::string what(){ return *error; }
+      };
 
-			class SSL_SERVER_API RequestHandler : private boost::noncopyable{
-			public:
-				void handleRequest(request& req, reply& rep, ServerFunctionRepository& functionRepo);
+      class SSL_SERVER_API RequestHandler : private boost::noncopyable{
+      public:
+        void handleRequest(request& req, reply& rep, ServerFunctionRepository& functionRepo);
 
-			};
-		}
+      };
+    }
 
-	}
+  }
 }// namespace serpents
 
 #endif // end REQUEST_HANDLER_H_

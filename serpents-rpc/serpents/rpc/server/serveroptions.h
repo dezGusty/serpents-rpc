@@ -37,20 +37,20 @@
 namespace serpents{
   class ServerOptions{
   public:
-	  virtual void portNumber(unsigned int   const& arg) =0;
-	  //sets the log file for serpents' logger if USELOG4CPP is define
-	  //does not set te log file for the underlying libs' logger
-	  virtual void logFileName(std::string    const& arg) = 0;
-	  virtual void keepaliveTimeout(unsigned int   const& arg) = 0;
-	  virtual void keepaliveMaxConn(unsigned int   const& arg) = 0;
-	  virtual void timeout(unsigned int   const& arg) = 0;
-	  virtual void dontAdvertise(bool           const& arg) = 0;
-	  virtual void uriPath(std::string    const& arg) = 0;
-	  virtual void chunkResponse(bool           const& arg) = 0;
-	  virtual void allowOrigin(std::string    const& arg) = 0;
-	  virtual void accessCtlMaxAge(unsigned int const& arg) = 0;
-	  virtual void serverOwnsSignals(bool           const& arg) = 0;
-	  virtual void expectSigchld(bool           const& arg) = 0;
+    virtual void portNumber(unsigned int   const& arg) =0;
+    //sets the log file for serpents' logger if USELOG4CPP is define
+    //does not set te log file for the underlying libs' logger
+    virtual void logFileName(std::string    const& arg) = 0;
+    virtual void keepaliveTimeout(unsigned int   const& arg) = 0;
+    virtual void keepaliveMaxConn(unsigned int   const& arg) = 0;
+    virtual void timeout(unsigned int   const& arg) = 0;
+    virtual void dontAdvertise(bool           const& arg) = 0;
+    virtual void uriPath(std::string    const& arg) = 0;
+    virtual void chunkResponse(bool           const& arg) = 0;
+    virtual void allowOrigin(std::string    const& arg) = 0;
+    virtual void accessCtlMaxAge(unsigned int const& arg) = 0;
+    virtual void serverOwnsSignals(bool           const& arg) = 0;
+    virtual void expectSigchld(bool           const& arg) = 0;
   };
   
   /*

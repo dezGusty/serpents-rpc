@@ -30,98 +30,98 @@
 #include "serpents\rpc\server\rpcselector.h"
 #include "serpents\rpc\server\server.h"
 namespace serpents{
-	void loadPlugin(const std::string& pluginName)
-	{
-		guslib::DynamicLib* lib = guslib::DynamicLibManager::getPtr()->load(pluginName);
+  void loadPlugin(const std::string& pluginName)
+  {
+    guslib::DynamicLib* lib = guslib::DynamicLibManager::getPtr()->load(pluginName);
 
-		DLL_START_PLUGIN pFunc = (DLL_START_PLUGIN)lib->getSymbol("dllStartPlugin");
+    DLL_START_PLUGIN pFunc = (DLL_START_PLUGIN)lib->getSymbol("dllStartPlugin");
 
-		if (!pFunc)
-		{
-			throw new guslib::SimpleException("Cannot find symbol dllStartPlugin in library ");
-		}
+    if (!pFunc)
+    {
+      throw new guslib::SimpleException("Cannot find symbol dllStartPlugin in library ");
+    }
 
-		// This must call installPlugin
-		pFunc();
-	}
+    // This must call installPlugin
+    pFunc();
+  }
 
-	void unloadPlugin(const std::string& pluginName)
-	{
-		guslib::DynamicLib* lib = guslib::DynamicLibManager::getPtr()->load(pluginName);
+  void unloadPlugin(const std::string& pluginName)
+  {
+    guslib::DynamicLib* lib = guslib::DynamicLibManager::getPtr()->load(pluginName);
 
-		DLL_START_PLUGIN pFunc = (DLL_START_PLUGIN)lib->getSymbol("dllStopPlugin");
+    DLL_START_PLUGIN pFunc = (DLL_START_PLUGIN)lib->getSymbol("dllStopPlugin");
 
-		if (!pFunc)
-		{
-			throw new guslib::SimpleException("Cannot find symbol dllStartPlugin in library ");
-		}
+    if (!pFunc)
+    {
+      throw new guslib::SimpleException("Cannot find symbol dllStartPlugin in library ");
+    }
 
-		// This must call installPlugin
-		pFunc();
-	}
+    // This must call installPlugin
+    pFunc();
+  }
 
-	//plug in
+  //plug in
 
-	//choose impl of server 
-	void RPCSelector::selectRPCMethod(Server& server, std::string method){
+  //choose impl of server 
+  void RPCSelector::selectRPCMethod(Server& server, std::string method){
 
-		server_ = &server;
+    server_ = &server;
 
 #ifdef USE_LOG4CPP
-		auto map = server_->getLogTargets();
-		for (auto it = map->begin(); it != map->end(); ++it){
-			Log::getPtr()->addAppender(it->second, it->first);
-		}
-		Log::getPtr()->info("---using library " + method + "---");
+    auto map = server_->getLogTargets();
+    for (auto it = map->begin(); it != map->end(); ++it){
+      Log::getPtr()->addAppender(it->second, it->first);
+    }
+    Log::getPtr()->info("---using library " + method + "---");
 #endif
 
-		std::cout << "start" << std::endl;
-		std::string plugin_name("xmlrpc_c_plugin.dll");
-		std::string ssl_plugin_name("serpents_ssl.dll");
-		std::cout << "loading plugin: " << plugin_name << std::endl;
-		loadPlugin(plugin_name);
-		std::cout << "loaded plugin: " << plugin_name << std::endl;
-		std::cout << "loading plugin: " << ssl_plugin_name << std::endl;
-		loadPlugin(ssl_plugin_name);
-		std::cout << "loaded plugin: " << ssl_plugin_name << std::endl;
+    std::cout << "start" << std::endl;
+    std::string plugin_name("xmlrpc_c_plugin.dll");
+    std::string ssl_plugin_name("serpents_ssl.dll");
+    std::cout << "loading plugin: " << plugin_name << std::endl;
+    loadPlugin(plugin_name);
+    std::cout << "loaded plugin: " << plugin_name << std::endl;
+    std::cout << "loading plugin: " << ssl_plugin_name << std::endl;
+    loadPlugin(ssl_plugin_name);
+    std::cout << "loaded plugin: " << ssl_plugin_name << std::endl;
 
-		std::string plugin_name_xmlrpc("xmlrpcpp_plugin.dll");
-		std::cout << "loading plugin: " << plugin_name_xmlrpc << std::endl;
-		loadPlugin(plugin_name_xmlrpc);
-		std::cout << "loaded plugin: " << plugin_name_xmlrpc << std::endl;
-		try{
-			this->ServerStartUpImpl_ = serpents::ServerManager::getPtr()->getServerPointer(method);
-			server.setServerOptionsImpl(ServerStartUpImpl_->getImplServerOptions());
-			server_->setServerOptionsImpl(ServerStartUpImpl_->getImplServerOptions()); //TODO this is silly, find a better way to do it
-		}
-		catch (std::exception& e){
-			throw std::exception(e.what());
-			Log::getPtr()->error(e.what());
-		}
-		if (ServerStartUpImpl_ == nullptr){
-			Log::getPtr()->error("selected plugin was not found");
-			throw std::exception("selected plugin was not found");
-		}
+    std::string plugin_name_xmlrpc("xmlrpcpp_plugin.dll");
+    std::cout << "loading plugin: " << plugin_name_xmlrpc << std::endl;
+    loadPlugin(plugin_name_xmlrpc);
+    std::cout << "loaded plugin: " << plugin_name_xmlrpc << std::endl;
+    try{
+      this->ServerStartUpImpl_ = serpents::ServerManager::getPtr()->getServerPointer(method);
+      server.setServerOptionsImpl(ServerStartUpImpl_->getImplServerOptions());
+      server_->setServerOptionsImpl(ServerStartUpImpl_->getImplServerOptions()); //TODO this is silly, find a better way to do it
+    }
+    catch (std::exception& e){
+      throw std::exception(e.what());
+      Log::getPtr()->error(e.what());
+    }
+    if (ServerStartUpImpl_ == nullptr){
+      Log::getPtr()->error("selected plugin was not found");
+      throw std::exception("selected plugin was not found");
+    }
 
-	}
-	void RPCSelector::stopServer(){
-		// ServerStartUpImpl_->runCon = false;
-	}
+  }
+  void RPCSelector::stopServer(){
+    // ServerStartUpImpl_->runCon = false;
+  }
 
-	void RPCSelector::startServer(){
-		ServerStartUpImpl_->execute(server_);
-		ServerStartUpImpl_->start();
-	}
-	RPCSelector::RPCSelector()
-	{
-	}
+  void RPCSelector::startServer(){
+    ServerStartUpImpl_->execute(server_);
+    ServerStartUpImpl_->start();
+  }
+  RPCSelector::RPCSelector()
+  {
+  }
 
 
-	RPCSelector::~RPCSelector()
-	{
-		delete ServerStartUpImpl_;
+  RPCSelector::~RPCSelector()
+  {
+    delete ServerStartUpImpl_;
 
-	}
+  }
 
 
 }

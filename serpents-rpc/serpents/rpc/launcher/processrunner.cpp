@@ -250,13 +250,13 @@ namespace serpents{
     std::string TrimString(const std::string& content)
     {
       std::string local_copy{ content };
-      size_t position = local_copy.find_last_not_of(" \t");
+      size_t position = local_copy.find_last_not_of("   ");
       if (std::string::npos != position)
       {
         local_copy = local_copy.substr(0, position + 1);
       }
 
-      position = local_copy.find_first_not_of(" \t");
+      position = local_copy.find_first_not_of("   ");
       if (std::string::npos != position)
       {
         local_copy = local_copy.substr(position);

@@ -8,7 +8,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 SET(  TEST_SSL_CLIENT
     "./test-ssl-client.cpp"
-	"./pugixml.cpp")
+  "./pugixml.cpp")
 SET ( TEST_SSL_CLIENT_SRC
   ${TEST_SSL_CLIENT}
  )
@@ -37,7 +37,7 @@ endif ()
 
 #add_definitions(-DSERPENTSRPC_EXPORTS)
 #install (TARGETS serpents
-#		ARCHIVE DESTINATION lib
-#		LIBRARY DESTINATION lib
-#		COMPONENT library
-#		)
+#    ARCHIVE DESTINATION lib
+#    LIBRARY DESTINATION lib
+#    COMPONENT library
+#    )

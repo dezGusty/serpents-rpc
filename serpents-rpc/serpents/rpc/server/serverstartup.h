@@ -35,11 +35,11 @@ namespace serpents{
   class ServerStartUp{
   public:
     virtual std::thread& execute(Server* server) = 0;
-	virtual void run(Server* server) = 0;
-	virtual void controll() = 0;
-	virtual void start() = 0;
-	virtual void stop() = 0;
-	virtual ServerOptions* getImplServerOptions() = 0;
+  virtual void run(Server* server) = 0;
+  virtual void controll() = 0;
+  virtual void start() = 0;
+  virtual void stop() = 0;
+  virtual ServerOptions* getImplServerOptions() = 0;
   };
 }
 

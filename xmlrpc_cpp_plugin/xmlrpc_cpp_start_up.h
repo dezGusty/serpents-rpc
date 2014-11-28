@@ -8,28 +8,28 @@
 #include "xmlrpc++\XmlRpc.h"
 namespace serpents{
 
-	class  XMLRPCpp_StartUp : public ServerStartUp, public guslib::Plugin{
-	private:
-		class Impl;
-		Impl* Impl_;
-	public:
-		XMLRPCpp_StartUp();
-		XMLRPCpp_StartUp(const XMLRPCpp_StartUp&) = delete;
-		~XMLRPCpp_StartUp();
-		virtual std::thread& execute(Server* server) override;
-		virtual void run(Server* server) override;
-		virtual void controll()override;
-		virtual void start() override;
-		virtual void stop() override;
-		virtual ServerOptions* getImplServerOptions() override;
-		//Plugin overrides
-		virtual const std::string& getName() const override;
-		virtual void install() override;
-		virtual void initialize() override;
-		virtual void shutdown() override;
-		virtual void uninstall() override;
+  class  XMLRPCpp_StartUp : public ServerStartUp, public guslib::Plugin{
+  private:
+    class Impl;
+    Impl* Impl_;
+  public:
+    XMLRPCpp_StartUp();
+    XMLRPCpp_StartUp(const XMLRPCpp_StartUp&) = delete;
+    ~XMLRPCpp_StartUp();
+    virtual std::thread& execute(Server* server) override;
+    virtual void run(Server* server) override;
+    virtual void controll()override;
+    virtual void start() override;
+    virtual void stop() override;
+    virtual ServerOptions* getImplServerOptions() override;
+    //Plugin overrides
+    virtual const std::string& getName() const override;
+    virtual void install() override;
+    virtual void initialize() override;
+    virtual void shutdown() override;
+    virtual void uninstall() override;
 
-	};
+  };
 }
 
 #endif // XMLRPC_CPP_START_UP_H_

@@ -30,22 +30,22 @@
 #include "serpents-ssl\util\xmlutil.hpp"
 #include "serpents-ssl\server\session.hpp"
 namespace serpents{
-	namespace ssl{
-		class SSL_SERVER_API server
-		{
-			class Impl;
-			Impl* Impl_;
-		public:
-			server(const std::string& address, boost::asio::io_service& io_service, unsigned short port, size_t& numOfThreads);
-			~server();
-			http::server2::ServerFunctionRepository& getfunctionRepo();
-			void run();
-			void stop();
-			void startSession();
-			std::string server::get_password() const;
-			void handle_accept(session* new_session,const boost::system::error_code& error);
-		};
+  namespace ssl{
+    class SSL_SERVER_API server
+    {
+      class Impl;
+      Impl* Impl_;
+    public:
+      server(const std::string& address, boost::asio::io_service& io_service, unsigned short port, size_t& numOfThreads);
+      ~server();
+      http::server2::ServerFunctionRepository& getfunctionRepo();
+      void run();
+      void stop();
+      void startSession();
+      std::string server::get_password() const;
+      void handle_accept(session* new_session,const boost::system::error_code& error);
+    };
 
-	}
+  }
 } // namespace serpents
 #endif /// SSL_SERVER_H_

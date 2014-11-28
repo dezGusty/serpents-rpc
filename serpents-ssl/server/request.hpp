@@ -32,35 +32,35 @@
 #include "header.hpp"
 #include "serpents-ssl\base.h"
 namespace serpents{
-	namespace http {
-		namespace server2 {
+  namespace http {
+    namespace server2 {
 
-			/// A request received from a client.
-			struct request
-			{
-				std::string method;
-				std::string uri;
-				std::string content;
-				int http_version_major;
-				int http_version_minor;
-				std::vector<header> headers;
-				//needed for copy-constrct
-				request(){}
-				request(const request& req){
-					this->method = req.method;
-					this->uri = req.uri;
-					this->content = req.content;
-					this->http_version_major = req.http_version_major;
-					this->http_version_minor = req.http_version_minor;
-					for each (header var in req.headers)
-					{
-						this->headers.push_back(var);
-					}
-				}
-			};
+      /// A request received from a client.
+      struct request
+      {
+        std::string method;
+        std::string uri;
+        std::string content;
+        int http_version_major;
+        int http_version_minor;
+        std::vector<header> headers;
+        //needed for copy-constrct
+        request(){}
+        request(const request& req){
+          this->method = req.method;
+          this->uri = req.uri;
+          this->content = req.content;
+          this->http_version_major = req.http_version_major;
+          this->http_version_minor = req.http_version_minor;
+          for each (header var in req.headers)
+          {
+            this->headers.push_back(var);
+          }
+        }
+      };
 
-		} // namespace server2
-	} // namespace http
+    } // namespace server2
+  } // namespace http
 } //namespace serpents 
 
 #endif // HTTP_SERVER2_REQUEST_HPP

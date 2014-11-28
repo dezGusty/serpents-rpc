@@ -34,7 +34,6 @@
 #include <thread>
 #include <chrono>
 #include <mutex>
-#include <string>
 
 serpents::ParameterContainer* internalContainer;
 
@@ -48,7 +47,8 @@ public:
     setName("generateUUID");
   }
   void execute(serpents::ParameterContainer* parameters, RetValue* rv)
-  {
+{
+
     std::string result;
     fillWithRandomChars(&result, 8);
     fillWithRandomChars(&result, 4);
@@ -115,6 +115,7 @@ class RPCMethod2 :public  serpents::Method
     sum = parameters->getInt(0) + parameters->getInt(1);
     rv->setValue(sum);
   }
+
 };
 
 class GetMean : public serpents::Method
@@ -130,21 +131,20 @@ class GetMean : public serpents::Method
   {
     double sum1 = 0;
     double sum2 = 0;
-    for(unsigned int i = 0; i < parameters->size() - 1; i += 2)
-    {
+    for (unsigned int i = 0; i < parameters->size() - 1; i += 2){
       int intNum = parameters->getInt(i);
       double doubleNum = parameters->getDouble(i + 1);
       sum1 += intNum*doubleNum;
       sum2 += doubleNum;
     }
 
-    rv->setValue(static_cast<double>(sum1 / sum2));
+    rv->setValue((double)sum1 / sum2);
   }
 };
 
 class PushInternalValue : public serpents::Method
 {
-  public:
+public:
   PushInternalValue()
   {
     setSignature(std::string("s:s"));
@@ -156,6 +156,7 @@ class PushInternalValue : public serpents::Method
     internalContainer->push(parameters->getString(0));
     rv->setValue(true);
   }
+
 };
 class PopInternalValue : public serpents::Method
 {
@@ -165,6 +166,7 @@ class PopInternalValue : public serpents::Method
     setSignature(std::string("s:s"));
     setHelp(std::string("returns mean average"));
     setName("pop");
+
   }
   void execute(serpents::ParameterContainer* parameters, RetValue* rv)
   {
@@ -175,7 +177,7 @@ class PopInternalValue : public serpents::Method
 
 class JustSleep : public serpents::Method
 {
-  public:
+public:
   JustSleep()
   {
     setSignature(std::string("i:"));
@@ -219,9 +221,9 @@ void main()
   serpents::RPCSelector rpcselect;
   try
   {
-    rpcselect.selectRPCMethod(server, "serpents_ssl");
+    rpcselect.selectRPCMethod(server, "xmlrpc_plugin");
   }
-  catch (const std::exception& e)
+  catch (std::exception& e)
   {
     std::cout << e.what() << std::endl;
   }
@@ -231,8 +233,11 @@ void main()
   {
     rpcselect.startServer();
   }
-  catch (const std::exception& e)
+  catch (std::exception& e)
   {
     std::cout << e.what() << std::endl;
   }
+  
+  
+  
 }

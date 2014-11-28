@@ -38,63 +38,64 @@
 //TODO: change ServerMethod  and FunctionRepository to the serpents-rpc immplementations
 
 namespace serpents{
-	namespace http{
-		namespace server2{
-			class Serpents_SSL_RetValue :public RetValue{
-				class Impl;
-				Impl* Impl_;
-			public: 
-				Serpents_SSL_RetValue();
-				~Serpents_SSL_RetValue();
-				void setValue(int n) override;
-				void setValue(double n) override;
-				void setValue(bool b) override;
-				void setValue(std::string s)override;
-				ParameterContainer& getRetValue();
-			};
+  namespace http{
+    namespace server2{
+      class Serpents_SSL_RetValue :public RetValue{
+        class Impl;
+        Impl* Impl_;
+      public: 
+        Serpents_SSL_RetValue();
+        ~Serpents_SSL_RetValue();
+        void setValue(int n) override;
+        void setValue(double n) override;
+        void setValue(bool b) override;
+        void setValue(std::string s)override;
+        void setValue(float f)override;
+        ParameterContainer& getRetValue();
+      };
 
-			class SSL_SERVER_API ServerMethod{
-			private:
-				class Impl;
-				Impl* Impl_;
-			public:
-				virtual void execute(serpents::ParameterContainer* pc, Serpents_SSL_RetValue* result) = 0;
-				ServerMethod(std::string& name, std::string& help, std::string& signature);
-				ServerMethod();
-				~ServerMethod();
-				void setSignature(std::string& signature);
-				void setHelp(std::string& help);
-				void setName(std::string& name);
-				std::string getSignature();
-				std::string getHelp();
-				std::string getName();
-			};
-	
-			typedef std::shared_ptr<serpents::Method*> sptr_method;
-			typedef std::map<std::string, sptr_method> repository_map;
+      class SSL_SERVER_API ServerMethod{
+      private:
+        class Impl;
+        Impl* Impl_;
+      public:
+        virtual void execute(serpents::ParameterContainer* pc, Serpents_SSL_RetValue* result) = 0;
+        ServerMethod(std::string& name, std::string& help, std::string& signature);
+        ServerMethod();
+        ~ServerMethod();
+        void setSignature(std::string& signature);
+        void setHelp(std::string& help);
+        void setName(std::string& name);
+        std::string getSignature();
+        std::string getHelp();
+        std::string getName();
+      };
+  
+      typedef std::shared_ptr<serpents::Method*> sptr_method;
+      typedef std::map<std::string, sptr_method> repository_map;
 
-			//server function repo
-			class SSL_SERVER_API ServerFunctionRepository{
-			private:
-				class Impl;
-				Impl* Impl_;
-			public:
+      //server function repo
+      class SSL_SERVER_API ServerFunctionRepository{
+      private:
+        class Impl;
+        Impl* Impl_;
+      public:
+        ServerFunctionRepository(const ServerFunctionRepository& sfr);
+        ServerFunctionRepository();
+        ~ServerFunctionRepository();
+        void ServerFunctionRepository::addServerMethod(serpents::Method* method);
+        void ServerFunctionRepository::addServerMethod(sptr_method& method);
+        sptr_method lookUpMethod(std::string& name);
 
-				ServerFunctionRepository();
-				~ServerFunctionRepository();
-				void ServerFunctionRepository::addServerMethod(serpents::Method* method);
-				void ServerFunctionRepository::addServerMethod(sptr_method& method);
-				sptr_method lookUpMethod(std::string& name);
-
-			};
-			
-			class RepoException : public std::exception{
-				std::string error;
-			public:
-				RepoException(std::string& errorMsg) ;
-				std::string what();
-			};
-		}
-	}
+      };
+      
+      class RepoException : public std::exception{
+        std::string error;
+      public:
+        RepoException(std::string& errorMsg) ;
+        std::string what();
+      };
+    }
+  }
 } // namespace serpents
 #endif // SERVER_FUNCTION_REPOSITORY_H_

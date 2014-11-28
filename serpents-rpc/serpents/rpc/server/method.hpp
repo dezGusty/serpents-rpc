@@ -27,24 +27,24 @@
 #include <string>
 #include "serpents\rpc\parameters\retValue.h"
 namespace serpents{
-	class ParameterContainer;
-	class SERPENTSDLL Method{
-	protected:
-		class Impl;
-		Impl* Impl_;
-	public:
-		Method();
-		~Method();
-		virtual std::string getSignature();
-		virtual std::string getHelp();
-		virtual void setSignature(std::string sig);
-		virtual void setHelp(std::string help);
-		virtual void setName(std::string name);
-		virtual std::string Method::getName();
-		virtual void execute(ParameterContainer* parameters, RetValue* rv) = 0;
-		Method& operator=(Method& m);
-		Method(const Method& m);
-	};
+  class ParameterContainer;
+  class SERPENTSDLL Method{
+  protected:
+    class Impl;
+    Impl* Impl_;
+  public:
+    Method();
+    ~Method();
+    virtual std::string getSignature();
+    virtual std::string getHelp();
+    virtual void setSignature(std::string sig);
+    virtual void setHelp(std::string help);
+    virtual void setName(std::string name);
+    virtual std::string Method::getName();
+    virtual void execute(ParameterContainer* parameters, RetValue* rv) = 0;
+    Method& operator=(Method& m);
+    Method(const Method& m);
+  };
 }
 
 #endif //METHOD_H_

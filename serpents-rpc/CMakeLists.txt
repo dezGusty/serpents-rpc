@@ -146,17 +146,17 @@ include_directories("${GUSLIB_INCLUDE_DIR}/guslib")
 
 
 target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} Ws2_32.lib odbc32.lib odbccp32.lib server_manager.lib ${GUSLIB_LIBRARY}) 
-#add guslib																				${LOG4CPP_LIBRARY})
+#add guslib                                        ${LOG4CPP_LIBRARY})
 
 add_definitions(-DSERPENTSRPC_EXPORTS -DSERVERMGR_EXP)
 
 if (SERPENTS_RPC_USELOG4CPP)
-	link_directories("${PROJECT_SOURCE_DIR}/bin/release/log4cpp")
+  link_directories("${PROJECT_SOURCE_DIR}/bin/release/log4cpp")
   target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} ${LOG4CPP_LIBRARY})
   add_definitions(-DUSE_LOG4CPP)
 endif ()
 install (TARGETS ${SERPENTS_RPC_PROJECT_NAME}
-		ARCHIVE DESTINATION lib
-		LIBRARY DESTINATION lib
-		COMPONENT library
-		)
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+    COMPONENT library
+    )

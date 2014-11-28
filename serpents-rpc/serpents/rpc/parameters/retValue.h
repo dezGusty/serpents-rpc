@@ -42,6 +42,7 @@ public:
   virtual void setValue(double n) = 0; 
   virtual void setValue(bool b) = 0; 
   virtual void setValue(std::string s) = 0; 
+  virtual void setValue(float f) = 0;
 
 };
 /*

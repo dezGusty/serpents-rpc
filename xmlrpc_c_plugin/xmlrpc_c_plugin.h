@@ -7,23 +7,23 @@
 #include "xmlrpc_plug_in_opts.h"
 #include "guslib\system\dynamiclibmanager.h"
 namespace serpents{
-	class XMLRPC_C_Plugin : public ServerStartUp,
-		public guslib::Plugin
-	{
-	public:
-		//ServerStartUp overrides
-		virtual std::thread& execute(Server& server) override;
-		virtual void run(Server& server) override;
+  class XMLRPC_C_Plugin : public ServerStartUp,
+    public guslib::Plugin
+  {
+  public:
+    //ServerStartUp overrides
+    virtual std::thread& execute(Server& server) override;
+    virtual void run(Server& server) override;
 
-		//Plugin overrides
-		virtual const std::string& getName() const override;
-		virtual void install() override;
-		virtual void initialize() override;
-		virtual void shutdown() override;
-		virtual void uninstall() override;
-	private:
+    //Plugin overrides
+    virtual const std::string& getName() const override;
+    virtual void install() override;
+    virtual void initialize() override;
+    virtual void shutdown() override;
+    virtual void uninstall() override;
+  private:
 
-	};
+  };
 }
 
 #endif XMLRPC_C_PLUGIN_H_

@@ -15,9 +15,9 @@ find_package(OpenSSL REQUIRED)
 find_package(Guslib_Local)
 
 find_path(PugiXML_BASE pugixml.hpp
-	PATHS ${PROJECT_SOURCE_DIR}
-	 PATH_SUFFIXES dependencies/pugixml
-	)
+  PATHS ${PROJECT_SOURCE_DIR}
+   PATH_SUFFIXES dependencies/pugixml
+  )
 
 include_directories(${Boost_INCLUDE_DIR} ${OPENSSL_INCLUDE_DIR})
 SET (SOURCE_FILES_SERVER
@@ -49,9 +49,9 @@ SET (SOURCE_FILES_SERVER
 
 )
 SET(SOURCE_FILES_PARAMETER 
-	"${CMAKE_CURRENT_SOURCE_DIR}/parametercontainer/parametercontainer.h"
-	"${CMAKE_CURRENT_SOURCE_DIR}/parametercontainer/parametercontainer.cpp"
-	)
+  "${CMAKE_CURRENT_SOURCE_DIR}/parametercontainer/parametercontainer.h"
+  "${CMAKE_CURRENT_SOURCE_DIR}/parametercontainer/parametercontainer.cpp"
+  )
 
 SET (SOURCE_FILES_BASE "${CMAKE_CURRENT_SOURCE_DIR}/base.h")
 
@@ -59,7 +59,7 @@ SET(SOURCE_FILES_PUGIXML
  "${CMAKE_SOURCE_DIR}/dependencies/pugixml/pugiconfig.hpp"
  "${CMAKE_SOURCE_DIR}/dependencies/pugixml/pugixml.hpp"
  "${CMAKE_SOURCE_DIR}/dependencies/pugixml/pugixml.cpp"
-	)
+  )
 
 SET (SOURCE_FILES_LOG 
 "${CMAKE_CURRENT_SOURCE_DIR}/log/log.h"
@@ -102,13 +102,13 @@ SOURCE_GROUP("serpents\\ssl-server\\pugixml\\" FILES
   ${SOURCE_FILES_PUGIXML}
 )
 SOURCE_GROUP("serpents\\ssl-server\\log" FILES
-	${SOURCE_FILES_LOG}
+  ${SOURCE_FILES_LOG}
 )
 SOURCE_GROUP("serpents\\util" FILES
-	 ${SOURCE_FILES_UTIL}
+   ${SOURCE_FILES_UTIL}
 )
 SOURCE_GROUP("serpents\\client" FILES
-	 ${SOURCE_FILES_CLIENT}
+   ${SOURCE_FILES_CLIENT}
 )
 
 

@@ -16,9 +16,9 @@ include_directories(${XMLRPC_C_INCLUDE_DIRS})
 link_directories(${XMLRPC_C_LIBRARY})
 
 include_directories("${CMAKE_SOURCE_DIR}/server-manager/" 
-					"${CMAKE_SOURCE_DIR}/serpents-rpc/"
-					"${CMAKE_SOURCE_DIR}/dependencies"
-					)
+          "${CMAKE_SOURCE_DIR}/serpents-rpc/"
+          "${CMAKE_SOURCE_DIR}/dependencies"
+          )
 
 link_directories("${CMAKE_SOURCE_DIR}/build")
 
