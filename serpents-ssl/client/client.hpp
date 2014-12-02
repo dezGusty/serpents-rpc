@@ -78,7 +78,7 @@ class client
     char subject_name[256];
     X509* cert = X509_STORE_CTX_get_current_cert(ctx.native_handle());
     X509_NAME_oneline(X509_get_subject_name(cert), subject_name, 256);
-    std::cout << "Verifying " << subject_name << "\n";
+  
 
     return preverified;
   }
@@ -120,7 +120,10 @@ class client
   {
     if (!error)
     {
-      std::cout << "starting read loop\n";
+      //  Normal method didn't work. For some reason it didn't recieve all of the message. 
+      //  The received message should always end in </methodResponse> if the client implements
+      //  the xmlrpc protocol.
+      //  BUT, if the client ommits that, it causes the server to read continously. 
       boost::asio::async_read_until(socket_,
         reply_,
         "</methodResponse>",

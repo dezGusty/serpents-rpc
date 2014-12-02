@@ -62,6 +62,7 @@ namespace serpents{
     void stopServer();
     RPCSelector();
     ~RPCSelector();
+    RPCSelector(const  RPCSelector&) = delete;
   };
 }
 

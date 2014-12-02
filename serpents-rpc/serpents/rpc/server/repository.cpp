@@ -25,7 +25,7 @@
 #include "repository.h"
 
 namespace serpents{
-  
+
   void FunctionRepository::addMethod(Method* method){
     std::string name = method->getName();
     if (!name.empty()){

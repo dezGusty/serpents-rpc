@@ -91,6 +91,8 @@ SET (SOURCE_FILES_LOG
 SET (SOURCE_FILES_PARAMETERS
  "./serpents/rpc/parameters/parametercontainer.hpp"
  "./serpents/rpc/parameters/parametercontainer.cpp"
+  "./serpents/rpc/parameters/any.h"
+  "./serpents/rpc/parameters/any.cpp"
  "./serpents/rpc/parameters/retvalue.h"
  "./serpents/rpc/parameters/retvalue.cpp"
  

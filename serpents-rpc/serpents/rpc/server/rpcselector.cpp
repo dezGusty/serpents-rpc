@@ -63,7 +63,7 @@ namespace serpents{
   //plug in
 
   //choose impl of server 
-  void RPCSelector::selectRPCMethod(Server& server, std::string method){
+  void RPCSelector::selectRPCMethod(Server& server, std::string plugInName){
 
     server_ = &server;
 
@@ -72,25 +72,14 @@ namespace serpents{
     for (auto it = map->begin(); it != map->end(); ++it){
       Log::getPtr()->addAppender(it->second, it->first);
     }
-    Log::getPtr()->info("---using library " + method + "---");
+    Log::getPtr()->info("---using library " + plugInName + "---");
 #endif
 
     std::cout << "start" << std::endl;
-    std::string plugin_name("xmlrpc_c_plugin.dll");
-    std::string ssl_plugin_name("serpents_ssl.dll");
-    std::cout << "loading plugin: " << plugin_name << std::endl;
-    loadPlugin(plugin_name);
-    std::cout << "loaded plugin: " << plugin_name << std::endl;
-    std::cout << "loading plugin: " << ssl_plugin_name << std::endl;
-    loadPlugin(ssl_plugin_name);
-    std::cout << "loaded plugin: " << ssl_plugin_name << std::endl;
-
-    std::string plugin_name_xmlrpc("xmlrpcpp_plugin.dll");
-    std::cout << "loading plugin: " << plugin_name_xmlrpc << std::endl;
-    loadPlugin(plugin_name_xmlrpc);
-    std::cout << "loaded plugin: " << plugin_name_xmlrpc << std::endl;
+    loadPlugin(plugInName);
+    std::cout << "loaded plugin: " << plugInName << std::endl;
     try{
-      this->ServerStartUpImpl_ = serpents::ServerManager::getPtr()->getServerPointer(method);
+      this->ServerStartUpImpl_ = serpents::ServerManager::getPtr()->getServerPointer(plugInName);
       server.setServerOptionsImpl(ServerStartUpImpl_->getImplServerOptions());
       server_->setServerOptionsImpl(ServerStartUpImpl_->getImplServerOptions()); //TODO this is silly, find a better way to do it
     }

@@ -44,7 +44,6 @@ namespace serpents{
     FunctionRepository();
     typedef std::map<std::string, Method *> methodMap;
     void addMethod(Method* method);
-   // void executeAll();
     FunctionRepository& operator=(FunctionRepository& fr);
     FunctionRepository(FunctionRepository& fr);
     Impl* getImpl();

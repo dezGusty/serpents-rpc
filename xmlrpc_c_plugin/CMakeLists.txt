@@ -26,11 +26,9 @@ link_directories("${CMAKE_SOURCE_DIR}/build")
 SET ( SRC_FLIES_ALL
   "./implservermethod.h"
   "./implservermethod.cpp"
-  "./parametercontainer.cpp"
   "./retvalue.h"
   "./retvalue.cpp"
   "./xmlrpc_c_buildopts.h"
-  "./xmlrpc_c_plugin.h"
   "./xmlrpc_c_serveroptions.h"
   "./xmlrpc_c_serveroptions.cpp"
   "./xmlrpc_c_startup.h"
