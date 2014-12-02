@@ -67,8 +67,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/build)
 SET ( SOURCE_FILES_SERVER
   "./serpents/rpc/server/server.h"
   "./serpents/rpc/server/server.cpp"
-  "./serpents/rpc/server/implservermethod.h"
-  "./serpents/rpc/server/implservermethod.cpp"
   "./serpents/rpc/server/method.hpp"
   "./serpents/rpc/server/method.cpp"
   "./serpents/rpc/server/repository.h"

@@ -84,7 +84,9 @@ namespace serpents
     }
     catch (const std::exception const& e)
     {
+#ifdef USELOG4CPP
       Log::getPtr()->error(e.what());
+#endif
     }
   }  //  run()
 
@@ -116,7 +118,9 @@ namespace serpents
         if (isFirst)
         {
           std::cout << "server started" << std::endl;
+#ifdef USELOG4CPP
           Log::getPtr()->info("server started");
+#endif
           isFirst = false;
         }
         std::cin >> command;
@@ -125,7 +129,9 @@ namespace serpents
         {
           Impl_->serverAbyssPtr->terminate();
           std::cout << "server closed" << std::endl;
+#ifdef USELOG4CPP
           Log::getPtr()->info("server closed");
+#endif
           keppAlive = false;
         }
       }

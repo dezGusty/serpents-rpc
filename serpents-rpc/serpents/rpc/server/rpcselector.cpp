@@ -85,10 +85,14 @@ namespace serpents{
     }
     catch (std::exception& e){
       throw std::exception(e.what());
+#ifdef USELOG4CPP
       Log::getPtr()->error(e.what());
+#endif
     }
     if (ServerStartUpImpl_ == nullptr){
+#ifdef USELOG4CPP
       Log::getPtr()->error("selected plugin was not found");
+#endif
       throw std::exception("selected plugin was not found");
     }
 

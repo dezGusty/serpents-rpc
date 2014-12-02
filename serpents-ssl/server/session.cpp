@@ -113,30 +113,42 @@ namespace serpents{
             //  boost::asio::placeholders::error));
           }
           catch (boost::bad_lexical_cast& e){
-            Log::getPtr()->error(e.what());            
+#ifdef USELOG4CPP
+            Log::getPtr()->error(e.what());     
+#endif
             http::server2::reply::stock_reply(http::server2::reply::ok, e.what(),Impl_->reply_);
           }
           catch (serpents::ParamContainerException& e){
+#ifdef USELOG4CPP
             Log::getPtr()->error(e.what());
+#endif
             http::server2::reply::stock_reply(http::server2::reply::ok, e.what(), Impl_->reply_);
 
           }
           catch (http::server2::RepoException& e){
+#ifdef USELOG4CPP
             Log::getPtr()->error(e.what());
+#endif
             http::server2::reply::stock_reply(http::server2::reply::ok, e.what(), Impl_->reply_);
 
           }
           catch (http::server2::RequestException& e){
+#ifdef USELOG4CPP
             Log::getPtr()->error(e.what());
+#endif
             http::server2::reply::stock_reply(http::server2::reply::ok, e.what(), Impl_->reply_);
           }
           catch (std::exception& e){
+#ifdef USELOG4CPP
             Log::getPtr()->error(e.what());
+#endif
             http::server2::reply::stock_reply(http::server2::reply::ok, e.what(), Impl_->reply_);
 
           }
           catch (...){
+#ifdef USELOG4CPP
             Log::getPtr()->error("unkonwn exception [catch(...) cought something]");
+#endif
             http::server2::reply::stock_reply(http::server2::reply::ok, "unkonwn exception [catch(...) cought something]"
                             , Impl_->reply_);
 
