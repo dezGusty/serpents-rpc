@@ -26,7 +26,6 @@ namespace serpents{
     }
   }
   ServerStartUp* ServerManagerUtil::getServerPointer(const std::string& name){
-    std::cout << Impl::getServerMap()->size() << std::endl;
     auto it = Impl::getServerMap()->find(name);
     if (it != Impl::getServerMap()->end()){
       return it->second;

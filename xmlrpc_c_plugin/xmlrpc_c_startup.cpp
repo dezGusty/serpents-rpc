@@ -84,7 +84,9 @@ namespace serpents
     }
     catch (const std::exception const& e)
     {
+      e.what();
 #ifdef USELOG4CPP
+     
       Log::getPtr()->error(e.what());
 #endif
     }

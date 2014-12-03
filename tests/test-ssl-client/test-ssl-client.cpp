@@ -116,6 +116,14 @@ namespace {
     double res = -2.0;
     EXPECT_EQ(res, reply.getDouble(0));
   }
+
+  TEST_F(SSL_Server_Test, sleep){
+    serpents::ParameterContainer request;
+    request.add(1);
+    serpents::ParameterContainer reply;
+    c->send("sleep", &request, &reply);
+    EXPECT_EQ(true, reply.getBool(0));
+  }
   TEST_F(SSL_Server_Test, getMeanOther){
     serpents::ParameterContainer request;
     serpents::ParameterContainer reply;
@@ -125,22 +133,8 @@ namespace {
     double res = 4;
     EXPECT_EQ(res, reply.getDouble(0));
   }
-  static int counter= 0;
-  void sendPush(){
-    serpents::ParameterContainer request;
-    request.add(std::to_string(counter++));
-    serpents::ParameterContainer reply;
-    SSL_Server_Other other;
-    other.c->send("push", &request, &reply);
-    //std::cout << reply.getBool(reply.getBool(0)) << std::endl;
-  }
-  TEST_F(SSL_Server_Test, sleep){
-    serpents::ParameterContainer request;
-    request.add(1);
-    serpents::ParameterContainer reply;
-    c->send("sleep", &request, &reply);
-    EXPECT_EQ(true, reply.getBool(0));
-  }
+  
+
    
 }
 
