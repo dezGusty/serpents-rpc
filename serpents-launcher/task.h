@@ -1,9 +1,12 @@
 class Task{
-  virtual void executeTask() = delete;
+public:
+  virtual void executeTask() = 0;
 };
 
 class NonBlockingTask : public Task{
-  //non blocking method
+  void executeTask(){
+    
+  }
 };
 class PriorityTask : public Task{
   //block all method

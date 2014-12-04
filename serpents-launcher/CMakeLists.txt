@@ -16,11 +16,8 @@ include_directories()
 
 SET (SOURCE_FILES_LAUNCHER
  "${CMAKE_CURRENT_SOURCE_DIR}/launcher_build_opts.h"
-  "${CMAKE_CURRENT_SOURCE_DIR}/launcher_manager.h"
- "${CMAKE_CURRENT_SOURCE_DIR}/launcher_manager.cpp"
  "${CMAKE_CURRENT_SOURCE_DIR}/threadpool.h"
- "${CMAKE_CURRENT_SOURCE_DIR}/task.h"
- "${CMAKE_CURRENT_SOURCE_DIR}/task.cpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/impl.inl"
  "${CMAKE_CURRENT_SOURCE_DIR}/threadpool.cpp")
 SET (SOURCE_FILES
  ${SOURCE_FILES_LAUNCHER})

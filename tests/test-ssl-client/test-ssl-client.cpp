@@ -5,6 +5,8 @@
 #include <memory>
 #include <vector>
 #include <thread>
+
+//
 namespace {
   class SSL_Server_Test : public ::testing::Test{
   protected:
@@ -61,8 +63,8 @@ namespace {
     c->send("generateUUID", &request, &reply);
     std::cout << reply.getString(0) << std::endl;
   }
-  
-  
+
+
   TEST_F(SSL_Server_Test, fileExists){
     serpents::ParameterContainer request;
     serpents::ParameterContainer reply;
@@ -80,8 +82,8 @@ namespace {
     EXPECT_EQ(false, reply.getBool(0));
   }
 
-  
-  TEST_F(SSL_Server_Test,push){
+
+  TEST_F(SSL_Server_Test, push){
     serpents::ParameterContainer request;
     request.add("test");
     serpents::ParameterContainer reply;
@@ -90,18 +92,18 @@ namespace {
     EXPECT_EQ(true, reply.getBool(0));
 
   }
-  TEST_F(SSL_Server_Test,pop){
+  TEST_F(SSL_Server_Test, pop){
     serpents::ParameterContainer request;
     serpents::ParameterContainer reply;
     c->send("pop", &request, &reply);
 
-    std::cout <<"reply:"<< reply.getString(0)<<std::endl;
+    std::cout << "reply:" << reply.getString(0) << std::endl;
     EXPECT_EQ("test", reply.getString(0));
   }
   TEST_F(SSL_Server_Test, getMean){
     serpents::ParameterContainer request;
     serpents::ParameterContainer reply;
-    request.add(2, 0.5, 2,0.5);
+    request.add(2, 0.5, 2, 0.5);
 
     c->send("getMean", &request, &reply);
     double res = 2.0;
@@ -133,7 +135,7 @@ namespace {
     double res = 4;
     EXPECT_EQ(res, reply.getDouble(0));
   }
-  
+
 
    
 }

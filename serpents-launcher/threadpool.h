@@ -1,101 +1,106 @@
-#ifndef LAUNHER_THREAD_POOL_H_
-#define LAUNHER_THREAD_POOL_H_
+#ifndef LAUNCHER_TASK_POOL_H_
+#define LAUNCHER_TASK_POOL_H_
 
-//  based off thread pool example @ http://codereview.stackexchange.com/questions/60363/thread-pool-worker-implementation
+// based off the immpl found @ http://codereview.stackexchange.com/questions/60363/thread-pool-worker-implementation
 
+#include "launcher_build_opts.h"
+
+#include <functional>
 #include <future>
-#include <functional>
 #include <deque>
-#include <atomic>
-#include <functional>
-#include <vector>
+#include <thread>
+
+#include "processfactory.h"
 
 namespace serpents{
   namespace launcher{
-   
-    class ThreadPool{
-    public:
-      enum action {BLOCKING, NONBLOCKING, PRIORITY};
-      explicit ThreadPool(int numThreads =1){
-        if (numThreads < 1)
-          throw std::runtime_error("TreadPool can't have less than one thread");
-        while (numThreads>0){
-          workQue_.emplace_back(&ThreadPool::doWork, this);
+
+  class LAUNCHER_EXPORT_SYMBOL TaskPool{
+  public:
+    class Impl;
+    Impl* Impl_;
+    explicit TaskPool(int numWorkers = -1);
+    ~TaskPool();
+    void abort();
+    void stop();  
+    void waitForCompletion();
+    template<typename RETVAL>
+    std::future<RETVAL> addTask(std::function<RETVAL()>&& function);
+    template<>
+    std::future<void> addTask(std::function<void()>&& function);
+  private:
+    void doWork();
+    void joinAll();
+    void operator=(const TaskPool&) = delete;
+    TaskPool(const TaskPool&) = delete;
+  };
+
+  class TaskPool::Impl{
+    friend TaskPool;
+    std::deque<std::function<void()>> taskQue_;
+    std::mutex mutex_;
+    std::condition_variable signal_;
+    std::atomic<bool> exit_{ false };
+    std::atomic<bool> finish_work_{ true };
+    std::vector<std::thread> threads_;
+  };
+  template<typename RETVAL>
+  std::future<RETVAL> TaskPool::addTask(std::function<RETVAL()>&& function){
+    if (Impl_->exit_){
+      throw std::runtime_error("Tried to add task while stopping");
+    }
+
+    // Workaround for lack of lambda move capture
+    typedef std::pair<std::promise<RETVAL>, std::function<RETVAL()>> pair_t;
+    std::shared_ptr<pair_t> data = std::make_shared<pair_t>(std::promise<RETVAL>(), std::move(function));
+
+    std::future<RETVAL> future = data->first.get_future();
+
+    {
+      std::lock_guard<std::mutex> lg(Impl_->mutex_);
+      Impl_->taskQue_.emplace_back([data](){
+        try{
+          data->first.set_value(data->second());
         }
-      }
-      virtual ~ThreadPool(){}
-      ThreadPool(const ThreadPool& that) = delete;
-      ThreadPool(ThreadPool&& that){}
-      ThreadPool& operator=(const ThreadPool& that) = delete;
-      
-      //non-blocking 
-      template<typename RetVal>
-      std::future<RetVal> addTask(std::function<RetVal()>&& function){
-        if (exit_){
-          throw std::runtime_error("Caught work submission to work queue that is desisting.");
+        catch (...){
+          data->first.set_exception(std::current_exception());
         }
+      });
+    }
+    Impl_->signal_.notify_one();
+    return std::move(future);
+  }
 
-        // Workaround for lack of lambda move capture
-        typedef std::pair<std::promise<RETVAL>, std::function<RETVAL()>> pair_t;
-        std::shared_ptr<pair_t> data = std::make_shared<pair_t>(std::promise<RETVAL>(), std::move(function));
+  template<>
+  std::future<void> TaskPool::addTask(std::function<void()>&& function){
+    if (Impl_->exit_){
+      throw std::runtime_error("");
+    }
+    // Workaround for lack of lambda move capture
+    typedef std::pair<std::promise<void>, std::function<void()>> pair_t;
+    std::shared_ptr<pair_t> data = std::make_shared<pair_t>(std::promise<void>(), std::move(function));
 
-        std::future<RETVAL> future = data->first.get_future();
-
-        {
-          std::lock_guard<std::mutex> lg(addTaskMutex_);
-          workQue_.emplace_back([data](){
-            try{
-              data->first.set_value(data->second());
-            }
-            catch (...){
-              data->first.set_exception(std::current_exception());
-            }
-          });
-        }
-        m_signal.notify_one();
-        return std::move(future);
-      }
-
+    std::future<void> future = data->first.get_future();
   
-    private:
-
-      void doWork(){
-        std::unique_lock<std::mutex> ul(blockingMutex);
-        while (!exit || (finish_work_ && !workQue_.empty())){
-          if (!workQue_.empty()){
-            std::function<void()> work(std::move(workQue_.front()));
-            workQue_.pop_front();
-            ul.unlock();
-            work();
-            ul.lock();
-          }
-          else{
-            signal_.wait(ul);
-          }
+    {
+      std::lock_guard<std::mutex> lg(Impl_->mutex_);
+      Impl_->taskQue_.emplace_back([data](){
+        try{
+          data->second();
+          data->first.set_value();
         }
-      }
-      void joinAll(){
-        for (auto& thread : workThreads_){
-          thread.join();
+        catch (...){
+          data->first.set_exception(std::current_exception());
         }
-        workThreads_.clear();
-      }
+      });
+    }
+    Impl_->signal_.notify_one();
 
-      std::vector<std::thread> workThreads_;
-      std::deque<std::function<void()>> workQue_;
-      std::atomic<bool> blockAll_{ false };
-      std::atomic<bool> exit_{ false };
-      std::mutex addTaskMutex_;
-      std::mutex blockingMutex;
-      std::mutex blockAllMutex;
-      std::atomic<bool> finish_work_{ true };
-      std::condition_variable signal_;
-      size_t numThreads;
-    };
-
- 
+    return std::move(future);
+  }
 
   }
 }
 
-#endif //  LAUNHER_THREAD_POOL_H_
+
+#endif  //  LAUNCHER_TASK_POOL_H_
