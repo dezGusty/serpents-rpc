@@ -4,40 +4,19 @@
 #include <string>
 namespace serpents{
   namespace laucher{
-  /*  template<typename >
     class Process{
-      std::future<int> ExecuteProcessAndWait();
-      std::future<std::string> ExecuteProcessWithOutputCaptureAndWait();
-      void WaitForProcessTerminationByHandle();
-      void ();
-    };
-    class ExecuteProcessAndWait : public Process{
-      std::future<int> operator()();
-      template<typename RETVALUE>
-      std::future<RETVALUE> getSomething() {};
-      int getTimeoutInMillis() {};
-      std::string getName() {};
-      HANDLE getHandle() {};
-    };
-    class ExecuteProcessWithOutputCaptureAndWait{
-     
-    };
-    */
-    class WaitForProcessTerminationByHandle{
-      HANDLE handle;
-      int timeout_in_millis;
-      void operator()();
-
-    };
-
-    class ReadPipeContent{
-
-    };
-    class GetProcessReturnCode{
-
-    };
-    class GetLocalHostName{
-
+      std::future<int> ExecuteProcessAndWait(const std::string& process_to_execute, int maximum_timeout_in_millis);
+      std::future<std::string> ExecuteProcessWithOutputCaptureAndWait(const std::string& process_to_execute,
+                                                                      bool process_visible,
+                                                                      bool retrieve_output,
+                                                                      int maximum_timeout_in_millis,
+                                                                      int& output_code);
+      std::future<std::string> ExecuteProcessWithOutputCaptureAndWaitWindows(const std::string& process_to_execute,
+                                                                bool process_visible,
+                                                                bool retrieve_output,
+                                                                int maximum_timeout_in_millis,
+                                                                int& output_code);
+      std::future<void> WaitForProcessTerminationByHandle(HANDLE process_handle, int timeout_in_millis);
     };
   }
 }
