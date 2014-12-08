@@ -4,7 +4,7 @@
 // based off the immpl found @ http://codereview.stackexchange.com/questions/60363/thread-pool-worker-implementation
 
 #include "launcher_build_opts.h"
-
+#include <iostream>
 #include <functional>
 #include <future>
 #include <deque>
@@ -26,8 +26,13 @@ namespace serpents{
     void waitForCompletion();
     template<typename RETVAL>
     std::future<RETVAL> addTask(std::function<RETVAL()>&& function);
+
+    template<typename RETVAL>
+    std::future<RETVAL> addProcTask(std::shared_ptr<Process<RETVAL>> proc);
+
     template<>
     std::future<void> addTask(std::function<void()>&& function);
+   
   private:
     void doWork();
     void joinAll();
@@ -97,6 +102,14 @@ namespace serpents{
     Impl_->signal_.notify_one();
 
     return std::move(future);
+  }
+
+  template<typename RETVAL>
+  std::future<RETVAL> TaskPool::addProcTask(std::shared_ptr<Process<RETVAL>> proc){
+    std::cout << "shit works " << std::endl;
+    std::future<RETVAL> future = proc->data_->first.get_future();
+    proc->data_->first.set_value(proc->data_->second());
+    return future;
   }
 
   }

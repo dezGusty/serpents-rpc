@@ -17,8 +17,10 @@ include_directories()
 SET (SOURCE_FILES_LAUNCHER
  "${CMAKE_CURRENT_SOURCE_DIR}/launcher_build_opts.h"
  "${CMAKE_CURRENT_SOURCE_DIR}/threadpool.h"
- "${CMAKE_CURRENT_SOURCE_DIR}/impl.inl"
- "${CMAKE_CURRENT_SOURCE_DIR}/threadpool.cpp")
+ "${CMAKE_CURRENT_SOURCE_DIR}/threadpool.cpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/processfactory.h"
+ "${CMAKE_CURRENT_SOURCE_DIR}/processfactory.cpp")
+
 SET (SOURCE_FILES
  ${SOURCE_FILES_LAUNCHER})
 

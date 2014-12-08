@@ -35,7 +35,7 @@ namespace serpents{
       Impl_->exit_ = true;
       Impl_->finish_work_ = true;
       Impl_->signal_.notify_all();
-      
+
     }
 
 
@@ -66,8 +66,7 @@ namespace serpents{
       }
       Impl_->threads_.clear();
     }
-    
-    
-    LAUNCHER_EXPIMP_TEMPLATE  template std::future<int> TaskPool::addTask(std::function<int()>&&);
+
+
   }
 }
