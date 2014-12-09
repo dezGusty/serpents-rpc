@@ -22,13 +22,15 @@ namespace serpents{
       HANDLE Handle_;
       std::unique_ptr<std::function<void()>> function_;
     public:
-      Task(std::string& process_to_execute, int timeout, std::function<void()>&& func)
+      Task(std::string& process_to_execute, int timeout,HANDLE Handle, std::function<void()>&& func)
         :process_to_execute_(process_to_execute),
-        timeout_(timeout)
+        timeout_(timeout),
+        Handle_(Handle)
       {
         function_ = std::make_unique<std::function<void()>>(std::move(func));
       }
       void exec(){
+        std::cout << "Process " << process_to_execute_ << " timeout " << timeout_ << " Handle " << Handle_ << std::endl;
         auto func = *function_.get();
         func();
       }
@@ -44,14 +46,9 @@ namespace serpents{
     void abort();
     void stop();  
     void waitForCompletion();
-  //  template<typename RETVAL>
-    //std::future<RETVAL> addTask(std::function<RETVAL()>&& function);
-
+ 
     template<typename RETVAL>
     std::future<RETVAL> addProcTask(std::shared_ptr<Process<RETVAL>> proc);
-
-   // template<>
-    //std::future<void> addTask(std::function<void()>&& function);
    
   private:
     void doWork();
@@ -69,69 +66,15 @@ namespace serpents{
     std::atomic<bool> finish_work_{ true };
     std::vector<std::thread> threads_;
   };
-  /*
-  template<typename RETVAL>
-  std::future<RETVAL> TaskPool::addTask(std::function<RETVAL()>&& function){
-    if (Impl_->exit_){
-      throw std::runtime_error("Tried to add task while stopping");
-    }
-
-    // Workaround for lack of lambda move capture
-    typedef std::pair<std::promise<RETVAL>, std::function<RETVAL()>> pair_t;
-    std::shared_ptr<pair_t> data = std::make_shared<pair_t>(std::promise<RETVAL>(), std::move(function));
-
-    std::future<RETVAL> future = data->first.get_future();
-
-    {
-      std::lock_guard<std::mutex> lg(Impl_->mutex_);
-      Impl_->taskQue_.emplace_back([data](){
-        try{
-          data->first.set_value(data->second());
-        }
-        catch (...){
-          data->first.set_exception(std::current_exception());
-        }
-      });
-    }
-    Impl_->signal_.notify_one();
-    return std::move(future);
-  }
-
-  template<>
-  std::future<void> TaskPool::addTask(std::function<void()>&& function){
-    if (Impl_->exit_){
-      throw std::runtime_error("");
-    }
-    // Workaround for lack of lambda move capture
-    typedef std::pair<std::promise<void>, std::function<void()>> pair_t;
-    std::shared_ptr<pair_t> data = std::make_shared<pair_t>(std::promise<void>(), std::move(function));
-
-    std::future<void> future = data->first.get_future();
-  
-    {
-      std::lock_guard<std::mutex> lg(Impl_->mutex_);
-      Impl_->taskQue_.emplace_back([data](){
-        try{
-          data->second();
-          data->first.set_value();
-        }
-        catch (...){
-          data->first.set_exception(std::current_exception());
-        }
-      });
-    }
-    Impl_->signal_.notify_one();
-
-    return std::move(future);
-  }
-  */
+ 
   template<typename RETVAL>
   std::future<RETVAL> TaskPool::addProcTask(std::shared_ptr<Process<RETVAL>> proc){
     std::future<RETVAL> future = proc->data_->first.get_future();
-    
+
     Impl_->taskQue_.emplace_back(std::make_shared<Task>(
       proc->process_to_execute_,
       proc->maximum_timeout_in_millis_,
+      proc->Handle_,
       [proc](){
       try{
         proc->data_->first.set_value(proc->data_->second());
@@ -140,11 +83,34 @@ namespace serpents{
       catch (...){
         proc->data_->first.set_exception(std::current_exception());
       }
+    }
+
+    ));
+
+    return std::move(future);
+  }
+  
+  template<>
+  std::future<void> TaskPool::addProcTask(std::shared_ptr<Process<void>> proc){
+    std::future<void> future = proc->data_->first.get_future();
+    
+    Impl_->taskQue_.emplace_back(std::make_shared<Task>(
+      proc->process_to_execute_,
+      proc->maximum_timeout_in_millis_,
+      proc->Handle_,
+      [proc](){
+      try{
+        proc->data_->first.set_value();
+        proc->data_->second();
+      }
+      catch (...){
+        proc->data_->first.set_exception(std::current_exception());
+      }
     } 
    
     ));
    
-    return future;
+    return std::move(future);
   }
 
   }

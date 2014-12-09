@@ -15,7 +15,15 @@ namespace serpents{
       std::shared_ptr<pair_t> data_;
       Process(const std::string& process_to_execute, int maximum_timeout_in_millis, std::function<RETVAL()>&& function) 
         :process_to_execute_(process_to_execute),
-         maximum_timeout_in_millis_(maximum_timeout_in_millis)
+         maximum_timeout_in_millis_(maximum_timeout_in_millis),
+         Handle_(nullptr)
+      {
+        data_ = std::make_shared<pair_t>(std::promise<RETVAL>(), std::move(function));
+      }
+      Process(HANDLE Handle, int maximum_timeout_in_millis, std::function<RETVAL()>&& function)
+        :process_to_execute_(""),
+        maximum_timeout_in_millis_(maximum_timeout_in_millis),
+        Handle_(Handle)
       {
         data_ = std::make_shared<pair_t>(std::promise<RETVAL>(), std::move(function));
       }
@@ -40,11 +48,15 @@ namespace serpents{
           return guslib::procrun::ExecuteProcessWithOutputCaptureAndWait(process_to_execute, process_visible, retrieve_output, maximum_timeout_in_millis, output_code);
         });
       }
-      /*
-      std::future<void> WaitForProcessTerminationByHandle(HANDLE process_handle, int timeout_in_millis){
       
+      static std::shared_ptr<Process<void>> WaitForProcessTerminationByHandle(HANDLE process_handle, int timeout_in_millis)
+      {
+        return std::make_shared <Process<void>>(process_handle, timeout_in_millis, [process_handle, timeout_in_millis]()
+        { 
+          return guslib::procrun::WaitForProcessTerminationByHandle(process_handle, timeout_in_millis);
+        });
       }
-      */
+      
      
     };
   }
