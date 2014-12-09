@@ -1,4 +1,4 @@
-
+﻿
 #ifdef USE_LOG4CPP
 
 //   This file is part of the serpents-rpc library, licensed under the terms of the MIT License.

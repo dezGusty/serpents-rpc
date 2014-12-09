@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 // Add platform specific definitions.
 #include "guslib/guslib_platform.h"

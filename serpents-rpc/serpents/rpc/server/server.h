@@ -1,4 +1,4 @@
-#ifndef SERVER_H_
+﻿#ifndef SERVER_H_
 #define SERVER_H_
 #pragma once
 //   This file is part of the serpents-rpc library, licensed under the terms of the MIT License.

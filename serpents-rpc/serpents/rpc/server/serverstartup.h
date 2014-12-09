@@ -1,4 +1,4 @@
-#ifndef SERVERSTARTUP_H_
+﻿#ifndef SERVERSTARTUP_H_
 #define SERVERSTARTUP_H_
 
 //   This file is part of the serpents-rpc library, licensed under the terms of the MIT License.

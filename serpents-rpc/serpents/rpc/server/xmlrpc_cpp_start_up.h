@@ -1,4 +1,4 @@
-#ifndef XMLRPC_CPP_START_UP_H_
+﻿#ifndef XMLRPC_CPP_START_UP_H_
 #define XMLRPC_CPP_START_UP_H_
 #include "guslib\util\plugin.h"
 #include "..\build\ServerManager\servermanager.h"

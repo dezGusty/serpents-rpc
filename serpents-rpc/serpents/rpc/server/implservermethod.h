@@ -1,4 +1,4 @@
-#ifndef IMPLSERVERMETHOD_H_
+﻿#ifndef IMPLSERVERMETHOD_H_
 #define IMPLSERVERMETHOD_H_
 #pragma once
 //   This file is part of the serpents-rpc library, licensed under the terms of the MIT License.

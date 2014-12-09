@@ -1,4 +1,4 @@
-#ifndef LAUNHER_THREAD_POOL_H_
+﻿#ifndef LAUNHER_THREAD_POOL_H_
 #define LAUNHER_THREAD_POOL_H_
 
 //  based off thread pool example @ http://codereview.stackexchange.com/questions/60363/thread-pool-worker-implementation

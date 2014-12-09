@@ -1,4 +1,4 @@
-if(UNITTEST_SERVER)
+﻿if(UNITTEST_SERVER)
 	add_subdirectory(test-server)
 endif()
 if(UNITTEST_XMLRPC_C_CLIENT)

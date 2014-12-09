@@ -1,4 +1,4 @@
-#ifndef ANY_H_
+﻿#ifndef ANY_H_
 #define ANY_H_
 // system libs 
 #include <string>

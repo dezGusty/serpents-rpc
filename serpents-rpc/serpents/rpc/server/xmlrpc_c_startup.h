@@ -1,4 +1,4 @@
-#ifndef XMLRPC_C_START_UP
+﻿#ifndef XMLRPC_C_START_UP
 #define XMLRPC_C_START_UP
 
 #include "serpents\rpc\server\serverstartup.h"

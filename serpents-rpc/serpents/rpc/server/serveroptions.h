@@ -1,4 +1,4 @@
-#ifndef SERVER_OPTIONS_H_
+﻿#ifndef SERVER_OPTIONS_H_
 #define SERVER_OPTIONS_H_
 
 //   This file is part of the serpents-rpc library, licensed under the terms of the MIT License.

@@ -1,4 +1,4 @@
-#include "guslib\system\processrunner.h"
+﻿#include "guslib\system\processrunner.h"
 #include "guslib\common\singleton.hpp"
 #include "launcher_build_opts.h"
 #include <string>

@@ -1,4 +1,4 @@
-//   This file is part of the serpents-rpc library, licensed under the terms of the MIT License.
+﻿//   This file is part of the serpents-rpc library, licensed under the terms of the MIT License.
 //
 //   The MIT License
 //   Copyright (C) 2010-2014  The serpents-rpc team (See AUTHORS file)

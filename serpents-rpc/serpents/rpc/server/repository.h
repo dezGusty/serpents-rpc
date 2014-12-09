@@ -1,4 +1,4 @@
-#ifndef REPOSITORY_H
+﻿#ifndef REPOSITORY_H
 #define REPOSITORY_H
 
 //   This file is part of the serpents-rpc library, licensed under the terms of the MIT License.

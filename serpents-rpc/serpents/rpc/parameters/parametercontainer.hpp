@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #ifndef PARAMETER_CON_H
 #define PARAMETER_CON_H
 

@@ -1,4 +1,4 @@
-#ifndef RETVALUE_H_
+﻿#ifndef RETVALUE_H_
 #define RETVALUE_H_
 
 //   This file is part of the serpents-rpc library, licensed under the terms of the MIT License.
