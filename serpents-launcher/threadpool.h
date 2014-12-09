@@ -14,6 +14,26 @@
 
 namespace serpents{
   namespace launcher{
+    
+    class Task {
+    public:
+      std::string process_to_execute_;
+      int timeout_;
+      HANDLE Handle_;
+      std::unique_ptr<std::function<void()>> function_;
+    public:
+      Task(std::string& process_to_execute, int timeout, std::function<void()>&& func)
+        :process_to_execute_(process_to_execute),
+        timeout_(timeout)
+      {
+        function_ = std::make_unique<std::function<void()>>(std::move(func));
+      }
+      void exec(){
+        auto func = *function_.get();
+        func();
+      }
+    };
+    
 
   class LAUNCHER_EXPORT_SYMBOL TaskPool{
   public:
@@ -24,14 +44,14 @@ namespace serpents{
     void abort();
     void stop();  
     void waitForCompletion();
-    template<typename RETVAL>
-    std::future<RETVAL> addTask(std::function<RETVAL()>&& function);
+  //  template<typename RETVAL>
+    //std::future<RETVAL> addTask(std::function<RETVAL()>&& function);
 
     template<typename RETVAL>
     std::future<RETVAL> addProcTask(std::shared_ptr<Process<RETVAL>> proc);
 
-    template<>
-    std::future<void> addTask(std::function<void()>&& function);
+   // template<>
+    //std::future<void> addTask(std::function<void()>&& function);
    
   private:
     void doWork();
@@ -42,13 +62,14 @@ namespace serpents{
 
   class TaskPool::Impl{
     friend TaskPool;
-    std::deque<std::function<void()>> taskQue_;
+    std::deque<std::shared_ptr<Task>> taskQue_;
     std::mutex mutex_;
     std::condition_variable signal_;
     std::atomic<bool> exit_{ false };
     std::atomic<bool> finish_work_{ true };
     std::vector<std::thread> threads_;
   };
+  /*
   template<typename RETVAL>
   std::future<RETVAL> TaskPool::addTask(std::function<RETVAL()>&& function){
     if (Impl_->exit_){
@@ -103,16 +124,31 @@ namespace serpents{
 
     return std::move(future);
   }
-
+  */
   template<typename RETVAL>
   std::future<RETVAL> TaskPool::addProcTask(std::shared_ptr<Process<RETVAL>> proc){
-    std::cout << "shit works " << std::endl;
     std::future<RETVAL> future = proc->data_->first.get_future();
-    proc->data_->first.set_value(proc->data_->second());
+    
+    Impl_->taskQue_.emplace_back(std::make_shared<Task>(
+      proc->process_to_execute_,
+      proc->maximum_timeout_in_millis_,
+      [proc](){
+      try{
+        proc->data_->first.set_value(proc->data_->second());
+
+      }
+      catch (...){
+        proc->data_->first.set_exception(std::current_exception());
+      }
+    } 
+   
+    ));
+   
     return future;
   }
 
   }
+
 }
 
 

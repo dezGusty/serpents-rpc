@@ -28,19 +28,24 @@ namespace serpents{
               return guslib::procrun::ExecuteProcessAndWait(process_to_execute, maximum_timeout_in_millis);
         });
       }
+      
+      static std::shared_ptr<Process<std::string>> ExecuteProcessWithOutputCaptureAndWait(const std::string& process_to_execute,
+                                                                  bool process_visible,
+                                                                  bool retrieve_output,
+                                                                  int maximum_timeout_in_millis,
+                                                                  int& output_code)
+      {
+        return std::make_shared<Process<std::string>>(process_to_execute, maximum_timeout_in_millis,
+          [process_to_execute, process_visible, retrieve_output, maximum_timeout_in_millis, &output_code](){
+          return guslib::procrun::ExecuteProcessWithOutputCaptureAndWait(process_to_execute, process_visible, retrieve_output, maximum_timeout_in_millis, output_code);
+        });
+      }
       /*
-      std::future<std::string> ExecuteProcessWithOutputCaptureAndWait(const std::string& process_to_execute,
-                                                                      bool process_visible,
-                                                                      bool retrieve_output,
-                                                                      int maximum_timeout_in_millis,
-                                                                      int& output_code);
-      std::future<std::string> ExecuteProcessWithOutputCaptureAndWaitWindows(const std::string& process_to_execute,
-                                                                bool process_visible,
-                                                                bool retrieve_output,
-                                                                int maximum_timeout_in_millis,
-                                                                int& output_code);
-      std::future<void> WaitForProcessTerminationByHandle(HANDLE process_handle, int timeout_in_millis);
+      std::future<void> WaitForProcessTerminationByHandle(HANDLE process_handle, int timeout_in_millis){
+      
+      }
       */
+     
     };
   }
 }

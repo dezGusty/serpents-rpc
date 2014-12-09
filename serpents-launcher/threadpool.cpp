@@ -45,19 +45,44 @@ namespace serpents{
       assert(Impl_->taskQue_.empty());
     }
     void TaskPool::doWork(){
+      std::chrono::milliseconds sleepDuration(1); // this works but the problem is still there
+      std::this_thread::sleep_for(sleepDuration);
       std::unique_lock<std::mutex> ul(Impl_->mutex_);
+     
       while (!Impl_->exit_ || (Impl_->finish_work_ && !Impl_->taskQue_.empty())){
+        
         if (!Impl_->taskQue_.empty()){
-          std::function<void()> work(std::move(Impl_->taskQue_.front()));
+          
+          auto task(std::move(Impl_->taskQue_.front()));
           Impl_->taskQue_.pop_front();
           ul.unlock();
+          task->exec();
+          ul.lock();
+          
+        }
+        else{
+          Impl_->signal_.wait(ul);
+        }
+        
+      }
+      
+      /*
+      while (!Impl_->exit_ || (Impl_->finish_work_ && !Impl_->procQue_.empty())){
+        if (!Impl_->procQue_.empty()){
+          std::function<void()> work(std::move(*Impl_->procQue_.front()->function_.get()));
+    
+          Impl_->procQue_.pop_front();
+          ul.unlock();
           work();
+          std::cout << "ajunge pana aici" << std::endl;
           ul.lock();
         }
         else{
           Impl_->signal_.wait(ul);
         }
       }
+      */
+    
     }
 
     void TaskPool::joinAll(){
