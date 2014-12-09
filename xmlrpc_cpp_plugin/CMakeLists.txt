@@ -26,6 +26,9 @@ SET (XMLRPCPP_SRC
   "./xmlrpcpp_serveroptions.cpp"
 )
 
+MESSAGE(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+MESSAGE(STATUS "")
+
 
 SET ( XMLRPCPP_PLUGIN_V
   ${XMLRPCPP_SRC}
@@ -52,7 +55,10 @@ LINK_DIRECTORIES( ${CMAKE_SOURCE_DIR}/build)
 ADD_DEFINITIONS(-DXMLRPC_CPP_EXP)
 ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 
-add_library( ${XMLRPC_CPP_PLUGIN_NAME} SHARED ${XMLRPCPP_PLUGIN_V} )
+#
+# Specify the library to be built from the source files.
+#
+ADD_LIBRARY( ${XMLRPC_CPP_PLUGIN_NAME} SHARED ${XMLRPCPP_PLUGIN_V} )
 
 # ---------------- Link Libraries section --------------------
 # Set the link options: the libraries to link against. Store them in a temporary variable
@@ -63,6 +69,8 @@ SET (LINK_LIBS
   server_manager
   serpents-rpc
 )
+
+MESSAGE (STATUS "LINK_LIBS: ${LINK_LIBS}")
 
 # Append OS system specific libraries.
 IF(WIN32)
@@ -81,3 +89,5 @@ ENDIF()
 
 # Set the link libraries for the project.
 TARGET_LINK_LIBRARIES(${XMLRPC_CPP_PLUGIN_NAME} ${LINK_LIBS})
+MESSAGE (STATUS "LINK_LIBS: ${LINK_LIBS}")
+MESSAGE(STATUS "server_manager: ${server_manager}")

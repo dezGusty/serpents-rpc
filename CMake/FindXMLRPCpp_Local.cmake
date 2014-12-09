@@ -1,33 +1,37 @@
 INCLUDE(${CMAKE_SOURCE_DIR}/CMake/HandleLibraryTypes.cmake)
 
+# Set the paths to search for as possible locations of the library.
 SET (XMLLIB_XMLRPCpp_SEARCH_PATH 
-	$ENV{XMLRPCPP_ROOT}
-	${PROJECT_SOURCE_DIR}/dependencies/
- 
-	)       
-
-
-find_path(XMLLIB_XMLRPCpp_INCLUDE_DIR xmlrpc++/XmlRpc.h
-  PATHS  ${XMLLIB_XMLRPCpp_SEARCH_PATH}
-  PATH_SUFFIXES xmlrpc++ 
-                xmlrpc++/include
-               
-
+    $ENV{XMLRPCPP_ROOT}
+    ${CMAKE_SOURCE_DIR}/dependencies
+    ${PROJECT_SOURCE_DIR}/dependencies
 )
 
+
+FIND_PATH(XMLLIB_XMLRPCpp_INCLUDE_DIR xmlrpc++/XmlRpc.h
+    PATHS  ${XMLLIB_XMLRPCpp_SEARCH_PATH}
+    PATH_SUFFIXES xmlrpc++ 
+                  xmlrpc++/include
+)
+
+#
+# Locate the link libraries (lib files)
+#
 FIND_LIBRARY(XMLLIB_XMLRPCpp_LIBRARY_OPTIMIZED
   NAMES xmlrpc
   PATHS ${XMLLIB_XMLRPCpp_SEARCH_PATH}
-  PATH_SUFFIXES Release
+  PATH_SUFFIXES Release bin/Release
 )
 FIND_LIBRARY(XMLLIB_XMLRPCpp_LIBRARY_DEBUG
   NAMES xmlrpc
   PATHS ${XMLLIB_XMLRPCpp_SEARCH_PATH}
-  PATH_SUFFIXES Debug
+  PATH_SUFFIXES Debug bin/Debug
 )
 
-MESSAGE("XMLLIB_XMLRPCpp_LIBRARY_DEBUG is ${XMLLIB_XMLRPCpp_LIBRARY_DEBUG}")
-MESSAGE("XMLLIB_XMLRPCpp_LIBRARY_OPTIMIZED is ${XMLLIB_XMLRPCpp_LIBRARY_OPTIMIZED}")
+MESSAGE(STATUS "XMLLIB_XMLRPCpp_LIBRARY_DEBUG is ${XMLLIB_XMLRPCpp_LIBRARY_DEBUG}")
+MESSAGE(STATUS "XMLLIB_XMLRPCpp_LIBRARY_OPTIMIZED is ${XMLLIB_XMLRPCpp_LIBRARY_OPTIMIZED}")
 
-
+# Collect debug and optimized libraries.
 HANDLE_LIBRARY_TYPES(XMLLIB_XMLRPCpp)
+
+MESSAGE(STATUS "XMLLIB_XMLRPCpp_LIBRARY: ${XMLLIB_XMLRPCpp_LIBRARY}")
