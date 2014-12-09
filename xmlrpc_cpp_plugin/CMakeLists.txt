@@ -13,6 +13,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 
 project ( ${XMLRPC_CPP_PLUGIN_NAME})
 
+# Define the files that are part of the project. Set them in a variable, so that they can also be grouped.
 SET (XMLRPCPP_SRC
   "./xmlrpc_cpp_start_up.h"
   "./xmlrpc_cpp_start_up.cpp"
@@ -29,20 +30,54 @@ SET (XMLRPCPP_SRC
 SET ( XMLRPCPP_PLUGIN_V
   ${XMLRPCPP_SRC}
  )
-#for visual studio 
-source_group("xmlrpcpp_plugin" FILES ${XMLRPCPP_PLUGIN_V})
 
+# Group the files if the IDE supports it (very useful for visual studio) 
+SOURCE_GROUP("xmlrpcpp_plugin" FILES ${XMLRPCPP_PLUGIN_V})
 
-find_package(Guslib_Local)
+# Find other libraries (identify values for environment variables).
+FIND_PACKAGE(Guslib_Local)
+FIND_PACKAGE(XMLRPCpp_Local)
 
-include_directories(${CMAKE_SOURCE_DIR}/serpents-rpc/ ${CMAKE_SOURCE_DIR}/dependencies 
-                ${CMAKE_SOURCE_DIR}/server-manager ${GUSLIB_INCLUDE_DIR}/guslib 
+# Specify the include directories.
+INCLUDE_DIRECTORIES(
+  ${CMAKE_SOURCE_DIR}/serpents-rpc 
+  ${CMAKE_SOURCE_DIR}/dependencies 
+  ${CMAKE_SOURCE_DIR}/server-manager 
+  ${GUSLIB_INCLUDE_DIR}/guslib 
 )
-link_directories( ${CMAKE_SOURCE_DIR}/build)
 
-add_definitions(-DXMLRPC_CPP_EXP)
+# Specify additional link directories.
+LINK_DIRECTORIES( ${CMAKE_SOURCE_DIR}/build)
+
+ADD_DEFINITIONS(-DXMLRPC_CPP_EXP)
+ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 
 add_library( ${XMLRPC_CPP_PLUGIN_NAME} SHARED ${XMLRPCPP_PLUGIN_V} )
 
-target_link_libraries(${XMLRPC_CPP_PLUGIN_NAME} xmlrpc.lib server_manager.lib serpents-rpc.lib Ws2_32.lib odbc32.lib 
-                        odbccp32.lib ${GUSLIB_LIBRARY})
+# ---------------- Link Libraries section --------------------
+# Set the link options: the libraries to link against. Store them in a temporary variable
+# as these are the common, cross-system link libraries.
+SET (LINK_LIBS
+  ${XMLLIB_XMLRPCpp_LIBRARY}
+  ${GUSLIB_LIBRARY}
+  server_manager
+  serpents-rpc
+)
+
+# Append OS system specific libraries.
+IF(WIN32)
+  SET(LINK_LIBS
+    ws2_32.lib
+    winmm.lib
+    ${LINK_LIBS}
+    )
+ELSEIF(UNIX AND NOT APPLE)
+  SET(LINK_LIBS
+    ${X11_X11_LIB}
+    ${X11_Xrandr_LIB}
+    ${LINK_LIBS}
+    )
+ENDIF()
+
+# Set the link libraries for the project.
+TARGET_LINK_LIBRARIES(${XMLRPC_CPP_PLUGIN_NAME} ${LINK_LIBS})

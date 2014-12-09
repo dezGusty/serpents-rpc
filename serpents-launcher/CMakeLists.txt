@@ -30,6 +30,7 @@ SOURCE_GROUP("launcher" FILES
 )
 
 add_definitions(-DLAUNCHER_EXP)
+ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 
 add_library(serpents_launcher SHARED ${SOURCE_FILES})
 

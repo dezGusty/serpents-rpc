@@ -25,6 +25,8 @@ FIND_PACKAGE(GTestLocal)
 add_executable (testclient test-client.cpp)
 target_link_libraries(testclient Ws2_32.lib odbc32.lib odbccp32.lib ${XMLLIB_XMLRPC_C_LIBRARY} ${XMLLIB_XMLRPCpp_LIBRARY} ${GTest_LIBRARY})
 
+ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
+
 #add_definitions(-DSERPENTSRPC_EXPORTS)
 #install (TARGETS serpents
 #    ARCHIVE DESTINATION lib

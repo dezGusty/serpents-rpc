@@ -149,6 +149,7 @@ target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} Ws2_32.lib odbc32.lib odbccp3
 #add guslib                                        ${LOG4CPP_LIBRARY})
 
 add_definitions(-DSERPENTSRPC_EXPORTS -DSERVERMGR_EXP)
+ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 
 if (SERPENTS_RPC_USELOG4CPP)
   link_directories("${PROJECT_SOURCE_DIR}/bin/release/log4cpp")

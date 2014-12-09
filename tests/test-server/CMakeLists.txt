@@ -25,6 +25,8 @@ FIND_PACKAGE(GTestLocal)
 add_executable (testserver test-server.cpp)
 target_link_libraries(testserver Ws2_32.lib odbc32.lib odbccp32.lib server_manager.lib ${GTest_LIBRARY})
 target_link_libraries(testserver serpents-rpc.lib)
+
+ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 #add_definitions(-DSERPENTSRPC_EXPORTS)
 #install (TARGETS serpents
 #    ARCHIVE DESTINATION lib

@@ -125,6 +125,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 include_directories(${OPENSSL_INCLUDE_DIR} )
 
 add_definitions(/D _WIN32_WINNT=0x0501 -D_SCL_SECURE_NO_WARNINGS -DSSL_SERVER_EXPORT -DSSLSERVER_EXP )
+ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 target_link_libraries(serpents_ssl Ws2_32.lib odbc32.lib odbccp32.lib server_manager.lib serpents-rpc.lib ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES} ${GUSLIB_LIBRARY} )
 
 if (SERPENTS_RPC_USELOG4CPP)
