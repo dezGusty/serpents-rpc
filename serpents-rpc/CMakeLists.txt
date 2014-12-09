@@ -142,7 +142,7 @@ FIND_PACKAGE(XMLRPCpp_Local)
 FIND_PACKAGE(LOG4CPP_Local)
 FIND_PACKAGE(GUSLIB_Local)
 
-include_directories("${GUSLIB_INCLUDE_DIR}/guslib")
+include_directories("${GUSLIB_INCLUDE_DIR}")
 
 
 target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} Ws2_32.lib odbc32.lib odbccp32.lib server_manager.lib ${GUSLIB_LIBRARY}) 

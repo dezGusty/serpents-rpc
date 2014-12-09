@@ -114,7 +114,7 @@ SOURCE_GROUP("serpents\\client" FILES
 
 include_directories(${PROJECT_SOURCE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/server-manager)
-include_directories(${GUSLIB_INCLUDE_DIR}/guslib)
+include_directories(${GUSLIB_INCLUDE_DIR})
 include_directories(${PROJECT_SOURCE_DIR}/serpents-rpc/)
 include_directories(${PugiXML_BASE})
 include_directories(${PROJECT_SOURCE_DIR}/dependencies/)

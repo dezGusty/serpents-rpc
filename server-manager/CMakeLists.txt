@@ -28,7 +28,7 @@ SOURCE_GROUP("server-manager" FILES
 )
 find_package(Guslib_Local)
 
-include_directories(${PROJECT_SOURCE_DIR}/serpents-rpc/ ${GUSLIB_INCLUDE_DIR}/guslib)
+include_directories(${PROJECT_SOURCE_DIR}/serpents-rpc/ ${GUSLIB_INCLUDE_DIR})
 
 
 add_library(${SERVER_MANAGER_PROJECT_NAME} SHARED ${SOURCE_SERVER_MANAGER})

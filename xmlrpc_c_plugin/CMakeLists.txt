@@ -46,7 +46,7 @@ SET ( SRC_FLIES_ALL
 )
 FIND_PACKAGE(GUSLIB_Local)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${GUSLIB_INCLUDE_DIR}/guslib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${GUSLIB_INCLUDE_DIR})
 source_group("" FILES ${SRC_FLIES_XMLRPC_C})
 
 add_library(xmlrpc_c_plugin SHARED ${SRC_FLIES_XMLRPC_C})

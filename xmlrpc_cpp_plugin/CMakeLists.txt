@@ -46,7 +46,7 @@ INCLUDE_DIRECTORIES(
   ${CMAKE_SOURCE_DIR}/serpents-rpc 
   ${CMAKE_SOURCE_DIR}/dependencies 
   ${CMAKE_SOURCE_DIR}/server-manager 
-  ${GUSLIB_INCLUDE_DIR}/guslib 
+  ${GUSLIB_INCLUDE_DIR}
 )
 
 # Specify additional link directories.
