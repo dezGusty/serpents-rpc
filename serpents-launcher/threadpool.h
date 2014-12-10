@@ -12,6 +12,10 @@
 
 #include "processfactory.h"
 
+#include <cstdio>
+#include <windows.h>
+#include <tlhelp32.h>
+
 namespace serpents{
   namespace launcher{
     
@@ -29,10 +33,50 @@ namespace serpents{
       {
         function_ = std::make_unique<std::function<void()>>(std::move(func));
       }
-      void exec(){
-        std::cout << "Process " << process_to_execute_ << " timeout " << timeout_ << " Handle " << Handle_ << std::endl;
+
+      // @in process name
+      void closeProcessByName(const std::string processName){
+        {
+          PROCESSENTRY32 entry;
+          entry.dwSize = sizeof(PROCESSENTRY32);
+
+          HANDLE snapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, NULL);
+
+          if (Process32First(snapshot, &entry) == TRUE)
+          {
+            while (Process32Next(snapshot, &entry) == TRUE)
+            {
+              if (stricmp(entry.szExeFile, processName.c_str()) == 0)
+              {
+                HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, entry.th32ProcessID);
+                closeProcessByHandle(hProcess);
+                CloseHandle(hProcess);
+              }
+            }
+          }
+
+          CloseHandle(snapshot);
+        }
+      }
+
+      oid closeProcessByHandle(HANDLE& Handle){
+        DWORD exitCode;
+        if (GetExitCodeProcess(Handle, &exitCode)){
+          ExitProcess(exitCode);
+        }
+      }
+      void cleanUp(){
+        if (Handle_ != nullptr){
+          closeProcessByHandle(Handle_);
+        }
+        else{
+          closeProcessByName(process_to_execute_);
+        }
+      }
+      void exec(){  
         auto func = *function_.get();
         func();
+        cleanUp();
       }
     };
     
