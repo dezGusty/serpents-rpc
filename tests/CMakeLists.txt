@@ -7,3 +7,7 @@ endif()
 if(UNITTEST_SSL_CLIENT)
 	add_subdirectory(test-ssl-client)
 endif()
+
+if(UNITTEST_LAUNCHER)
+	add_subdirectory(test-launcher)
+endif()

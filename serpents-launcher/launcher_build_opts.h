@@ -1,7 +1,5 @@
-﻿#pragma once
+#pragma once
 
-// Add platform specific definitions.
-#include "guslib/guslib_platform.h"
 
 #ifdef LAUNCHER_EXP
 #define LAUNCHER_EXPORT_SYMBOL __declspec (dllexport)
@@ -16,8 +14,7 @@
 #endif
 #endif // LAUNCHER_EXP
 
-#ifdef S
-LAUNCHER__EXP
+#ifdef LAUNCHER__EXP
 #define EXP_STATIC_VAR extern "C" __declspec(dllexport)
 #else
 #define EXP_STATIC_VAR extern "C" __declspec(dllimport)

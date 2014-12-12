@@ -1,4 +1,4 @@
-﻿#include "launcher_manager.h"
+#include "launcher_manager.h"
 
 #include "guslib\system\systemmutex.h"
 #include <memory>

@@ -8,7 +8,7 @@
 namespace {
   class SSL_Server_Test : public ::testing::Test{
   protected:
-    SSL_Server_Test() : resolver(io_service), query("localhost", "8080"), ctx(boost::asio::ssl::context::sslv23){
+    SSL_Server_Test() : resolver(io_service), query("localhost", "8081"), ctx(boost::asio::ssl::context::sslv23){
       
       iterator = resolver.resolve(query);
       ctx.load_verify_file("cacert.pem");
@@ -28,7 +28,7 @@ namespace {
 
   class SSL_Server_Other {
   public:
-    SSL_Server_Other() : resolver(io_service), query("localhost", "8080"), ctx(boost::asio::ssl::context::sslv23){
+    SSL_Server_Other() : resolver(io_service), query("localhost", "8081"), ctx(boost::asio::ssl::context::sslv23){
 
       iterator = resolver.resolve(query);
       ctx.load_verify_file("cacert.pem");

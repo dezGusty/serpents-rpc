@@ -18,6 +18,7 @@ OPTION(SERPENTS_RPC_BUILD_LAUNCHER "build launcher" OFF)
 OPTION(UNITTEST_SERVER "Build unit tests for ssl-plugin" ON)
 OPTION(UNITTEST_XMLRPC_C_CLIENT "Build unit tests for xmlrpc_c plugin" ON)
 OPTION(UNITTEST_SSL_CLIENT "Build unit tests for ssl plugin" ON)
+OPTION(UNITTEST_LAUNCHER "Build test-launcher" ON)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build)

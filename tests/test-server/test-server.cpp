@@ -225,7 +225,7 @@ void main()
   {
     std::cout << e.what() << std::endl;
   }
-  server.getServerOptions()->portNumber(8080);
+  server.getServerOptions()->portNumber(8081);
   server.getServerOptions()->uriPath("/RPC2");
   try
   {

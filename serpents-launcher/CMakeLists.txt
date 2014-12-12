@@ -16,12 +16,15 @@ include_directories()
 
 SET (SOURCE_FILES_LAUNCHER
  "${CMAKE_CURRENT_SOURCE_DIR}/launcher_build_opts.h"
-  "${CMAKE_CURRENT_SOURCE_DIR}/launcher_manager.h"
- "${CMAKE_CURRENT_SOURCE_DIR}/launcher_manager.cpp"
  "${CMAKE_CURRENT_SOURCE_DIR}/threadpool.h"
+ "${CMAKE_CURRENT_SOURCE_DIR}/threadpool.cpp"
  "${CMAKE_CURRENT_SOURCE_DIR}/task.h"
  "${CMAKE_CURRENT_SOURCE_DIR}/task.cpp"
- "${CMAKE_CURRENT_SOURCE_DIR}/threadpool.cpp")
+ "${CMAKE_CURRENT_SOURCE_DIR}/processutil.h"
+ "${CMAKE_CURRENT_SOURCE_DIR}/processutil.cpp"
+ "${CMAKE_CURRENT_SOURCE_DIR}/processfactory.h"
+ "${CMAKE_CURRENT_SOURCE_DIR}/processfactory.cpp")
+
 SET (SOURCE_FILES
  ${SOURCE_FILES_LAUNCHER})
 
@@ -34,4 +37,28 @@ ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 
 add_library(serpents_launcher SHARED ${SOURCE_FILES})
 
-target_link_libraries(serpents_launcher ${GUSLIB_LIBRARY} )
+# ---------------- Link Libraries section --------------------
+# Set the link options: the libraries to link against. Store them in a temporary variable
+# as these are the common, cross-system link libraries.
+SET (LINK_LIBS_LAUNCHER
+  ${GUSLIB_LIBRARY}
+)
+
+MESSAGE (STATUS "LINK_LIBS_LAUNCHER: ${LINK_LIBS_LAUNCHER}")
+
+# Append OS system specific libraries.
+IF(WIN32)
+  SET(LINK_LIBS_LAUNCHER
+    ws2_32.lib
+    winmm.lib
+    ${LINK_LIBS_LAUNCHER}
+    )
+ELSEIF(UNIX AND NOT APPLE)
+  SET(LINK_LIBS_LAUNCHER
+    ${X11_X11_LIB}
+    ${X11_Xrandr_LIB}
+    ${LINK_LIBS_LAUNCHER}
+    )
+ENDIF()
+
+target_link_libraries(serpents_launcher ${LINK_LIBS_LAUNCHER})
