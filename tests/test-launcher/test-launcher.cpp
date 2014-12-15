@@ -14,11 +14,14 @@ int main(){
     std::future<std::string> f2 = tp.addProcTask<std::string>(ProcessFactory::ExecuteProcessWithOutputCaptureAndWait("C:\\Users\\vlad.petrescu\\Documents\\GitHub\\serpents-rpc\\build\\Debug\\testserver.exe", true, false, -1, n, Type::NonBlocking));
     std::future<std::string> f3 = tp.addProcTask<std::string>(ProcessFactory::ExecuteProcessWithOutputCaptureAndWait("C:\\Users\\vlad.petrescu\\Documents\\GitHub\\serpents-rpc\\build\\Debug\\test-ssl-client.exe", true, false, 5000, n, Type::Blocking));
 
+
+    tp.waitForCompletion();
+
     std::cout << "f1 returned " << f1.get() << std::endl;
     std::cout << "f2 returned " << f2.get() << std::endl;
     std::cout << "f3 returned " << f3.get() << std::endl;
 
-    tp.waitForCompletion();
+   
  
 
     

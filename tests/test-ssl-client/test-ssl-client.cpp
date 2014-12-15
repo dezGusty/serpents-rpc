@@ -69,7 +69,10 @@ namespace {
     std::string fileName("D:\\test.txt");
     request.add(fileName);
     c->send("fileLookUp", &request, &reply);
-    EXPECT_EQ(true, reply.getBool(0));
+    if (reply.size() > 0)
+      EXPECT_EQ(true, reply.getBool(0));
+    else
+      EXPECT_EQ(true, false);
   }
   TEST_F(SSL_Server_Test, fileDoesntExist){
     serpents::ParameterContainer request;
@@ -77,7 +80,10 @@ namespace {
     std::string fileName("D:\\test2.txt");
     request.add(fileName);
     c->send("fileLookUp", &request, &reply);
-    EXPECT_EQ(false, reply.getBool(0));
+    if (reply.size() > 0)
+      EXPECT_EQ(true, reply.getBool(0));
+    else
+      EXPECT_EQ(true, false);
   }
 
   
