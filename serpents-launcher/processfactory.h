@@ -5,7 +5,7 @@
 #include "guslib\system\processrunner.h"
 namespace serpents{
   namespace launcher{
-    enum Type {Blocking, NonBlocking};
+    enum Type {Blocking, NonBlocking, BlockAll};
     template<typename RETVAL>
     class Process{
     public:

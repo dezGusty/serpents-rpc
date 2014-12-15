@@ -37,6 +37,15 @@ namespace serpents{
       virtual void cleanUp() override;
       virtual void exec() override;
     };
+    class LAUNCHER_EXPORT_SYMBOL BlockingAllTask : public Task{
+      class Impl;
+      Impl* Impl_;
+    public:
+      BlockingAllTask(std::string& process_to_execute, int timeout, HANDLE Handle, std::function<void()>&& func);
+      ~BlockingAllTask();
+      virtual void cleanUp() override;
+      virtual void exec() override;
+    };
   }
 }
 

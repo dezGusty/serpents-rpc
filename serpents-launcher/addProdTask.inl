@@ -34,6 +34,21 @@
           }
           }));
       } break;
+     case Type::BlockAll:
+     {
+       task = std::make_shared<Task*>(new BlockingAllTask(
+           proc->process_to_execute_,
+          proc->maximum_timeout_in_millis_,
+          proc->Handle_,
+          [proc](){
+          try{
+            proc->data_->first.set_value(proc->data_->second());
+          }
+          catch (...){
+            proc->data_->first.set_exception(std::current_exception());
+          }
+          }));
+     } break;
     }
 
     Impl_->taskQue_.emplace_back(task);
@@ -79,6 +94,22 @@
           }));
         }
         break; 
+     case Type::BlockAll:
+     {
+       task = std::make_shared<Task*>(new BlockingAllTask(
+           proc->process_to_execute_,
+          proc->maximum_timeout_in_millis_,
+          proc->Handle_,
+          [proc](){
+          try{
+            proc->data_->first.set_value();
+            proc->data_->second();
+          }
+          catch (...){
+            proc->data_->first.set_exception(std::current_exception());
+          }
+          }));
+     } break;
       default: break;
     }
     
