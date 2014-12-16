@@ -14,8 +14,10 @@ namespace serpents{
    
     class LAUNCHER_EXPORT_SYMBOL Task {
     public:
+     virtual int getTimeout() = 0;
      virtual void cleanUp() =0;
      virtual void exec()=0;
+     virtual ~Task() {};
     };
 
     class LAUNCHER_EXPORT_SYMBOL NonBlockingTask : public Task{
@@ -26,16 +28,18 @@ namespace serpents{
       ~NonBlockingTask();
       virtual void cleanUp() override;
       virtual void exec() override;
+      virtual int getTimeout() override;
     };
 
     class LAUNCHER_EXPORT_SYMBOL BlockingTask : public Task{
       class Impl;
       Impl* Impl_;
     public:
-      BlockingTask(std::string& process_to_execute, int timeout, HANDLE Handle, std::function<void()>&& func);
+      BlockingTask(const std::string& process_to_execute, int timeout, HANDLE Handle, std::function<void()>&& func, const std::string& resourceType = "");
       ~BlockingTask();
       virtual void cleanUp() override;
       virtual void exec() override;
+      virtual int getTimeout() override;
     };
     class LAUNCHER_EXPORT_SYMBOL BlockingAllTask : public Task{
       class Impl;
@@ -45,6 +49,7 @@ namespace serpents{
       ~BlockingAllTask();
       virtual void cleanUp() override;
       virtual void exec() override;
+      virtual int getTimeout() override;
     };
   }
 }
