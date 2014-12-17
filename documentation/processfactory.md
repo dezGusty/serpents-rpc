@@ -19,7 +19,7 @@
   The type of the process you want to start, defaults to NonBlocking
   * **@IN std::string resourceType**
  specifies the resource type you want to use. The application only takes this parameter in consideration if the type of the process is specified as *Blocking*.ResourceType defaults to empty string, this is not considered a process type by the application
-  * ** @OUT std::shared_ptr<Process<int>>** Shared pointer containing an a Process object initialized with the return value. This value will be used to initialize the std::future type returned by the lambda.
+  * **@OUT std::shared_ptr<Process<int>>** Shared pointer containing an a Process object initialized with the return value. This value will be used to initialize the std::future type returned by the lambda.
 ~~~cpp
 static std::shared_ptr<Process<int>> ExecuteProcessAndWait(
 					const std::string& process_to_execute, 
@@ -43,7 +43,7 @@ static std::shared_ptr<Process<int>> ExecuteProcessAndWait(
   The type of the process you want to start, defaults to NonBlocking
  * **@IN std::string resourceType**
  specifies the resource type you want to use. The application only takes this parameter in consideration if the type of the process is specified as *Blocking*.ResourceType defaults to empty string, this is not considered a process type by the application
- * ** @OUT std::shared_ptr<Process<int>>** Shared pointer containing an a Process object initialized with the return value. This value will be used to initialize the std::future type returned by the lambda.
+ * **@OUT std::shared_ptr<Process<int>>** Shared pointer containing an a Process object initialized with the return value. This value will be used to initialize the std::future type returned by the lambda.
 ~~~cpp
 static std::shared_ptr<Process<std::string>> ExecuteProcessWithOutputCaptureAndWait(
 					const std::string& process_to_execute,
@@ -64,7 +64,7 @@ static std::shared_ptr<Process<std::string>> ExecuteProcessWithOutputCaptureAndW
   The type of the process you want to start, defaults to NonBlocking
   * **@IN std::string resourceType**
  specifies the resource type you want to use. The application only takes this parameter in consideration if the type of the process is specified as *Blocking*.ResourceType defaults to empty string, this is not considered a process type by the application
-  * ** @OUT std::shared_ptr<Process<void>>** Shared pointer containing an a Process object initialized with the return value. This value will be used to initialize the std::future type returned by the lambda.
+  * **@OUT std::shared_ptr<Process<void>>** Shared pointer containing an a Process object initialized with the return value. This value will be used to initialize the std::future type returned by the lambda.
 ~~~cpp
 static std::shared_ptr<Process<void>> WaitForProcessTerminationByHandle(
 					HANDLE process_handle, 
@@ -85,7 +85,7 @@ _Note:Because no timeout is specified for this method, the application defaults 
 * *NOTE* value passed directly to the guslib method
   * **@IN std::string resourceType** The type of the process you want to start, defaults to NonBlocking
  specifies the resource type you want to use. The application only takes this parameter in consideration if the type of the process is specified as *Blocking*.ResourceType defaults to empty string, this is not considered a process type by the application
-  * ** @OUT std::shared_ptr<Process<std::string>>** Shared pointer containing an a Process object initialized with the return value. This value will be used to initialize the std::future type returned by the lambda.
+  * **@OUT std::shared_ptr<Process<std::string>>** Shared pointer containing an a Process object initialized with the return value. This value will be used to initialize the std::future type returned by the lambda.
 ~~~cpp
 static std::shared_ptr<Process<std::string>> ReadPipeContent(
 					HANDLE process_handle, 
