@@ -24,6 +24,7 @@ virtual void cleanUp()
 ~~~
 
 Starts the clean up for the process started by the current class. If the handle of the process is known the [closeProcessByHandle][l1] method is used. If not, the application uses [closeProcessByName][l2].
+
 _Note:_ [closeProcessByName][l2] kills all processes with the same name curently running on the system. 
 
 #####Task::exec
@@ -47,6 +48,7 @@ Multiple processes started by this class can run at the same time unless they us
 
 ####BlockingAllTask
 When the exec method is called it forces all of the other threads to yeald.
+
 _Note:_ this behavior causes a race between the threads that were forced to yeald. Can not guarantee which thread executes firts. 
 
 *******
