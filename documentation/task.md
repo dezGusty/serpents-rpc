@@ -49,7 +49,7 @@ Multiple processes started by this class can run at the same time unless they us
 ####BlockingAllTask
 When the exec method is called it forces all of the other threads to yeald.
 
-_Note:_ this behavior causes a race between the threads that were forced to yeald. Can not guarantee which thread executes firts. 
+_Note:_ this behavior causes a race between the threads that were forced to yeald. Can not guarantee which thread executes first. 
 
 *******
 
