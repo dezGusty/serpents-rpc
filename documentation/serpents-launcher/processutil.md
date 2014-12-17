@@ -1,39 +1,18 @@
-[block:api-header]
-{
-  "type": "basic",
-  "title": "closeProcessByName"
-}
-[/block]
+##ProcessUtil
 
-[block:code]
-{
-  "codes": [
-    {
-      "code": " static void closeProcessByName(const std::string processPath);",
-      "language": "cplusplus",
-      "name": "closeProcessByName"
-    }
-  ]
-}
-[/block]
-* **@IN processPath** the path of the executable. The application tries to extract the name of the process in order to be able to obtain the process Handle. Calls closeProcessByHandle after finding the corresponding handle
-[block:api-header]
-{
-  "type": "basic",
-  "title": "closeProcessByHandle"
-}
-[/block]
- if a processs exists this method closes it 
+[TOC]
+
+####closeProcessByName
+_ The method tries to extract the name of the process from the path in order to obtain the process Handle. Calls closeProcessByHandle after finding the corresponding Handle._
+* **@IN processPath** the path of the executable.
+~~~cpp
+	static void closeProcessByName(const std::string processPath);
+~~~
+
+####closeProcessByHandle
+ _If a processs exists this method closes it_
+ * **@IN: HANDLE& Handle** process to close
  * *NOTE:* ExitProcess() detaches the process, TerminateProcess() kills the process 
-[block:code]
-{
-  "codes": [
-    {
-      "code": "static void closeProcessByHandle(HANDLE& Handle);",
-      "language": "cplusplus",
-      "name": "closeProcessByHandle"
-    }
-  ]
-}
-[/block]
-* **@IN: HANDLE& Handle** process to close
+~~~cpp
+	static void closeProcessByHandle(HANDLE& Handle);
+~~~
