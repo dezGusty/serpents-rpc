@@ -3,7 +3,7 @@
 ####TaskPool Class
 
 ~~~cpp
-	lass LAUNCHER_EXPORT_SYMBOL TaskPool{
+	class LAUNCHER_EXPORT_SYMBOL TaskPool{
   public:
     class Impl;
     Impl* Impl_;
@@ -30,6 +30,12 @@ _The constructor is used to specify the number of threads the applications will 
 **@IN: int numWorkers** number of threads the application will use
 ~~~cpp
 explicit TaskPool(int numWorkers = -1);
+~~~
+
+#####TaskPool::~Taskpool
+_Calls TaskPool::abort() to guarante all threads finish and no new threads are being added to the queue . Deletes Impl._
+~~~cpp
+~TaskPool();
 ~~~
 
 #####TaskPool::stop
