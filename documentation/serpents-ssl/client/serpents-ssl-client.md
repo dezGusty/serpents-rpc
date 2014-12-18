@@ -1,6 +1,37 @@
+
 ##Serpents ssl client
 _Creates a ssl-rpc client for the serpents-rpc library_
 
+####Example usage
+~~~cpp
+int main(){
+	std::string host("localhost");
+	std::string port("8080");
+
+	boost::asio::io_service io_service;
+	boost::asio::ip::tcp::resolver resolver(io_service);
+	boost::asio::ip::tcp::resolver::query query(host, port);
+	boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve(query);
+	//ssl context 
+	boost::asio::ssl::context ctx(boost::asio::ssl::context::sslv23); // the server/client accepts sslv23 or higher
+	                                                                  //to begin the secure connection
+    ctx.load_verify_file("ca.pem"); // CA certificate file
+
+	client c(io_service,ctx,iterator);
+
+	//method parameters
+	serpents::ParameterContainer request;
+	serpents::ParameterContainer reply;
+	request.add(2,3)
+
+	//send the request to the rpc server 
+	c.send("add", &request, &reply);
+	
+	//get the result
+	std::cout<<reply.getInt(0)<<std::endl;
+	return 0;
+} // main
+~~~
 ####client::client
 
 _The Constructor verifies the CA cerificate through the [verify_certificate][l1] method and, if the certificate is valid, it tries to connect to the server through [handle_connect][l2].
