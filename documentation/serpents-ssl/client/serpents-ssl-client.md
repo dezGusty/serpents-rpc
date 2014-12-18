@@ -72,12 +72,14 @@ bool verify_certificate(bool preverified,
 
 ####client::handle_connect
 _Asynchronously calls [handle_handshake][l3]._
+
 **@IN: const boost::system::error_code& error**  Shows if any error occoured in the previous asynch method. 
 ~~~cpp
  void handle_connect(const boost::system::error_code& error)
 ~~~
 ####client::handle_handshake
 _Asynchronously calls [handle_write][l4]. Begins building the https post request. _
+
 **@IN: const boost::system::error_code& error**  Shows if any error occoured in the previous asynch method. 
 ~~~cpp
  void handle_handshake(const boost::system::error_code& error)
