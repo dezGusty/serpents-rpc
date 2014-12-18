@@ -13,8 +13,8 @@ int main(){
 	boost::asio::ip::tcp::resolver::query query(host, port);
 	boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve(query);
 	//ssl context 
-	boost::asio::ssl::context ctx(boost::asio::ssl::context::sslv23); // the server/client accepts sslv23 or higher
-	                                                                  //to begin the secure connection
+	boost::asio::ssl::context ctx(boost::asio::ssl::context::sslv23); // the server/client accepts sslv23 
+	                                                                  // or higher to begin the secure connection
     ctx.load_verify_file("ca.pem"); // CA certificate file
 
 	client c(io_service,ctx,iterator);
