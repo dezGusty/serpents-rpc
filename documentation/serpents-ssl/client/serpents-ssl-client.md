@@ -2,7 +2,6 @@
 ##Serpents ssl client
 _Creates a ssl-rpc client for the serpents-rpc library_
 
-[TOC]
 ####Example usage
 ~~~cpp
 int main(){
