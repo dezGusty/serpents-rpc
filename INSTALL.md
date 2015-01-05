@@ -23,7 +23,7 @@ Boost:
 1. Download and unzip Boost
 2. Go to the boost root directory and run bootstrap.bat
 3. Open command prompt 
-4. cd top the boost root directory 
+4. cd to the boost root directory 
 5. execute ``b2 --build-dir=build-directory toolset=toolset-name --build-type=complete stage``
  - *build-dir* isn't strictly necessary 
  - *toolset* specifies the compiler used (msvc for visual studio)
