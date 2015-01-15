@@ -40,7 +40,7 @@ namespace serpents{
   virtual void start() = 0;
   virtual void stop() = 0;
   virtual ServerOptions* getImplServerOptions() = 0;
-  virtual ~ServerStartUp();
+  virtual ~ServerStartUp(){}
   };
 }
 

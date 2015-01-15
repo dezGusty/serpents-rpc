@@ -42,7 +42,7 @@ namespace serpents
     friend XMLRPC_C_StartUp;
     std::thread controllThread;
     std::thread thrd;
-    xmlrpc_c::serverAbyss* serverAbyssPtr;
+    xmlrpc_c::serverAbyss* serverAbyssPtr = nullptr;
     bool runCon;
     xmlrpc_c::registry myRegistry;
     XMLRPC_CServerOptions serveroptions;

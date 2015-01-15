@@ -54,8 +54,8 @@ namespace serpents{
   class RPCSELECTDLL RPCSelector
   {
   private:
-    ServerStartUp* ServerStartUpImpl_;
-    Server* server_;
+    ServerStartUp* ServerStartUpImpl_ = nullptr;
+    Server* server_ = nullptr;
   public:
     void startServer();
     void selectRPCMethod(Server& server, std::string method);

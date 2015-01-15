@@ -63,8 +63,8 @@ namespace serpents{
           not_implemented = 501,
           bad_gateway = 502,
           service_unavailable = 503
-        } status;
-
+        } status = status_type::created;
+        
         /// Convert the reply into a vector of buffers. The buffers do not own the
         /// underlying memory blocks, therefore the reply object must remain valid and
         /// not be changed until the write operation has completed.

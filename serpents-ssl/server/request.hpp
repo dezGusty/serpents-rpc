@@ -41,8 +41,8 @@ namespace serpents{
         std::string method;
         std::string uri;
         std::string content;
-        int http_version_major;
-        int http_version_minor;
+        int http_version_major =0;
+        int http_version_minor =0;
         std::vector<header> headers;
         //needed for copy-constrct
         request(){}

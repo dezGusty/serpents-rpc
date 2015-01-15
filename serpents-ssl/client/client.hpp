@@ -163,8 +163,8 @@ class client
     return buff;
   }
   private:
-  serpents::ParameterContainer* requestParam_;
-  serpents::ParameterContainer* replyParam_;
+  serpents::ParameterContainer* requestParam_ = nullptr;
+  serpents::ParameterContainer* replyParam_ = nullptr;
   std::string methodName_;
   serpents::util::xml::IXMLClass* XMLParser_;
   boost::asio::io_service& io_service_;

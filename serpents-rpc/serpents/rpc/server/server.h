@@ -37,8 +37,7 @@ namespace serpents{
   class SERPENTSDLL Server{
     class Impl;
     Impl* Impl_;
-
-    FunctionRepository* repository;
+    FunctionRepository* repository = nullptr;
   public:
     Server();
     Server(unsigned int port);

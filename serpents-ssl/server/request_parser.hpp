@@ -67,7 +67,7 @@ namespace serpents{
         static std::string content_length_name_;
 
         /// Content length as decoded from headers. Defaults to 0.
-        std::size_t content_length_;
+        std::size_t content_length_ =0;
 
         /// Handle the next character of input.
         boost::tribool consume(request& req, char input);

@@ -17,11 +17,11 @@ namespace serpents{
       friend NonBlockingTask;
       Impl();
       ~Impl();
-      HANDLE Handle_;
+      HANDLE Handle_ = nullptr;
       ProcessUtil* procUtil;
       std::atomic<bool> cleanedUp = false;
       std::string process_to_execute_;
-      int timeout_;
+      int timeout_ = 0;
       std::unique_ptr<std::function<void()>> function_;
     };
     NonBlockingTask::Impl::Impl(){
@@ -68,11 +68,11 @@ namespace serpents{
       friend BlockingTask;
       Impl();
       ~Impl();
-      HANDLE Handle_;
+      HANDLE Handle_ = nullptr;
       ProcessUtil* procUtil;
       std::string process_to_execute_;
       std::string resourceType_;
-      int timeout_;
+      int timeout_ = 0;
       std::atomic<bool> cleanedUp = false;
       std::unique_ptr<std::function<void()>> function_;
     };
@@ -155,11 +155,11 @@ namespace serpents{
       friend BlockingAllTask;
       Impl();
       ~Impl();
-      HANDLE Handle_;
+      HANDLE Handle_ = nullptr;
       ProcessUtil* procUtil;
       std::string process_to_execute_;
       std::atomic<bool> cleanedUp = false;
-      int timeout_;
+      int timeout_ =0;
       std::unique_ptr<std::function<void()>> function_;
     };
     BlockingAllTask::Impl::Impl(){

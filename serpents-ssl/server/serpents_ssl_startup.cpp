@@ -15,7 +15,7 @@ namespace serpents{
   std::string hiddenName = "serpents_ssl";
   class SerpentsSSLStartUp::Impl{
     friend SerpentsSSLStartUp;
-    ssl::server* server;
+    ssl::server* server = nullptr;
     std::thread thrd;
     std::thread controllThread;
     SSL_ServerOptions serveroptions;
