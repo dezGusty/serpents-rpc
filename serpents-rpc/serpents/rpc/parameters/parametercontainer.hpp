@@ -203,7 +203,7 @@ namespace serpents
       }
       int ParameterContainer::getInt(unsigned int n)
       {
-        if (n < 0 || n > Impl_->allVec.size())
+        if (n > Impl_->allVec.size())
           throw(ParamContainerException("out of bounds exception"));
         try
         {
@@ -220,7 +220,7 @@ namespace serpents
       {
         try
         {
-          if (n < 0 || n >Impl_->allVec.size())
+          if (n >Impl_->allVec.size())
           {
             throw(ParamContainerException("out of bounds exception"));
           }
@@ -235,7 +235,7 @@ namespace serpents
       {
         try
         {
-          if (n < 0 || n > Impl_->allVec.size())
+          if (n > Impl_->allVec.size())
           {
             throw(ParamContainerException("out of bounds exception"));
           }

@@ -93,7 +93,7 @@ namespace serpents{
         std::string error;
       public:
         RepoException(std::string& errorMsg) ;
-        std::string what();
+        const char* what() const noexcept override;
       };
     }
   }
