@@ -34,6 +34,9 @@ namespace serpents{
   Server::Server() {
     Impl_ = new Impl();
   }
+  Server::~Server(){
+    delete Impl_;
+  }
   void Server::setRepository(serpents::FunctionRepository& fr){
     this->repository = &fr;
   }

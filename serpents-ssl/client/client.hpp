@@ -142,9 +142,6 @@ class client
     std::ostringstream ss;
     ss << &reply_;
     std::string s = ss.str();
-
-
-
     XMLParser_->getResponseParameters(s, *replyParam_);
   }
   void send(const std::string& methodName, serpents::ParameterContainer* request, serpents::ParameterContainer* reply)

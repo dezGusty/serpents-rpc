@@ -194,6 +194,7 @@ class JustSleep : public serpents::Method
 
 void main()
 {
+  
   internalContainer = new serpents::ParameterContainer();
   serpents::Server server;
   server.addLogTarget("default", "D:\\program.log");

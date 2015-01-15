@@ -30,6 +30,7 @@
 #include "serpents\rpc\server\rpcselector.h"
 #include "serpents\rpc\server\server.h"
 namespace serpents{
+
   void loadPlugin(const std::string& pluginName)
   {
     guslib::DynamicLib* lib = guslib::DynamicLibManager::getPtr()->load(pluginName);

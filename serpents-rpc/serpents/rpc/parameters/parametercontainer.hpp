@@ -64,7 +64,7 @@ namespace serpents
         Int, Float, Double, String, Bool
       };
     private:
-      //  struct to handle parse for ParameterContainer
+   
       class Impl
       {
         friend ParameterContainer;

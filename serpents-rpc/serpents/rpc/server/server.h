@@ -42,6 +42,7 @@ namespace serpents{
   public:
     Server();
     Server(unsigned int port);
+    ~Server();
     void run();
     void setRepository(FunctionRepository& fr);
     FunctionRepository* getRepository();
