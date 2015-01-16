@@ -95,7 +95,7 @@ namespace serpents{
 
       // exception 
       RepoException::RepoException(std::string& errorMsg) : error(errorMsg){  }
-      const char* RepoException::what() const noexcept{ return error.c_str; }
+      const char* RepoException::what() const { return error.c_str(); }
 
       //server function repo
       class ServerFunctionRepository::Impl{

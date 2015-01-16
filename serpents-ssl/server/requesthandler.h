@@ -41,7 +41,7 @@ namespace serpents{
         std::string* error;
       public:
         RequestException(std::string& errorMsg){ *error = errorMsg; }
-        const char* what() const noexcept override{ return error->c_str(); }
+        const char* what() const override{ return error->c_str(); }
       };
 
       class SSL_SERVER_API RequestHandler : private boost::noncopyable{
