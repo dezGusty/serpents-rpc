@@ -10,7 +10,11 @@ MESSAGE("Building serpents-ssl")
 MESSAGE("*")
 MESSAGE("")
 
-find_package(Boost 1.36.0 COMPONENTS system date_time regex REQUIRED)
+add_definitions( -DBOOST_ALL_NO_LIB )
+# set(Boost_DEBUG ON)
+# set(Boost_USE_STATIC_LIBS   ON)
+# set(Boost_USE_MULTITHREADED ON)
+find_package(Boost COMPONENTS system date_time regex)
 find_package(OpenSSL REQUIRED)
 find_package(Guslib_Local)
 
@@ -126,7 +130,7 @@ include_directories(${OPENSSL_INCLUDE_DIR} )
 
 add_definitions(/D _WIN32_WINNT=0x0501 -D_SCL_SECURE_NO_WARNINGS -DSSL_SERVER_EXPORT -DSSLSERVER_EXP )
 ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
-target_link_libraries(serpents_ssl Ws2_32.lib odbc32.lib odbccp32.lib server_manager.lib serpents-rpc.lib ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES} ${GUSLIB_LIBRARY} )
+target_link_libraries(serpents_ssl Ws2_32.lib odbc32.lib odbccp32.lib server_manager.lib serpents-rpc ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES} ${GUSLIB_LIBRARY} )
 
 if (SERPENTS_RPC_USELOG4CPP)
  FIND_PACKAGE(LOG4CPP_Local)

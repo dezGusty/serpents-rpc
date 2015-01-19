@@ -1,3 +1,11 @@
+Current state:
+--------------
+- In order to build, it is recommended to deactivate in CMake the following
+  bool options:
+    - SERPENTS_RPC_BUILD_XMLRPC_CPP_PLUGIN
+
+- Issues: The test-launcher links to the serpents-launcher library, even when not built.
+    - SERPENTS_RPC_BUILD_LAUNCHER set to off: test-launcher still attempts to be built.
 
 Coding guidelines:
 ------------------

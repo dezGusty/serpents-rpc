@@ -1,4 +1,4 @@
-﻿SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMake/;${PROJECT_SOURCE_DIR}/CMake/;${CMAKE_ROOT}/Modules;${CMAKE_MODULE_PATH}")
+SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/../CMake/;${PROJECT_SOURCE_DIR}/CMake/;${CMAKE_ROOT}/Modules;${CMAKE_MODULE_PATH}")
 
 project(test-ssl-server)
 
@@ -26,7 +26,7 @@ add_executable (test-ssl-server test-ssl-server.cpp)
 add_definitions(/D _WIN32_WINNT=0x0501 -D_SCL_SECURE_NO_WARNINGS -DSSL_SERVER_EXPORT)
 ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 target_link_libraries(test-ssl-server Ws2_32.lib odbc32.lib odbccp32.lib ${Boost_LIBRARIES} ${OPENSSL_LIBRARIES} 
-            ${GTEST_LIBRARIES} serpents_ssl.lib)
+            ${GTEST_LIBRARIES} serpents_ssl)
 
 if (SERPENTS_RPC_USELOG4CPP)
  FIND_PACKAGE(LOG4CPP_Local)

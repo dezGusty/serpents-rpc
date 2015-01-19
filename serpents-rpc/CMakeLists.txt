@@ -127,12 +127,13 @@ SOURCE_GROUP("serpents\\rpc\\log" FILES
 SOURCE_GROUP("serpents\\rpc\\parameters" FILES
   ${SOURCE_FILES_PARAMETERS}
 )
-link_directories("${CMAKE_SOURCE_DIR}/build")
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-source_group("" FILES ${SOURCE_FILES})
+
+LINK_DIRECTORIES("${CMAKE_SOURCE_DIR}/build")
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+SOURCE_GROUP("" FILES ${SOURCE_FILES})
 
 
-add_library(${SERPENTS_RPC_PROJECT_NAME} SHARED ${SOURCE_FILES})
+ADD_LIBRARY(${SERPENTS_RPC_PROJECT_NAME} SHARED ${SOURCE_FILES})
 
 # Set the link dependencies.
 # Note: This should be done for the test projects.
@@ -142,21 +143,45 @@ FIND_PACKAGE(XMLRPCpp_Local)
 FIND_PACKAGE(LOG4CPP_Local)
 FIND_PACKAGE(GUSLIB_Local)
 
-include_directories("${GUSLIB_INCLUDE_DIR}")
+INCLUDE_DIRECTORIES("${GUSLIB_INCLUDE_DIR}")
 
+# ---------------- Link Libraries section --------------------
+# Set the link options: the libraries to link against. Store them in a temporary variable
+# as these are the common, cross-system link libraries.
+SET (LINK_LIBS_SERPENTS_RPC
+  server_manager
+  ${GUSLIB_LIBRARY}
+)
 
-target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} Ws2_32.lib odbc32.lib odbccp32.lib server_manager.lib ${GUSLIB_LIBRARY}) 
-#add guslib                                        ${LOG4CPP_LIBRARY})
+# Append OS system specific libraries.
+IF(WIN32)
+  SET(LINK_LIBS_SERPENTS_RPC
+#     ws2_32.lib
+#     winmm.lib
+#     odbc32.lib
+#     odbccp32.lib
+    ${LINK_LIBS_SERPENTS_RPC}
+    )
+ELSEIF(UNIX AND NOT APPLE)
+  SET(LINK_LIBS_SERPENTS_RPC
+    ${X11_X11_LIB}
+    ${X11_Xrandr_LIB}
+    ${LINK_LIBS_SERPENTS_RPC}
+    )
+ENDIF()
 
-add_definitions(-DSERPENTSRPC_EXPORTS -DSERVERMGR_EXP)
+TARGET_LINK_LIBRARIES(${SERPENTS_RPC_PROJECT_NAME} ${LINK_LIBS_SERPENTS_RPC}) 
+
+ADD_DEFINITIONS(-DSERPENTSRPC_EXPORTS -DSERVERMGR_EXP)
 ADD_DEFINITIONS(-DUNICODE -D_UNICODE)
 
-if (SERPENTS_RPC_USELOG4CPP)
-  link_directories("${PROJECT_SOURCE_DIR}/bin/release/log4cpp")
-  target_link_libraries(${SERPENTS_RPC_PROJECT_NAME} ${LOG4CPP_LIBRARY})
-  add_definitions(-DUSE_LOG4CPP)
-endif ()
-install (TARGETS ${SERPENTS_RPC_PROJECT_NAME}
+IF (SERPENTS_RPC_USELOG4CPP)
+  LINK_DIRECTORIES("${PROJECT_SOURCE_DIR}/bin/release/log4cpp")
+  TARGET_LINK_LIBRARIES(${SERPENTS_RPC_PROJECT_NAME} ${LOG4CPP_LIBRARY})
+  ADD_DEFINITIONS(-DUSE_LOG4CPP)
+ENDIF ()
+
+INSTALL (TARGETS ${SERPENTS_RPC_PROJECT_NAME}
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     COMPONENT library
