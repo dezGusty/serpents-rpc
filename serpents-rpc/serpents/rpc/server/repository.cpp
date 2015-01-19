@@ -39,15 +39,16 @@ namespace serpents{
  // void FunctionRepository::executeAll(){
  //   
  // }
-  FunctionRepository::FunctionRepository(){
+  FunctionRepository::FunctionRepository() : Impl_(nullptr){
     Impl_ = new Impl;  
   }
 
   FunctionRepository& FunctionRepository::operator=(FunctionRepository& fr){
+    //check if same object 
     if (this != &fr){
+      this->Impl_ = new Impl;
       for each (auto var in fr.Impl_->methodContainer)
       {
-        this->Impl_ = new Impl;
         Impl_->methodContainer.insert(std::pair<std::string, Method*>(var.first, var.second));
       }
       return *this;
@@ -57,10 +58,10 @@ namespace serpents{
     }
   
   }
-  FunctionRepository::FunctionRepository(FunctionRepository& fr){
+  FunctionRepository::FunctionRepository(FunctionRepository& fr) : Impl_(nullptr){
+    this->Impl_ = new Impl;
     for each (auto var in fr.Impl_->methodContainer)
     {
-      this->Impl_ = new Impl;
       this->Impl_->methodContainer.insert(std::pair<std::string, Method*>(var.first,&(*var.second)));
     }
   }

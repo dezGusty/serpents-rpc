@@ -194,46 +194,53 @@ class JustSleep : public serpents::Method
 
 void main()
 {
-  
-  internalContainer = new serpents::ParameterContainer();
-  serpents::Server server;
-  server.addLogTarget("default", "D:\\program.log");
+  try{
+    internalContainer = new serpents::ParameterContainer();
+    serpents::Server server;
+    server.addLogTarget("default", "D:\\program.log");
 
-  RPCMethod* rpc = new RPCMethod();
-  RPCMethod2* rpc2 = new RPCMethod2();
-  GetMean* getmean = new GetMean();
-  PushInternalValue* push = new PushInternalValue();
-  PopInternalValue* pop = new PopInternalValue();
-  GenerateRandomString* gen = new GenerateRandomString();
-  JustSleep* js = new JustSleep();
-  serpents::FunctionRepository fr;
+    RPCMethod* rpc = new RPCMethod();
+    RPCMethod2* rpc2 = new RPCMethod2();
+    GetMean* getmean = new GetMean();
+    PushInternalValue* push = new PushInternalValue();
+    PopInternalValue* pop = new PopInternalValue();
+    GenerateRandomString* gen = new GenerateRandomString();
+    JustSleep* js = new JustSleep();
+    serpents::FunctionRepository fr;
 
-  fr.addMethod(rpc);
-  fr.addMethod(rpc2);
-  fr.addMethod(getmean);
-  fr.addMethod(pop);
-  fr.addMethod(push);
-  fr.addMethod(gen);
-  fr.addMethod(js);
-  
-  server.setRepository(fr);
-  serpents::RPCSelector rpcselect;
-  try
-  {
-    rpcselect.selectRPCMethod(server, "serpents_ssl");
+    fr.addMethod(rpc);
+    fr.addMethod(rpc2);
+    fr.addMethod(getmean);
+    fr.addMethod(pop);
+    fr.addMethod(push);
+    fr.addMethod(gen);
+    fr.addMethod(js);
+
+    server.setRepository(fr);
+    serpents::RPCSelector rpcselect;
+    try
+    {
+      rpcselect.selectRPCMethod(server, "serpents_ssl");
+    }
+    catch (const std::exception& e)
+    {
+      std::cout << e.what() << std::endl;
+    }
+    server.getServerOptions()->portNumber(8081);
+    server.getServerOptions()->uriPath("/RPC2");
+    try
+    {
+      rpcselect.startServer();
+    }
+    catch (const std::exception& e)
+    {
+      std::cout << e.what() << std::endl;
+    }
   }
-  catch (const std::exception& e)
-  {
+  catch (const serpents::ParamContainerException& e){
     std::cout << e.what() << std::endl;
   }
-  server.getServerOptions()->portNumber(8081);
-  server.getServerOptions()->uriPath("/RPC2");
-  try
-  {
-    rpcselect.startServer();
-  }
-  catch (const std::exception& e)
-  {
+  catch (const std::exception& e){
     std::cout << e.what() << std::endl;
   }
 }

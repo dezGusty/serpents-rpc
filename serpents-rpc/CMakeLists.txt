@@ -77,10 +77,10 @@ SET ( SOURCE_FILES_SERVER
   "./serpents/rpc/server/serverstartup.h"
 )
 
-SET (SOURCE_FILES_LAUNCHER
-  "./serpents/rpc/launcher/processrunner.h"
-  "./serpents/rpc/launcher/processrunner.cpp"
-)
+#SET (SOURCE_FILES_LAUNCHER
+#  "./serpents/rpc/launcher/processrunner.h"
+# "./serpents/rpc/launcher/processrunner.cpp"
+#)
 SET (SOURCE_FILES_LOG
   "./serpents/rpc/log/log.h"
   "./serpents/rpc/log/log.cpp"

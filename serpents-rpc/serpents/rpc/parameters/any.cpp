@@ -6,7 +6,7 @@ namespace serpents
   class any::Impl
   {
     friend any;
-    any::type m_type;
+    any::type m_type= type::Int;
     int   INT = 0;
     double DOUBLE = 0;
     bool BOOL = 0;

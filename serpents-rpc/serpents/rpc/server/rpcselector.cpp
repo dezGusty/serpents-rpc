@@ -33,32 +33,50 @@ namespace serpents{
 
   void loadPlugin(const std::string& pluginName)
   {
-    guslib::DynamicLib* lib = guslib::DynamicLibManager::getPtr()->load(pluginName);
+    try{
+      guslib::DynamicLib* lib = guslib::DynamicLibManager::getPtr()->load(pluginName);
 
-    DLL_START_PLUGIN pFunc = (DLL_START_PLUGIN)lib->getSymbol("dllStartPlugin");
+      DLL_START_PLUGIN pFunc = (DLL_START_PLUGIN)lib->getSymbol("dllStartPlugin");
 
-    if (!pFunc)
-    {
-      throw new guslib::SimpleException("Cannot find symbol dllStartPlugin in library ");
+      if (!pFunc)
+      {
+        throw new guslib::SimpleException("Cannot find symbol dllStartPlugin in library ");
+      }
+
+      // This must call installPlugin
+      pFunc();
     }
-
-    // This must call installPlugin
-    pFunc();
+    catch (const guslib::SimpleException& e)
+    {
+      std::cerr << e.what() <<std::endl;
+#ifdef USELOG4CPP
+      Log::getPtr()->error(e.what());
+#endif
+    }
   }
 
   void unloadPlugin(const std::string& pluginName)
   {
-    guslib::DynamicLib* lib = guslib::DynamicLibManager::getPtr()->load(pluginName);
+    try{
+      guslib::DynamicLib* lib = guslib::DynamicLibManager::getPtr()->load(pluginName);
 
-    DLL_START_PLUGIN pFunc = (DLL_START_PLUGIN)lib->getSymbol("dllStopPlugin");
+      DLL_START_PLUGIN pFunc = (DLL_START_PLUGIN)lib->getSymbol("dllStopPlugin");
 
-    if (!pFunc)
-    {
-      throw new guslib::SimpleException("Cannot find symbol dllStartPlugin in library ");
+      if (!pFunc)
+      {
+        throw new guslib::SimpleException("Cannot find symbol dllStartPlugin in library ");
+      }
+
+      // This must call installPlugin
+      pFunc();
     }
-
-    // This must call installPlugin
-    pFunc();
+    catch (const guslib::SimpleException& e)
+    {
+      std::cerr << e.what() << std::endl;
+#ifdef USELOG4CPP
+      Log::getPtr()->error(e.what());
+#endif
+    }
   }
 
   //plug in
@@ -108,6 +126,8 @@ namespace serpents{
   }
   RPCSelector::RPCSelector()
   {
+    ServerStartUp* ServerStartUpImpl_ = nullptr;
+    Server* server_ = nullptr;
   }
 
 

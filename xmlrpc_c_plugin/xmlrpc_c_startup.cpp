@@ -40,10 +40,10 @@ namespace serpents
   class XMLRPC_C_StartUp::Impl
   {
     friend XMLRPC_C_StartUp;
-    std::thread controllThread;
+    std::thread controllThread ;
     std::thread thrd;
     xmlrpc_c::serverAbyss* serverAbyssPtr = nullptr;
-    bool runCon;
+    bool runCon =false;
     xmlrpc_c::registry myRegistry;
     XMLRPC_CServerOptions serveroptions;
   };
